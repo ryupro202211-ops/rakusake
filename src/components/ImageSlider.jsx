@@ -3,13 +3,13 @@ import React from 'react';
 const ImageSlider = () => {
     // Images array
     const images = [
-        '/images/real_fireworks.jpg',
-        '/images/real_bbq.jpg',
-        '/images/real_party.jpg',
-        '/images/slider1.png',
-        '/images/slider2.png',
-        '/images/slider3.png',
-        '/images/slider4.png',
+        `${import.meta.env.BASE_URL}images/real_fireworks.jpg`,
+        `${import.meta.env.BASE_URL}images/real_bbq.jpg`,
+        `${import.meta.env.BASE_URL}images/real_party.jpg`,
+        `${import.meta.env.BASE_URL}images/slider1.png`,
+        `${import.meta.env.BASE_URL}images/slider2.png`,
+        `${import.meta.env.BASE_URL}images/slider3.png`,
+        `${import.meta.env.BASE_URL}images/slider4.png`,
     ];
 
     const sliderContainerStyle = {
