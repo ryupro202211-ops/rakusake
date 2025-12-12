@@ -191,7 +191,7 @@ const Admin = () => {
     };
 
     return (
-        <div className="container section-padding" style={{ marginTop: '60px' }}>
+        <div className="container section-padding" style={{ marginTop: '100px' }}>
             <h2>Event Management</h2>
 
             <form onSubmit={handleSubmit} style={formStyle}>
