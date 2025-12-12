@@ -18,7 +18,7 @@ const Hero = () => {
         left: 0,
         width: '100%',
         height: '100%',
-        backgroundImage: 'url(/images/hero_party.png)',
+        backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         zIndex: 0,
