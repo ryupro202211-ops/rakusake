@@ -13,7 +13,6 @@ const Admin = () => {
     });
     const [preview, setPreview] = useState(null);
     const [editingId, setEditingId] = useState(null);
-    const [fileHandle, setFileHandle] = useState(null);
 
     useEffect(() => {
         setEvents(getEvents().reverse());
@@ -62,41 +61,27 @@ const Admin = () => {
         }
     };
 
-    const connectToLocalFile = async () => {
+    const saveToSource = async (currentEvents) => {
+        // Only works in dev mode
+        if (!import.meta.env.DEV) return;
+
         try {
-            const [handle] = await window.showOpenFilePicker({
-                types: [{
-                    description: 'JavaScript File',
-                    accept: { 'text/javascript': ['.js'] },
-                }],
-                multiple: false,
+            const response = await fetch('/__api/save-events', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ events: currentEvents }),
             });
-            setFileHandle(handle);
-            alert('Connected to seedData.js! Changes will now be auto-saved to the codebase.');
-        } catch (err) {
-            console.error(err);
-            // Ignore abort error
-        }
-    };
 
-    const saveToLocalFile = async (currentEvents) => {
-        if (!fileHandle) return;
-
-        // Prevent saving empty data which causes data loss
-        if (!currentEvents || currentEvents.length === 0) {
-            console.warn('Skipping auto-save: No events to save.');
-            return;
-        }
-
-        try {
-            const fileContent = `export const DATA_VERSION = '${Date.now()}';\n\nexport const initialEvents = ${JSON.stringify(currentEvents, null, 4)};`;
-            const writable = await fileHandle.createWritable();
-            await writable.write(fileContent);
-            await writable.close();
-            console.log('Auto-saved to seedData.js');
+            if (response.ok) {
+                console.log('Auto-saved to seedData.js');
+                // Optional: Show a toast or small indicator
+            } else {
+                console.error('Failed to auto-save to source');
+            }
         } catch (err) {
             console.error('Auto-save failed:', err);
-            alert('Failed to auto-save to codebase. Please check permissions or reconnect file.');
         }
     };
 
@@ -120,9 +105,8 @@ const Admin = () => {
             setEvents(updatedEvents);
 
             // Auto-save if connected
-            if (fileHandle) {
-                saveToLocalFile(updatedEvents);
-            }
+            // Auto-save to source
+            saveToSource(updatedEvents);
         } catch (err) {
             alert('Failed to save event. Image might be too large for browser storage.');
             console.error(err);
@@ -152,9 +136,8 @@ const Admin = () => {
                 resetForm();
             }
             // Auto-save if connected
-            if (fileHandle) {
-                saveToLocalFile(updatedEvents);
-            }
+            // Auto-save to source
+            saveToSource(updatedEvents);
         }
     };
 
@@ -329,31 +312,8 @@ const Admin = () => {
                 </ul>
             </div>
             <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid #eee' }}>
-                <h3>🛠️ Developer Tools</h3>
-                <p style={{ color: '#666', marginBottom: '1rem' }}>
-                    <strong>Step 1:</strong> Click "Connect" and select <code>src/utils/seedData.js</code>.<br />
-                    <strong>Step 2:</strong> Add/Edit/Delete events as usual. The code file will update automatically!<br />
-                    <strong>Step 3:</strong> Deploy to Netlify.
-                </p>
-
-                {!fileHandle ? (
-                    <button
-                        onClick={connectToLocalFile}
-                        style={{
-                            background: '#3498db',
-                            color: '#fff',
-                            border: 'none',
-                            padding: '10px 20px',
-                            borderRadius: '8px',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                            fontWeight: 'bold',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.1)'
-                        }}
-                    >
-                        🔗 Connect to seedData.js for Auto-Sync
-                    </button>
-                ) : (
+                <h3>🛠️ Local CMS Status</h3>
+                {import.meta.env.DEV ? (
                     <div style={{
                         padding: '1rem',
                         background: '#e8f8f5',
@@ -365,7 +325,18 @@ const Admin = () => {
                         alignItems: 'center',
                         gap: '10px'
                     }}>
-                        <span>✅ Connected! Events will be auto-saved to codebase.</span>
+                        <span>✅ Connected to Local Source! Changes are auto-saved to seedData.js.</span>
+                    </div>
+                ) : (
+                    <div style={{
+                        padding: '1rem',
+                        background: '#fff3cd',
+                        border: '1px solid #ffeeba',
+                        borderRadius: '8px',
+                        color: '#856404',
+                        fontWeight: 'bold'
+                    }}>
+                        <span>⚠️ Production Mode: Changes are temporary and will NOT be saved to code.</span>
                     </div>
                 )}
             </div>
