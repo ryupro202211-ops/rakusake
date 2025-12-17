@@ -1,4 +1,4 @@
-import { initialEvents, DATA_VERSION } from './seedData';
+import { initialEvents, DATA_VERSION } from "./seedData.js";
 
 const STORAGE_KEY = `rakusake_events_${DATA_VERSION}`;
 
