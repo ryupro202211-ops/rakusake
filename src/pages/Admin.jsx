@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { saveEvent, getEvents, deleteEvent, updateEvent } from '../utils/storage';
+import ConfirmationModal from '../components/ConfirmationModal';
 import '../styles/App.css';
 
 const Admin = () => {
@@ -13,6 +14,8 @@ const Admin = () => {
     });
     const [preview, setPreview] = useState(null);
     const [editingId, setEditingId] = useState(null);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deletingId, setDeletingId] = useState(null);
 
     useEffect(() => {
         setEvents(getEvents().reverse());
@@ -62,17 +65,24 @@ const Admin = () => {
     };
 
     const saveToSource = async (currentEvents) => {
+        console.log('Attempting to save to source...', { isDev: import.meta.env.DEV });
         // Only works in dev mode
-        if (!import.meta.env.DEV) return;
+        if (!import.meta.env.DEV) {
+            console.log('Not in DEV mode, aborting save.');
+            return;
+        }
 
         try {
-            const response = await fetch('/__api/save-events', {
+            console.log('Sending POST request to /rakusake/__api/save-events');
+            const response = await fetch('/rakusake/__api/save-events', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ events: currentEvents }),
             });
+
+            console.log('Response status:', response.status);
 
             if (response.ok) {
                 console.log('Auto-saved to seedData.js');
@@ -128,17 +138,27 @@ const Admin = () => {
     };
 
     const handleDelete = (id) => {
-        if (window.confirm('Are you sure you want to delete this event?')) {
-            deleteEvent(id);
+        setDeletingId(id);
+        setShowDeleteModal(true);
+    };
+
+    const confirmDelete = () => {
+        if (deletingId) {
+            deleteEvent(deletingId);
             const updatedEvents = getEvents().reverse();
             setEvents(updatedEvents);
-            if (editingId === id) {
+            if (editingId === deletingId) {
                 resetForm();
             }
-            // Auto-save if connected
-            // Auto-save to source
             saveToSource(updatedEvents);
         }
+        setShowDeleteModal(false);
+        setDeletingId(null);
+    };
+
+    const cancelDelete = () => {
+        setShowDeleteModal(false);
+        setDeletingId(null);
     };
 
     const resetForm = () => {
@@ -340,6 +360,12 @@ const Admin = () => {
                     </div>
                 )}
             </div>
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={cancelDelete}
+                onConfirm={confirmDelete}
+                message="Are you sure you want to delete this event?"
+            />
         </div>
     );
 };
