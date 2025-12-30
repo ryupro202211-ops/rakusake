@@ -6,10 +6,10 @@ const ImageSlider = () => {
         `${import.meta.env.BASE_URL}images/real_fireworks.jpg`,
         `${import.meta.env.BASE_URL}images/real_bbq.jpg`,
         `${import.meta.env.BASE_URL}images/real_party.jpg`,
-        `${import.meta.env.BASE_URL}images/slider1.png`,
-        `${import.meta.env.BASE_URL}images/slider2.png`,
-        `${import.meta.env.BASE_URL}images/slider3.png`,
-        `${import.meta.env.BASE_URL}images/slider4.png`,
+        `${import.meta.env.BASE_URL}images/slider1.jpeg`,
+        `${import.meta.env.BASE_URL}images/slider2.jpg`,
+        `${import.meta.env.BASE_URL}images/slider3.jpg`,
+        `${import.meta.env.BASE_URL}images/slider4.jpg`,
     ];
 
     const sliderContainerStyle = {

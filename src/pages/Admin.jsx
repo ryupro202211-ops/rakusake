@@ -18,7 +18,7 @@ const Admin = () => {
     const [deletingId, setDeletingId] = useState(null);
 
     useEffect(() => {
-        setEvents(getEvents().reverse());
+        setEvents(getEvents().sort((a, b) => new Date(b.date) - new Date(a.date)));
     }, []);
 
     const handleChange = (e) => {
@@ -111,7 +111,7 @@ const Admin = () => {
                 alert('Event added successfully!');
             }
             resetForm();
-            const updatedEvents = getEvents().reverse();
+            const updatedEvents = getEvents().sort((a, b) => new Date(b.date) - new Date(a.date));
             setEvents(updatedEvents);
 
             // Auto-save if connected
@@ -145,7 +145,7 @@ const Admin = () => {
     const confirmDelete = () => {
         if (deletingId) {
             deleteEvent(deletingId);
-            const updatedEvents = getEvents().reverse();
+            const updatedEvents = getEvents().sort((a, b) => new Date(b.date) - new Date(a.date));
             setEvents(updatedEvents);
             if (editingId === deletingId) {
                 resetForm();
