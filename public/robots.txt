@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ryupro202211-ops.github.io/rakusake/sitemap.xml
