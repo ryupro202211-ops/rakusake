@@ -57,10 +57,10 @@ const Hero = () => {
         left: 0,
         right: 0,
         bottom: 0,
-        // Dark gradient to ensure text readability on any image
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.6) 100%)',
+        // Darker gradient to hide text in background images and improve readability
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%)',
         zIndex: 1,
-        backdropFilter: 'blur(2px)',
+        backdropFilter: 'blur(3px)',
     };
 
     const contentStyle = {
@@ -68,19 +68,18 @@ const Hero = () => {
         textAlign: 'center',
         color: '#fff',
         padding: '0 20px',
-        maxWidth: '800px', // Limit width for better readability on desktop
+        maxWidth: '800px',
         width: '100%',
-        textShadow: '0 2px 10px rgba(0,0,0,0.5)', // Stronger shadow for readability
+        textShadow: '0 2px 10px rgba(0,0,0,0.7)',
     };
 
     const titleStyle = {
-        fontSize: 'clamp(2rem, 5vw, 4.5rem)', // Responsive font size
+        fontSize: 'clamp(1.5rem, 4vw, 4rem)', // Smaller min/max for mobile
         marginBottom: '20px',
-        lineHeight: 1.2,
+        lineHeight: 1.4, // More breathing room
         fontFamily: 'var(--font-pop)',
         fontWeight: '800',
-        wordBreak: 'keep-all', // Try to keep words together for Japanese
-        overflowWrap: 'break-word',
+        wordWrap: 'break-word', // Allow wrapping
     };
 
     const subtitleStyle = {
