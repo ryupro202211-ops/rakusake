@@ -58,7 +58,7 @@ const Hero = () => {
         right: 0,
         bottom: 0,
         // Darker gradient to hide text in background images and improve readability
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%)',
+        background: 'linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.3) 100%)',
         zIndex: 1,
         backdropFilter: 'blur(3px)',
     };
@@ -80,6 +80,8 @@ const Hero = () => {
         fontFamily: 'var(--font-pop)',
         fontWeight: '800',
         wordWrap: 'break-word', // Allow wrapping
+        color: '#ffffff',
+        textShadow: '0 0 20px rgba(255,255,255,0.6), 0 2px 10px rgba(0,0,0,0.5)',
     };
 
     const subtitleStyle = {
