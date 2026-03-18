@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { saveEvent, getEvents, deleteEvent, updateEvent } from '../utils/storage';
 import ConfirmationModal from '../components/ConfirmationModal';
-import '../styles/App.css';
+import '../styles/admin.css';
+
+const ADMIN_PASSWORD = 'rakusake2024';
 
 const Admin = () => {
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const [password, setPassword] = useState('');
+    const [authError, setAuthError] = useState('');
     const [events, setEvents] = useState([]);
     const [formData, setFormData] = useState({
         title: '',
@@ -18,8 +23,48 @@ const Admin = () => {
     const [deletingId, setDeletingId] = useState(null);
 
     useEffect(() => {
-        setEvents(getEvents().sort((a, b) => new Date(b.date) - new Date(a.date)));
+        const auth = sessionStorage.getItem('rakusake_admin_auth');
+        if (auth === 'true') {
+            setIsAuthenticated(true);
+        }
     }, []);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            setEvents(getEvents().sort((a, b) => new Date(b.date) - new Date(a.date)));
+        }
+    }, [isAuthenticated]);
+
+    const handleLogin = (e) => {
+        e.preventDefault();
+        if (password === ADMIN_PASSWORD) {
+            setIsAuthenticated(true);
+            sessionStorage.setItem('rakusake_admin_auth', 'true');
+            setAuthError('');
+        } else {
+            setAuthError('パスワードが違います');
+        }
+    };
+
+    if (!isAuthenticated) {
+        return (
+            <div className="admin-auth">
+                <form onSubmit={handleLogin} className="admin-auth__form">
+                    <h2 className="admin-auth__title">Admin Login</h2>
+                    {authError && <p className="admin-auth__error">{authError}</p>}
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        placeholder="パスワードを入力"
+                        className="admin-auth__input"
+                        autoFocus
+                    />
+                    <button type="submit" className="btn-primary">ログイン</button>
+                </form>
+            </div>
+        );
+    }
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,12 +82,10 @@ const Admin = () => {
                 return;
             }
 
-            // Preview
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result);
 
-                // Resize logic to save space in localStorage
                 const img = new Image();
                 img.src = reader.result;
                 img.onload = () => {
@@ -55,8 +98,7 @@ const Admin = () => {
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-                    // Helper to get base64
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7); // Compress quality 0.7
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
                     setFormData(prev => ({ ...prev, image: dataUrl }));
                 };
             };
@@ -65,28 +107,17 @@ const Admin = () => {
     };
 
     const saveToSource = async (currentEvents) => {
-        console.log('Attempting to save to source...', { isDev: import.meta.env.DEV });
-        // Only works in dev mode
-        if (!import.meta.env.DEV) {
-            console.log('Not in DEV mode, aborting save.');
-            return;
-        }
+        if (!import.meta.env.DEV) return;
 
         try {
-            console.log('Sending POST request to /rakusake/__api/save-events');
             const response = await fetch('/rakusake/__api/save-events', {
                 method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
+                headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ events: currentEvents }),
             });
 
-            console.log('Response status:', response.status);
-
             if (response.ok) {
                 console.log('Auto-saved to seedData.js');
-                // Optional: Show a toast or small indicator
             } else {
                 console.error('Failed to auto-save to source');
             }
@@ -113,9 +144,6 @@ const Admin = () => {
             resetForm();
             const updatedEvents = getEvents().sort((a, b) => new Date(b.date) - new Date(a.date));
             setEvents(updatedEvents);
-
-            // Auto-save if connected
-            // Auto-save to source
             saveToSource(updatedEvents);
         } catch (err) {
             alert('Failed to save event. Image might be too large for browser storage.');
@@ -133,7 +161,6 @@ const Admin = () => {
             image: event.image
         });
         setPreview(event.image);
-        // Scroll to top to see form
         window.scrollTo({ top: 0, behavior: 'smooth' });
     };
 
@@ -167,106 +194,80 @@ const Admin = () => {
         setEditingId(null);
     };
 
-    const formStyle = {
-        display: 'flex',
-        flexDirection: 'column',
-        maxWidth: '600px',
-        margin: '0 auto',
-        gap: '1rem',
-        background: '#fff',
-        padding: '2rem',
-        borderRadius: '16px',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
-    };
-
-    const inputStyle = {
-        padding: '0.8rem',
-        borderRadius: '8px',
-        border: '1px solid #ddd',
-        fontSize: '1rem'
-    };
-
-    const labelStyle = {
-        fontWeight: 'bold',
-        marginBottom: '0.2rem',
-        fontSize: '0.9rem',
-        color: '#555'
-    };
-
     return (
-        <div className="container section-padding" style={{ marginTop: '100px' }}>
+        <div className="container section-padding admin">
             <h2>Event Management</h2>
 
-            <form onSubmit={handleSubmit} style={formStyle}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <form onSubmit={handleSubmit} className="admin__form">
+                <div className="admin__form-header">
                     <h3>{editingId ? 'Edit Event' : 'Add New Event'}</h3>
                     {editingId && (
-                        <button type="button" onClick={resetForm} style={{ background: 'transparent', border: '1px solid #ddd', padding: '5px 10px', borderRadius: '4px', cursor: 'pointer' }}>Cancel</button>
+                        <button type="button" onClick={resetForm} className="admin__cancel-btn">Cancel</button>
                     )}
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label style={labelStyle}>Title</label>
+                <div className="admin__field">
+                    <label className="admin__label">Title</label>
                     <input
                         type="text"
                         name="title"
                         value={formData.title}
                         onChange={handleChange}
-                        style={inputStyle}
+                        className="admin__input"
                         required
                     />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label style={labelStyle}>Date</label>
+                <div className="admin__field">
+                    <label className="admin__label">Date</label>
                     <input
                         type="date"
                         name="date"
                         value={formData.date}
                         onChange={handleChange}
-                        style={inputStyle}
+                        className="admin__input"
                         required
                     />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label style={labelStyle}>Image Upload</label>
+                <div className="admin__field">
+                    <label className="admin__label">Image Upload</label>
                     <input
                         type="file"
                         accept="image/*"
                         onChange={handleImageChange}
-                        style={inputStyle}
+                        className="admin__input"
                     />
                     {preview && (
-                        <div style={{ position: 'relative', display: 'inline-block' }}>
-                            <img src={preview} alt="Preview" style={{ marginTop: '10px', maxHeight: '200px', borderRadius: '8px' }} />
+                        <div className="admin__preview-wrapper">
+                            <img src={preview} alt="Preview" className="admin__preview-image" />
                             {formData.image && (
-                                <div style={{ fontSize: '0.8rem', color: '#888' }}>Image loaded</div>
+                                <div className="admin__preview-status">Image loaded</div>
                             )}
                         </div>
                     )}
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label style={labelStyle}>Summary (For List View)</label>
+                <div className="admin__field">
+                    <label className="admin__label">Summary (For List View)</label>
                     <textarea
                         name="summary"
                         placeholder="Short description for the home page..."
                         value={formData.summary}
                         onChange={handleChange}
-                        style={{ ...inputStyle, minHeight: '60px' }}
+                        className="admin__textarea"
                         required
                     />
                 </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <label style={labelStyle}>Description (For Detail Page - HTML Supported)</label>
+                <div className="admin__field">
+                    <label className="admin__label">Description (For Detail Page - HTML Supported)</label>
                     <textarea
                         name="description"
                         placeholder="Full detailed description... (You can use HTML tags like <br>, <b>, <a href>...)"
                         value={formData.description}
                         onChange={handleChange}
-                        style={{ ...inputStyle, minHeight: '150px', fontFamily: 'monospace' }}
+                        className="admin__textarea admin__textarea--large"
                         required
                     />
                 </div>
@@ -276,54 +277,24 @@ const Admin = () => {
                 </button>
             </form>
 
-            <div style={{ marginTop: '4rem' }}>
+            <div className="admin__list-section">
                 <h3>Current Events List</h3>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
+                <ul className="admin__list">
                     {events.map(event => (
-                        <li key={event.id} style={{
-                            background: '#fff',
-                            padding: '1rem',
-                            marginBottom: '1rem',
-                            borderRadius: '8px',
-                            display: 'flex',
-                            justifyContent: 'space-between',
-                            alignItems: 'center',
-                            boxShadow: '0 2px 5px rgba(0,0,0,0.05)'
-                        }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                        <li key={event.id} className="admin__list-item">
+                            <div className="admin__list-content">
                                 {event.image && (
-                                    <img src={event.image} alt="" style={{ width: '40px', height: '40px', objectFit: 'cover', borderRadius: '4px' }} />
+                                    <img src={event.image} alt="" className="admin__list-thumb" />
                                 )}
                                 <div>
                                     <strong>{event.date}</strong> - {event.title}
                                 </div>
                             </div>
                             <div>
-                                <button
-                                    onClick={() => handleEdit(event)}
-                                    style={{
-                                        background: 'var(--color-primary)',
-                                        color: '#fff',
-                                        border: 'none',
-                                        padding: '5px 10px',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer',
-                                        marginRight: '10px'
-                                    }}
-                                >
+                                <button onClick={() => handleEdit(event)} className="admin__edit-btn">
                                     Edit
                                 </button>
-                                <button
-                                    onClick={() => handleDelete(event.id)}
-                                    style={{
-                                        background: '#ff4757',
-                                        color: '#fff',
-                                        border: 'none',
-                                        padding: '5px 10px',
-                                        borderRadius: '4px',
-                                        cursor: 'pointer'
-                                    }}
-                                >
+                                <button onClick={() => handleDelete(event.id)} className="admin__delete-btn">
                                     Delete
                                 </button>
                             </div>
@@ -331,35 +302,20 @@ const Admin = () => {
                     ))}
                 </ul>
             </div>
-            <div style={{ marginTop: '4rem', paddingTop: '2rem', borderTop: '1px solid #eee' }}>
-                <h3>🛠️ Local CMS Status</h3>
+
+            <div className="admin__status-section">
+                <h3>Local CMS Status</h3>
                 {import.meta.env.DEV ? (
-                    <div style={{
-                        padding: '1rem',
-                        background: '#e8f8f5',
-                        border: '1px solid #2ecc71',
-                        borderRadius: '8px',
-                        color: '#27ae60',
-                        fontWeight: 'bold',
-                        display: 'flex',
-                        alignItems: 'center',
-                        gap: '10px'
-                    }}>
-                        <span>✅ Connected to Local Source! Changes are auto-saved to seedData.js.</span>
+                    <div className="admin__status--connected">
+                        <span>Connected to Local Source! Changes are auto-saved to seedData.js.</span>
                     </div>
                 ) : (
-                    <div style={{
-                        padding: '1rem',
-                        background: '#fff3cd',
-                        border: '1px solid #ffeeba',
-                        borderRadius: '8px',
-                        color: '#856404',
-                        fontWeight: 'bold'
-                    }}>
-                        <span>⚠️ Production Mode: Changes are temporary and will NOT be saved to code.</span>
+                    <div className="admin__status--production">
+                        <span>Production Mode: Changes are temporary and will NOT be saved to code.</span>
                     </div>
                 )}
             </div>
+
             <ConfirmationModal
                 isOpen={showDeleteModal}
                 onClose={cancelDelete}
