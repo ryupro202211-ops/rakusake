@@ -1,0 +1,110 @@
+/* About Section */
+.about {
+    position: relative;
+    overflow: hidden;
+}
+
+.about__blob {
+    position: absolute;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+    filter: blur(30px);
+    opacity: 0.6;
+    z-index: 0;
+}
+
+.about__blob--yellow {
+    top: 10%;
+    right: -5%;
+    width: 300px;
+    height: 300px;
+    background: #ffeaa7;
+    animation: float 8s infinite;
+}
+
+.about__blob--cyan {
+    bottom: 10%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: #81ecec;
+    animation: float 10s infinite reverse;
+}
+
+.about__container {
+    position: relative;
+    z-index: 1;
+}
+
+.about__heading {
+    width: 100%;
+    text-align: center;
+}
+
+.about__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 3rem;
+    align-items: center;
+    position: relative;
+    z-index: 2;
+}
+
+.about__text-box {
+    background: #fff;
+    border-radius: 30px;
+    padding: 3rem;
+    box-shadow: 0 15px 35px rgba(255, 159, 28, 0.1);
+    border: 3px solid #fff;
+    transition: all 0.8s ease-out;
+}
+
+.about__text-box--hidden {
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+.about__text-box--visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.about__text-box--secondary {
+    transition-delay: 0.2s;
+    background: linear-gradient(135deg, #fff 0%, #fffbf0 100%);
+    border: 2px solid var(--color-primary);
+}
+
+.about__title {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-primary);
+}
+
+.about__text {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+    font-size: 1.05rem;
+}
+
+.about__text--bold {
+    margin-bottom: 1.5rem;
+    color: var(--color-text);
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.about__text--muted {
+    margin-bottom: 1rem;
+    color: var(--color-text-muted);
+}
+
+.about__highlight-box {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    text-align: center;
+    margin-top: 2rem;
+    padding: 1rem;
+    background: rgba(46, 196, 182, 0.1);
+    border-radius: 15px;
+}

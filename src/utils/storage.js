@@ -82,6 +82,17 @@ export const deleteEvent = (id) => {
     triggerUpdate();
 };
 
+// Resolve image paths with base URL for deployment
+const resolveImagePaths = (events) => {
+    const baseUrl = import.meta.env.BASE_URL || '/';
+    return events.map(event => {
+        if (event.image && event.image.startsWith('/images/')) {
+            return { ...event, image: baseUrl + event.image.slice(1) };
+        }
+        return event;
+    });
+};
+
 // Seed initial data if empty
 export const seedInitialData = () => {
     try {
@@ -90,7 +101,8 @@ export const seedInitialData = () => {
 
         const events = getEvents();
         if (events.length === 0) {
-            safeSetItem(STORAGE_KEY, JSON.stringify(initialEvents));
+            const resolvedEvents = resolveImagePaths(initialEvents);
+            safeSetItem(STORAGE_KEY, JSON.stringify(resolvedEvents));
             triggerUpdate();
         }
     } catch (e) {

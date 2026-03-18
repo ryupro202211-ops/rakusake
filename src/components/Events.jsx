@@ -1,61 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
+import '../styles/events.css';
 
 const EventCard = ({ id, title, date, description, summary, isPast = false, image }) => (
-    <Link to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
-        <div style={{
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            background: '#fff',
-            borderRadius: '24px',
-            overflow: 'hidden',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.08)',
-            position: 'relative',
-            top: 0
-        }}
-            onMouseEnter={(e) => {
-                e.currentTarget.style.transform = 'translateY(-10px)';
-                e.currentTarget.style.boxShadow = '0 20px 40px rgba(255, 159, 28, 0.2)';
-            }}
-            onMouseLeave={(e) => {
-                e.currentTarget.style.transform = 'translateY(0)';
-                e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)';
-            }}
-        >
+    <Link to={`/events/${id}`} className="event-card-link">
+        <div className="event-card">
             {image && (
-                <div style={{ height: '200px', overflow: 'hidden' }}>
-                    <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
-                        onMouseOver={(e) => e.target.style.transform = 'scale(1.1)'}
-                        onMouseOut={(e) => e.target.style.transform = 'scale(1.0)'}
-                        onError={(e) => e.target.style.display = 'none'} // Hide broken images
+                <div className="event-card__image-wrapper">
+                    <img src={image} alt={title} className="event-card__image"
+                        onError={(e) => e.target.style.display = 'none'}
                     />
                 </div>
             )}
-            <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                <div style={{
-                    display: 'flex',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    marginBottom: '0.8rem'
-                }}>
-                    <span style={{
-                        fontSize: '0.8rem',
-                        fontWeight: 'bold',
-                        color: isPast ? '#a0a0a0' : 'var(--color-primary)',
-                        background: isPast ? '#f0f0f0' : 'rgba(255, 159, 28, 0.15)',
-                        padding: '4px 12px',
-                        borderRadius: '20px',
-                    }}>
+            <div className="event-card__body">
+                <div className="event-card__header">
+                    <span className={`event-card__badge ${isPast ? 'event-card__badge--past' : 'event-card__badge--upcoming'}`}>
                         {isPast ? 'PAST' : 'UPCOMING'}
                     </span>
-                    <span style={{ fontSize: '0.9rem', color: '#888', fontWeight: 'bold' }}>{date}</span>
+                    <span className="event-card__date">{date}</span>
                 </div>
 
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.8rem', lineHeight: 1.4, textAlign: 'left' }}>{title}</h3>
-                <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--color-text-muted)', flexGrow: 1 }}>
+                <h3 className="event-card__title">{title}</h3>
+                <p className="event-card__summary">
                     {summary || (description && description.substring(0, 50) + "...")}
                 </p>
             </div>
@@ -70,15 +37,14 @@ const Events = () => {
     useEffect(() => {
         const fetchEvents = () => {
             const allEvents = getEvents();
-            const today = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
+            const today = new Date().toISOString().split('T')[0];
 
             const upcoming = [];
             const past = [];
 
             allEvents.forEach(event => {
-                if (!event.date) return; // Skip invalid dates
+                if (!event.date) return;
 
-                // Simple string comparison for YYYY-MM-DD works
                 if (event.date >= today) {
                     upcoming.push(event);
                 } else {
@@ -86,7 +52,6 @@ const Events = () => {
                 }
             });
 
-            // Sort: Upcoming (nearest first), Past (newest first)
             upcoming.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
             past.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
 
@@ -95,48 +60,33 @@ const Events = () => {
         };
 
         fetchEvents();
-
-        // Listen for updates from other components (like Admin or seed)
         window.addEventListener('storage-update', fetchEvents);
-
         return () => {
             window.removeEventListener('storage-update', fetchEvents);
         };
-    }, []); // Run once on mount
+    }, []);
 
     return (
-        <section id="events" className="section-padding" style={{ background: '#fcfcfc' }}>
+        <section id="events" className="section-padding events">
             <div className="container">
-                <h2 style={{ width: '100%', textAlign: 'center' }}>EVENTS</h2>
+                <h2 className="events__heading">EVENTS</h2>
 
-                <div style={{ marginBottom: '4rem' }}>
-                    <h3 style={{
-                        textAlign: 'center',
-                        marginBottom: '2rem',
-                        fontSize: '1.5rem',
-                        color: 'var(--color-text-muted)'
-                    }}>
+                <div className="events__section">
+                    <h3 className="events__subheading">
                         Check Upcoming Events!
                     </h3>
                     {upcomingEvents.length > 0 ? (
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                        <div className="events__grid">
                             {upcomingEvents.map(event => (
                                 <EventCard key={event.id} {...event} />
                             ))}
                         </div>
                     ) : (
-                        <div className="glass-panel" style={{
-                            textAlign: 'center',
-                            padding: '3rem',
-                            background: '#fff',
-                            maxWidth: '600px',
-                            margin: '0 auto',
-                            border: '2px dashed #ddd'
-                        }}>
-                            <p style={{ fontSize: '1.2rem', color: 'var(--color-text)', fontWeight: 'bold' }}>
-                                現在、とびきり楽しいイベントを企画中！🚀
+                        <div className="glass-panel events__empty">
+                            <p className="events__empty-title">
+                                現在、とびきり楽しいイベントを企画中！
                             </p>
-                            <p style={{ color: 'var(--color-text-muted)', marginTop: '0.5rem' }}>
+                            <p className="events__empty-sub">
                                 次回の開催をお楽しみに！
                             </p>
                         </div>
@@ -144,15 +94,10 @@ const Events = () => {
                 </div>
 
                 <div>
-                    <h3 style={{
-                        textAlign: 'center',
-                        marginBottom: '2rem',
-                        fontSize: '1.5rem',
-                        color: 'var(--color-text)'
-                    }}>
+                    <h3 className="events__subheading events__subheading--dark">
                         Past Party Archives
                     </h3>
-                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                    <div className="events__grid">
                         {pastEvents.map(event => (
                             <EventCard key={event.id} {...event} isPast={true} />
                         ))}
