@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
 
+const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
+
 const Hero = () => {
     const [latestEvent, setLatestEvent] = useState(null);
 
@@ -9,139 +11,146 @@ const Hero = () => {
         const fetchLatestEvent = () => {
             const allEvents = getEvents();
             const today = new Date().toISOString().split('T')[0];
-
-            // Filter upcoming events
             const upcoming = allEvents
                 .filter(event => event.date >= today)
                 .sort((a, b) => (a.date || '').localeCompare(b.date || ''));
-
-            if (upcoming.length > 0) {
-                setLatestEvent(upcoming[0]);
-            }
+            if (upcoming.length > 0) setLatestEvent(upcoming[0]);
         };
-
         fetchLatestEvent();
         window.addEventListener('storage-update', fetchLatestEvent);
         return () => window.removeEventListener('storage-update', fetchLatestEvent);
     }, []);
 
-    const heroStyle = {
-        height: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        position: 'relative',
-        overflow: 'hidden',
-        backgroundAttachment: 'fixed',
-    };
-
-    // Fallback static image
-    const defaultBgImage = `${import.meta.env.BASE_URL}images/hero_party.png`;
-    const bgImage = latestEvent?.image || defaultBgImage;
-
-    const bgImageStyle = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        height: '100%',
-        backgroundImage: `url(${bgImage})`,
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        zIndex: 0,
-    };
-
-    const overlayStyle = {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        // Darker gradient to hide text in background images and improve readability
-        background: 'linear-gradient(to bottom, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.8) 100%)',
-        zIndex: 1,
-        backdropFilter: 'blur(3px)',
-    };
-
-    const contentStyle = {
-        zIndex: 2,
-        textAlign: 'center',
-        color: '#fff',
-        padding: '0 20px',
-        maxWidth: '800px',
-        width: '100%',
-        textShadow: '0 2px 10px rgba(0,0,0,0.7)',
-    };
-
-    const titleStyle = {
-        fontSize: 'clamp(1.5rem, 4vw, 4rem)', // Smaller min/max for mobile
-        marginBottom: '20px',
-        lineHeight: 1.4, // More breathing room
-        fontFamily: 'var(--font-pop)',
-        fontWeight: '800',
-        wordWrap: 'break-word', // Allow wrapping
-    };
-
-    const subtitleStyle = {
-        fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-        fontWeight: 'bold',
-        marginBottom: '30px',
-        display: 'block',
-        lineHeight: 1.6,
-    };
-
-    const dateBadgeStyle = {
-        display: 'inline-block',
-        background: '#ff4d4d',
-        color: 'white',
-        padding: '5px 15px',
-        borderRadius: '20px',
-        fontWeight: 'bold',
-        marginBottom: '1rem',
-        fontSize: '0.9rem',
-        boxShadow: '0 4px 10px rgba(0,0,0,0.2)',
+    const formatDate = (dateStr) => {
+        if (!dateStr) return '';
+        const d = new Date(dateStr + 'T00:00:00');
+        const days = ['日', '月', '火', '水', '木', '金', '土'];
+        return `${d.getFullYear()}年${d.getMonth() + 1}月${d.getDate()}日(${days[d.getDay()]})`;
     };
 
     return (
-        <section style={heroStyle}>
-            <div style={bgImageStyle}></div>
-            <div style={overlayStyle}></div>
+        <section style={{
+            minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
+            position: 'relative', overflow: 'hidden',
+        }}>
+            {/* Background image */}
+            <div style={{
+                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
+                backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0, filter: 'blur(3px)', transform: 'scale(1.02)',
+            }} />
+            {/* Dark overlay for text readability */}
+            <div style={{
+                position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+                background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 100%)',
+                zIndex: 1,
+            }} />
 
-            <div className="container" style={contentStyle}>
+            <div className="container" style={{ zIndex: 2, textAlign: 'center', color: '#fff', padding: '100px 20px 60px', maxWidth: '900px', width: '100%' }}>
                 <div className="animate-fade-in">
+                    {/* Functional main copy */}
+                    <p style={{
+                        fontSize: 'clamp(0.85rem, 1.8vw, 1.1rem)', letterSpacing: '0.15em',
+                        color: 'var(--color-secondary)', marginBottom: '1rem', fontWeight: 'bold',
+                    }}>
+                        東京で毎月開催 | お酒 × 企画の交流イベント
+                    </p>
+
+                    <div style={{ marginBottom: '1.2rem' }}>
+                        <img
+                            src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
+                            alt="楽SAKEターミナル"
+                            style={{
+                                height: 'clamp(80px, 15vw, 140px)', width: 'auto', borderRadius: '16px',
+                            }}
+                        />
+                    </div>
+
+                    <p className="delay-200 animate-slide-right" style={{
+                        fontSize: 'clamp(1rem, 2vw, 1.3rem)', fontWeight: '500',
+                        marginBottom: '2.5rem', lineHeight: 1.8, opacity: 0.9,
+                    }}>
+                        一人参加OK・20〜30代中心<br />
+                        お酒好きが集まる、ちょっと特別な交流の場
+                    </p>
+                </div>
+
+                {/* Next event card OR LINE registration CTA */}
+                <div className="delay-300 animate-fade-in" style={{ maxWidth: '520px', margin: '0 auto' }}>
                     {latestEvent ? (
-                        <>
-                            <div className="animate-slide-down" style={{ marginBottom: '1rem' }}>
-                                <span style={dateBadgeStyle}>NEXT EVENT: {latestEvent.date}</span>
+                        <div style={{
+                            background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)',
+                            borderRadius: '20px', padding: '2rem', border: '1px solid rgba(255,255,255,0.15)',
+                            textAlign: 'left',
+                        }}>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
+                                <span style={{
+                                    background: '#ff4d4d', color: '#fff', padding: '4px 14px',
+                                    borderRadius: '20px', fontWeight: 'bold', fontSize: '0.8rem',
+                                }}>NEXT EVENT</span>
+                                <span style={{ fontSize: '0.9rem', opacity: 0.8 }}>{formatDate(latestEvent.date)}</span>
                             </div>
-                            <h1 style={titleStyle}>
-                                {latestEvent.title}
-                            </h1>
-                            <span style={subtitleStyle} className="delay-200 animate-slide-right">
-                                {latestEvent.summary}
-                            </span>
-                            <div className="delay-500 animate-fade-in" style={{ marginTop: '2rem' }}>
-                                <Link to={`/events/${latestEvent.id}`} className="btn-primary" style={{ boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-                                    詳細を見る
+                            <h3 style={{ fontSize: '1.3rem', marginBottom: '0.8rem', lineHeight: 1.4 }}>{latestEvent.title}</h3>
+                            {latestEvent.summary && (
+                                <p style={{ fontSize: '0.95rem', opacity: 0.8, marginBottom: '1.2rem', lineHeight: 1.6 }}>{latestEvent.summary}</p>
+                            )}
+                            {latestEvent.venue && (
+                                <p style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '1rem' }}>
+                                    📍 {latestEvent.venue}
+                                    {latestEvent.fee && ` | 💰 ${latestEvent.fee}`}
+                                </p>
+                            )}
+                            {latestEvent.remainingSeats != null && (
+                                <p style={{ fontSize: '0.85rem', color: '#ff6b6b', fontWeight: 'bold', marginBottom: '1rem' }}>
+                                    🔥 残り{latestEvent.remainingSeats}席
+                                </p>
+                            )}
+                            <div style={{ textAlign: 'center' }}>
+                                <Link to={`/events/${latestEvent.id}`} className="btn-primary" style={{ width: '100%', display: 'block', textAlign: 'center', boxSizing: 'border-box' }}>
+                                    次回に申し込む
                                 </Link>
                             </div>
-                        </>
+                        </div>
                     ) : (
-                        <>
-                            <h1 style={titleStyle}>
-                                美味い酒を<br />
-                                片手に語り合おう
-                            </h1>
-                            <span style={subtitleStyle} className="delay-200 animate-slide-right">
-                                みんなで楽しむ、最高の一杯と新しい出会い！
-                            </span>
-                            <div className="delay-500 animate-fade-in" style={{ marginTop: '2rem' }}>
-                                <a href="#events" className="btn-primary" style={{ boxShadow: '0 10px 25px rgba(0,0,0,0.2)' }}>
-                                    Check Events!
-                                </a>
-                            </div>
-                        </>
+                        <div style={{
+                            background: 'rgba(255,255,255,0.08)', backdropFilter: 'blur(20px)',
+                            borderRadius: '20px', padding: '2rem', border: '1px solid rgba(255,255,255,0.12)',
+                            textAlign: 'center',
+                        }}>
+                            <p style={{ fontSize: '1.1rem', marginBottom: '0.5rem', fontWeight: 'bold' }}>
+                                次回イベントは準備中です
+                            </p>
+                            <p style={{ fontSize: '0.9rem', opacity: 0.7, marginBottom: '1.5rem' }}>
+                                LINE登録で最速告知を受け取れます
+                            </p>
+                            <a
+                                href={LINE_URL}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                style={{
+                                    display: 'inline-flex', alignItems: 'center', gap: '8px',
+                                    padding: '14px 32px', background: '#06C755', color: '#fff',
+                                    borderRadius: '50px', fontWeight: 'bold', fontSize: '1rem',
+                                    textDecoration: 'none', transition: 'all 0.3s',
+                                    boxShadow: '0 4px 15px rgba(6,199,85,0.3)',
+                                }}
+                                onMouseEnter={e => e.target.style.transform = 'translateY(-2px)'}
+                                onMouseLeave={e => e.target.style.transform = 'translateY(0)'}
+                            >
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                                    <path d="M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"/>
+                                </svg>
+                                LINE登録で最速告知
+                            </a>
+                        </div>
                     )}
+                </div>
+
+                {/* Scroll down indicator */}
+                <div className="delay-500 animate-fade-in" style={{ marginTop: '3rem', opacity: 0.5 }}>
+                    <a href="#about" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
+                        ▼ SCROLL
+                    </a>
                 </div>
             </div>
         </section>

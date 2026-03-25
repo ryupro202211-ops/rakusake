@@ -47,7 +47,7 @@ const Atmosphere = () => {
     return (
         <section id="atmosphere" style={sectionStyle} ref={ref}>
             <div className="container" style={containerStyle}>
-                <h2 style={titleStyle}>Our Atmosphere</h2>
+                <h2 style={titleStyle}>イベントの雰囲気</h2>
                 <h3 style={{ textAlign: 'center', marginBottom: '3rem', color: 'var(--color-text-muted)', marginTop: '-2rem' }}>
                     過去の開催の様子
                 </h3>

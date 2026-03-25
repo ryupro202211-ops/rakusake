@@ -17,8 +17,8 @@
     --color-glass-border: rgba(255, 255, 255, 0.5);
     --shadow-card: 0 10px 20px rgba(0, 0, 0, 0.08);
 
-    --font-main: 'Helvetica Neue', 'Arial', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-    --font-pop: 'Arial Rounded MT Bold', 'Varela Round', sans-serif;
+    --font-main: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Rounded Mplus 1c', sans-serif;
+    --font-pop: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Rounded Mplus 1c', sans-serif;
     /* For headers */
 }
 

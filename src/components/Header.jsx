@@ -1,78 +1,141 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import '../styles/App.css';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
-  const isHome = location.pathname === '/';
+  const isHome = location.pathname === '/' || location.pathname === '';
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 50);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Force header background on non-home pages
-  const showBackground = scrolled || !isHome;
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location]);
 
-  const headerStyle = {
-    position: 'fixed',
-    top: 0,
-    left: 0,
-    width: '100%',
-    zIndex: 1000,
-    padding: '20px 0',
-    transition: 'all 0.3s ease',
-    backgroundColor: showBackground ? 'rgba(255, 255, 255, 0.9)' : 'transparent',
-    backdropFilter: showBackground ? 'blur(10px)' : 'none',
-    boxShadow: showBackground ? '0 4px 20px rgba(0,0,0,0.05)' : 'none',
-  };
-
-  const navStyle = {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  };
-
-  const logoStyle = {
-    fontSize: '1.6rem',
-    fontWeight: 'bold',
-    color: showBackground ? 'var(--color-primary)' : '#fff',
-    letterSpacing: '1px',
-    fontFamily: 'var(--font-pop)',
-    transition: 'color 0.3s',
-  };
-
-  const linkStyle = {
-    marginLeft: '30px',
-    fontSize: '0.95rem',
-    fontWeight: 'bold',
-    color: showBackground ? 'var(--color-text)' : '#fff',
-    opacity: 1,
-    transition: 'color 0.3s',
-    cursor: 'pointer'
-  };
+  const showBg = scrolled || !isHome || menuOpen;
 
   return (
-    <header style={headerStyle}>
-      <div className="container" style={navStyle}>
-        <Link to="/" style={logoStyle}>楽SAKEターミナル</Link>
-        <nav>
+    <header style={{
+      position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
+      padding: '12px 0',
+      transition: 'all 0.3s ease',
+      backgroundColor: showBg ? 'rgba(255,255,255,0.95)' : 'transparent',
+      backdropFilter: showBg ? 'blur(10px)' : 'none',
+      boxShadow: showBg ? '0 2px 20px rgba(0,0,0,0.06)' : 'none',
+    }}>
+      <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+          <img
+            src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
+            alt="楽SAKEターミナル"
+            style={{ height: '40px', width: 'auto', borderRadius: '6px', transition: 'all 0.3s' }}
+          />
+        </Link>
+
+        {/* Hamburger button (mobile) */}
+        <button
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="メニュー"
+          style={{
+            display: 'none', background: 'none', border: 'none', cursor: 'pointer',
+            flexDirection: 'column', gap: '5px', padding: '8px', zIndex: 1001,
+          }}
+          className="hamburger-btn"
+        >
+          {[0, 1, 2].map(i => (
+            <span key={i} style={{
+              display: 'block', width: '24px', height: '2px',
+              background: showBg ? 'var(--color-text)' : '#fff',
+              transition: 'all 0.3s',
+              transform: menuOpen
+                ? i === 0 ? 'rotate(45deg) translate(5px, 5px)' : i === 2 ? 'rotate(-45deg) translate(5px, -5px)' : 'scaleX(0)'
+                : 'none',
+            }} />
+          ))}
+        </button>
+
+        {/* Nav links */}
+        <nav className="nav-links" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
           {isHome ? (
             <>
-              <a href="#about" style={linkStyle}>About</a>
-              <a href="#events" style={linkStyle}>Events</a>
+              <NavLink href="#about" showBg={showBg} onClick={() => setMenuOpen(false)}>コンセプト</NavLink>
+              <NavLink href="#events" showBg={showBg} onClick={() => setMenuOpen(false)}>イベント一覧</NavLink>
+              <NavLink href="#first-timer" showBg={showBg} onClick={() => setMenuOpen(false)}>初めての方へ</NavLink>
             </>
           ) : (
-            <Link to="/" style={linkStyle}>Home</Link>
+            <Link to="/" style={{ ...navLinkStyle(showBg), textDecoration: 'none' }}>ホーム</Link>
           )}
+          <a
+            href="#events"
+            onClick={() => setMenuOpen(false)}
+            style={{
+              display: 'inline-block', padding: '10px 24px',
+              background: 'var(--color-primary)', color: '#fff',
+              borderRadius: '50px', fontWeight: 'bold', fontSize: '0.9rem',
+              textDecoration: 'none', marginLeft: '8px',
+              transition: 'all 0.3s',
+              boxShadow: '0 4px 12px rgba(255,159,28,0.3)',
+            }}
+            onMouseEnter={e => { e.target.style.background = 'var(--color-accent)'; e.target.style.transform = 'translateY(-2px)'; }}
+            onMouseLeave={e => { e.target.style.background = 'var(--color-primary)'; e.target.style.transform = 'translateY(0)'; }}
+          >
+            次回に申し込む
+          </a>
         </nav>
       </div>
+
+      {/* Mobile menu overlay */}
+      {menuOpen && (
+        <div style={{
+          position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0,
+          background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
+          display: 'flex', flexDirection: 'column', alignItems: 'center',
+          justifyContent: 'center', gap: '2rem', zIndex: 999,
+        }} className="mobile-menu-overlay">
+          {isHome ? (
+            <>
+              <a href="#about" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>コンセプト</a>
+              <a href="#events" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>イベント一覧</a>
+              <a href="#first-timer" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>初めての方へ</a>
+            </>
+          ) : (
+            <Link to="/" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>ホーム</Link>
+          )}
+          <a href="#events" onClick={() => setMenuOpen(false)} className="btn-primary" style={{ fontSize: '1.1rem', padding: '14px 40px' }}>
+            次回に申し込む
+          </a>
+        </div>
+      )}
+
+      <style>{`
+        @media (max-width: 768px) {
+          .hamburger-btn { display: flex !important; }
+          .nav-links { display: none !important; }
+        }
+      `}</style>
     </header>
   );
+};
+
+const navLinkStyle = (showBg) => ({
+  fontSize: '0.9rem', fontWeight: 'bold',
+  color: showBg ? 'var(--color-text)' : '#fff',
+  opacity: 1, transition: 'color 0.3s', cursor: 'pointer',
+  padding: '8px 12px',
+});
+
+const NavLink = ({ href, showBg, children, onClick }) => (
+  <a href={href} style={navLinkStyle(showBg)} onClick={onClick}>{children}</a>
+);
+
+const mobileNavStyle = {
+  fontSize: '1.3rem', fontWeight: 'bold', color: 'var(--color-text)',
+  textDecoration: 'none', padding: '0.5rem 1rem',
 };
 
 export default Header;

@@ -52,7 +52,7 @@ const ImageSlider = () => {
                 fontFamily: 'var(--font-pop)',
                 fontSize: '1.5rem'
             }}>
-                Party Vibes 📸
+                イベントの様子
             </h3>
 
             <div style={trackStyle}>
