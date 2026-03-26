@@ -79,8 +79,8 @@ const Hero = () => {
                 <div className="delay-300 animate-fade-in" style={{ maxWidth: '520px', margin: '0 auto' }}>
                     {latestEvent ? (
                         <div style={{
-                            background: 'rgba(255,255,255,0.1)', backdropFilter: 'blur(20px)',
-                            borderRadius: '20px', padding: '2rem', border: '1px solid rgba(255,255,255,0.15)',
+                            background: 'rgba(0,0,0,0.6)', backdropFilter: 'blur(20px)',
+                            borderRadius: '20px', padding: '2rem', border: '1px solid rgba(255,255,255,0.1)',
                             textAlign: 'left',
                         }}>
                             <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '1rem' }}>
@@ -88,9 +88,9 @@ const Hero = () => {
                                     background: '#ff4d4d', color: '#fff', padding: '4px 14px',
                                     borderRadius: '20px', fontWeight: 'bold', fontSize: '0.8rem',
                                 }}>NEXT EVENT</span>
-                                <span style={{ fontSize: '0.9rem', opacity: 0.8 }}>{formatDate(latestEvent.date)}</span>
+                                <span style={{ fontSize: '0.9rem', color: '#fff', opacity: 0.9 }}>{formatDate(latestEvent.date)}</span>
                             </div>
-                            <h3 style={{ fontSize: '1.3rem', marginBottom: '0.8rem', lineHeight: 1.4 }}>{latestEvent.title}</h3>
+                            <h3 style={{ fontSize: '1.3rem', marginBottom: '0.8rem', lineHeight: 1.4, color: '#fff' }}>{latestEvent.title}</h3>
                             {latestEvent.summary && (
                                 <p style={{ fontSize: '0.95rem', opacity: 0.8, marginBottom: '1.2rem', lineHeight: 1.6 }}>{latestEvent.summary}</p>
                             )}
