@@ -80,6 +80,9 @@ const Footer = () => {
                     <p style={{ fontSize: '0.8rem', color: '#888' }}>
                         &copy; {new Date().getFullYear()} 楽SAKEターミナル All rights reserved.
                     </p>
+                    <p style={{ fontSize: '0.7rem', color: '#bbb', marginTop: '0.5rem' }}>
+                        運営：<a href="https://ryupro202211-ops.github.io/ryupro/" target="_blank" rel="noopener noreferrer" style={{ color: '#bbb', textDecoration: 'none' }}>合同会社ryupro</a>
+                    </p>
                 </div>
             </div>
         </footer>
