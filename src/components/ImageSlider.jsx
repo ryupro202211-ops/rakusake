@@ -39,7 +39,7 @@ const ImageSlider = () => {
         borderRadius: '16px',
         boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
         transition: 'transform 0.3s',
-        filter: 'blur(1px)',
+        filter: 'blur(1.5px)',
     };
 
     return (
