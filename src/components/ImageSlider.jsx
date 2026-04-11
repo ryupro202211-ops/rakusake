@@ -43,7 +43,7 @@ const ImageSlider = () => {
     };
 
     return (
-        <section style={sliderContainerStyle}>
+        <section id="event-photos" style={sliderContainerStyle}>
             {/* Title similar to other sections */}
             <h3 style={{
                 textAlign: 'center',

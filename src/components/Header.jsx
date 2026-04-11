@@ -65,6 +65,7 @@ const Header = () => {
             <>
               <NavLink href="#about" showBg={showBg} onClick={() => setMenuOpen(false)}>コンセプト</NavLink>
               <NavLink href="#events" showBg={showBg} onClick={() => setMenuOpen(false)}>イベント一覧</NavLink>
+              <NavLink href="#event-photos" showBg={showBg} onClick={() => setMenuOpen(false)}>イベントの様子</NavLink>
               <NavLink href="#first-timer" showBg={showBg} onClick={() => setMenuOpen(false)}>初めての方へ</NavLink>
             </>
           ) : (
@@ -101,6 +102,7 @@ const Header = () => {
             <>
               <a href="#about" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>コンセプト</a>
               <a href="#events" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>イベント一覧</a>
+              <a href="#event-photos" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>イベントの様子</a>
               <a href="#first-timer" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>初めての方へ</a>
             </>
           ) : (
