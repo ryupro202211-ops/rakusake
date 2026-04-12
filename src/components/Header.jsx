@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
@@ -17,11 +18,16 @@ const Header = () => {
     setMenuOpen(false);
   }, [location]);
 
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [menuOpen]);
+
   const showBg = scrolled || !isHome || menuOpen;
 
   return (
     <header style={{
-      position: 'fixed', top: 0, left: 0, width: '100%', zIndex: 1000,
+      position: 'fixed', top: 0, left: 0, width: '100%', zIndex: menuOpen ? 10001 : 1000,
       padding: '12px 0',
       transition: 'all 0.3s ease',
       backgroundColor: showBg ? 'rgba(255,255,255,0.95)' : 'transparent',
@@ -29,7 +35,7 @@ const Header = () => {
       boxShadow: showBg ? '0 2px 20px rgba(0,0,0,0.06)' : 'none',
     }}>
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-        <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           <img
             src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
             alt="楽SAKEターミナル"
@@ -43,7 +49,7 @@ const Header = () => {
           aria-label="メニュー"
           style={{
             display: 'none', background: 'none', border: 'none', cursor: 'pointer',
-            flexDirection: 'column', gap: '5px', padding: '8px', zIndex: 1001,
+            flexDirection: 'column', gap: '5px', padding: '8px', zIndex: 100000, position: 'relative',
           }}
           className="hamburger-btn"
         >
@@ -85,19 +91,29 @@ const Header = () => {
             onMouseEnter={e => { e.target.style.background = 'var(--color-accent)'; e.target.style.transform = 'translateY(-2px)'; }}
             onMouseLeave={e => { e.target.style.background = 'var(--color-primary)'; e.target.style.transform = 'translateY(0)'; }}
           >
-            次回に申し込む
+            申し込む
           </a>
         </nav>
       </div>
 
-      {/* Mobile menu overlay */}
-      {menuOpen && (
+      {/* Mobile menu overlay - rendered via portal to body */}
+      {menuOpen && createPortal(
         <div style={{
-          position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0,
-          background: 'rgba(255,255,255,0.98)', backdropFilter: 'blur(20px)',
+          position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+          background: '#ffffff',
           display: 'flex', flexDirection: 'column', alignItems: 'center',
-          justifyContent: 'center', gap: '2rem', zIndex: 999,
+          justifyContent: 'center', gap: '2rem', zIndex: 99999,
         }} className="mobile-menu-overlay">
+          <button
+            onClick={() => setMenuOpen(false)}
+            aria-label="メニューを閉じる"
+            style={{
+              position: 'absolute', top: '12px', right: '36px',
+              background: 'none', border: 'none', cursor: 'pointer',
+              fontSize: '2rem', color: 'var(--color-text)', lineHeight: 1,
+              padding: '8px',
+            }}
+          >✕</button>
           {isHome ? (
             <>
               <a href="#about" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>コンセプト</a>
@@ -109,9 +125,10 @@ const Header = () => {
             <Link to="/" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>ホーム</Link>
           )}
           <a href="#events" onClick={() => setMenuOpen(false)} className="btn-primary" style={{ fontSize: '1.1rem', padding: '14px 40px' }}>
-            次回に申し込む
+            申し込む
           </a>
-        </div>
+        </div>,
+        document.body
       )}
 
       <style>{`

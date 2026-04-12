@@ -107,7 +107,7 @@ const Hero = () => {
                             )}
                             <div style={{ textAlign: 'center' }}>
                                 <Link to={`/events/${latestEvent.id}`} className="btn-primary" style={{ width: '100%', display: 'block', textAlign: 'center', boxSizing: 'border-box' }}>
-                                    次回に申し込む
+                                    申し込む
                                 </Link>
                             </div>
                         </div>

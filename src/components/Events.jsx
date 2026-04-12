@@ -17,7 +17,7 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
         >
             {image && (
                 <div style={{ height: '200px', overflow: 'hidden' }}>
-                    <img src={image} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
+                    <img src={image.startsWith('data:') ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
                         onMouseOver={e => e.target.style.transform = 'scale(1.1)'}
                         onMouseOut={e => e.target.style.transform = 'scale(1.0)'}
                         onError={e => e.target.style.display = 'none'}
@@ -53,6 +53,7 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
 const Events = () => {
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
+    const [showAllPast, setShowAllPast] = useState(false);
 
     useEffect(() => {
         const fetchEvents = () => {
@@ -88,9 +89,6 @@ const Events = () => {
                         <>
                             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                                 {upcomingEvents.map(event => <EventCard key={event.id} {...event} />)}
-                            </div>
-                            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
-                                <a href="#events" className="btn-primary">次回に申し込む</a>
                             </div>
                         </>
                     ) : (
@@ -133,8 +131,25 @@ const Events = () => {
                             過去のイベント
                         </h3>
                         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-                            {pastEvents.map(event => <EventCard key={event.id} {...event} isPast={true} />)}
+                            {(showAllPast ? pastEvents : pastEvents.slice(0, 3)).map(event => <EventCard key={event.id} {...event} isPast={true} />)}
                         </div>
+                        {pastEvents.length > 3 && !showAllPast && (
+                            <div style={{ textAlign: 'center', marginTop: '2rem' }}>
+                                <button
+                                    onClick={() => setShowAllPast(true)}
+                                    style={{
+                                        padding: '12px 32px', background: 'transparent',
+                                        border: '2px solid var(--color-primary)', color: 'var(--color-primary)',
+                                        borderRadius: '50px', fontWeight: 'bold', fontSize: '0.95rem',
+                                        cursor: 'pointer', transition: 'all 0.3s',
+                                    }}
+                                    onMouseEnter={e => { e.target.style.background = 'var(--color-primary)'; e.target.style.color = '#fff'; }}
+                                    onMouseLeave={e => { e.target.style.background = 'transparent'; e.target.style.color = 'var(--color-primary)'; }}
+                                >
+                                    過去のイベントをもっと見る（残り{pastEvents.length - 3}件）
+                                </button>
+                            </div>
+                        )}
                     </div>
                 )}
             </div>
