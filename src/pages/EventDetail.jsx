@@ -10,6 +10,7 @@ const EventDetail = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        window.scrollTo(0, 0);
         const fetchedEvent = getEventById(id);
         if (fetchedEvent) {
             setEvent(fetchedEvent);
@@ -33,13 +34,14 @@ const EventDetail = () => {
         <div style={{ paddingTop: '80px', minHeight: '80vh' }}>
             {/* Hero-like Header */}
             <div style={{
-                height: '40vh',
+                minHeight: '50vh',
                 position: 'relative',
                 background: event.image ? `url(${event.image})` : 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 display: 'flex',
-                alignItems: 'end'
+                alignItems: 'end',
+                paddingTop: '2rem'
             }}>
                 <div style={{
                     position: 'absolute',
@@ -58,7 +60,7 @@ const EventDetail = () => {
                     }}>
                         {event.date}
                     </span>
-                    <h1 style={{ color: '#fff', fontSize: '3rem', marginTop: '1rem', textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>{event.title}</h1>
+                    <h1 style={{ color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 3rem)', marginTop: '1rem', textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>{event.title}</h1>
                 </div>
             </div>
 
