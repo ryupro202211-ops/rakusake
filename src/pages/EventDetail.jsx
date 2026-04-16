@@ -36,7 +36,7 @@ const EventDetail = () => {
             <div style={{
                 minHeight: '50vh',
                 position: 'relative',
-                background: event.image ? `url(${event.image})` : 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
+                background: event.image ? `url(${event.image.startsWith('data:') ? event.image : `${import.meta.env.BASE_URL}${event.image.replace(/^\//, '')}`})` : 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
                 backgroundSize: 'cover',
                 backgroundPosition: 'center',
                 display: 'flex',
