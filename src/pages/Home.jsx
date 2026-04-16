@@ -14,6 +14,19 @@ const Home = () => {
         seedInitialData();
     }, []);
 
+    useEffect(() => {
+        const hash = window.location.hash;
+        if (hash) {
+            const timer = setTimeout(() => {
+                const el = document.querySelector(hash);
+                if (el) {
+                    el.scrollIntoView({ behavior: 'smooth' });
+                }
+            }, 500);
+            return () => clearTimeout(timer);
+        }
+    }, []);
+
     return (
         <>
             <Hero />
