@@ -402,7 +402,8 @@
     <ul class="quiz-options" id="quizOptions"></ul>
     <div class="quiz-hint" id="quizHint"></div>
     <div class="quiz-actions host-only">
-      <button class="primary" id="quizRevealBtn">答えを表示</button>
+      <button class="secondary" id="quizOptionsBtn">選択肢を表示</button>
+      <button class="primary" id="quizRevealBtn">参加者に公開</button>
       <button class="secondary" id="quizNextBtn">別の問題</button>
       <button class="secondary" id="quizCloseBtn">閉じる</button>
     </div>
@@ -780,9 +781,13 @@ function startApp() {
     const optsEl = document.getElementById("quizOptions");
     const numLabels = ["①", "②", "③", "④"];
     if (VIEW_MODE) {
-      // 参加者側:選択肢は非表示。答え公開後は正解のみハイライトで表示
-      if (state.quiz.showAnswer) {
-        optsEl.innerHTML = '<li class="quiz-option correct"><span class="quiz-option-num">' + numLabels[q.answer] + '</span>' + q.options[q.answer] + '</li>';
+      // 参加者側:showOptions が true なら全選択肢を表示(正解は showAnswer=true の時だけハイライト)
+      const shouldShowOptions = state.quiz.showOptions || state.quiz.showAnswer;
+      if (shouldShowOptions) {
+        optsEl.innerHTML = q.options.map((opt, i) => {
+          const isCorrect = state.quiz.showAnswer && i === q.answer;
+          return '<li class="quiz-option' + (isCorrect ? ' correct' : '') + '"><span class="quiz-option-num">' + numLabels[i] + '</span>' + opt + '</li>';
+        }).join('');
       } else {
         optsEl.innerHTML = '';
       }
@@ -803,6 +808,8 @@ function startApp() {
       hintEl.classList.remove("show");
       hintEl.textContent = "";
     }
+    const optionsBtn = document.getElementById("quizOptionsBtn");
+    if (optionsBtn) optionsBtn.textContent = state.quiz.showOptions ? "選択肢を隠す" : "選択肢を表示";
     const revealBtn = document.getElementById("quizRevealBtn");
     if (revealBtn) revealBtn.textContent = state.quiz.showAnswer ? "参加者から隠す" : "参加者に公開";
     modal.classList.add("open");
@@ -821,13 +828,19 @@ function startApp() {
     }
     const idx = candidates[Math.floor(Math.random() * candidates.length)];
     state.usedQuizzes.add(idx);
-    state.quiz = { index: idx, showAnswer: false };
+    state.quiz = { index: idx, showAnswer: false, showOptions: false };
     renderQuiz();
     syncToFirebase();
   }
   function toggleAnswer() {
     if (VIEW_MODE || !state.quiz) return;
     state.quiz.showAnswer = !state.quiz.showAnswer;
+    renderQuiz();
+    syncToFirebase();
+  }
+  function toggleOptions() {
+    if (VIEW_MODE || !state.quiz) return;
+    state.quiz.showOptions = !state.quiz.showOptions;
     renderQuiz();
     syncToFirebase();
   }
@@ -1010,6 +1023,7 @@ function startApp() {
     document.getElementById("copyUrlBtn").addEventListener("click", copyUrl);
     document.getElementById("qrModal").addEventListener("click", (e) => { if (e.target.id === "qrModal") hideQR(); });
     document.getElementById("quizBtn").addEventListener("click", showQuiz);
+    document.getElementById("quizOptionsBtn").addEventListener("click", toggleOptions);
     document.getElementById("quizRevealBtn").addEventListener("click", toggleAnswer);
     document.getElementById("quizNextBtn").addEventListener("click", nextQuestion);
     document.getElementById("quizCloseBtn").addEventListener("click", closeQuiz);
