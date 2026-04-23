@@ -86,6 +86,114 @@
   .btn-reset { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.25); border-radius: 12px; font-family: inherit; font-weight: 500; font-size: 14px; padding: 0 28px; cursor: pointer; transition: all 0.2s; }
   .btn-reset:hover { background: rgba(245, 242, 234, 0.08); }
 
+  /* BINGO! ボタン */
+  .btn-bingo {
+    display: block;
+    width: 100%;
+    margin-bottom: 32px;
+    background: #fbbf24;
+    color: #0f0e0c;
+    border: none;
+    border-radius: 12px;
+    font-family: "Unbounded", sans-serif;
+    font-weight: 900;
+    font-size: 20px;
+    letter-spacing: 0.2em;
+    padding: 18px;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 24px rgba(251, 191, 36, 0.35);
+  }
+  .btn-bingo:hover { background: #fcd34d; transform: translateY(-1px); box-shadow: 0 0 32px rgba(251, 191, 36, 0.55); }
+  .btn-bingo:active { transform: translateY(0); }
+
+  /* 当選オーバーレイ */
+  .bingo-overlay {
+    position: fixed; inset: 0; z-index: 300;
+    display: none;
+    align-items: center; justify-content: center;
+    background: rgba(15, 14, 12, 0.88);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .bingo-overlay.open { display: flex; }
+  .bingo-overlay::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at center, rgba(251, 191, 36, 0.15), transparent 60%);
+    animation: bingo-pulse 2s ease-in-out infinite;
+  }
+  @keyframes bingo-pulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+  .bingo-text {
+    display: flex;
+    gap: clamp(10px, 2vw, 24px);
+    z-index: 2;
+    position: relative;
+  }
+  .bingo-text span {
+    font-family: "Unbounded", sans-serif;
+    font-weight: 900;
+    font-size: clamp(60px, 18vw, 240px);
+    line-height: 1;
+    text-shadow: 0 0 60px rgba(255, 255, 255, 0.3);
+    animation: bingo-letter 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+    display: inline-block;
+  }
+  .bingo-text span:nth-child(1) { animation-delay: 0s; color: #3b82f6; }
+  .bingo-text span:nth-child(2) { animation-delay: 0.12s; color: #ef4444; }
+  .bingo-text span:nth-child(3) { animation-delay: 0.24s; color: #22c55e; }
+  .bingo-text span:nth-child(4) { animation-delay: 0.36s; color: #eab308; }
+  .bingo-text span:nth-child(5) { animation-delay: 0.48s; color: #a855f7; }
+  .bingo-text span:nth-child(6) { animation-delay: 0.60s; color: #fbbf24; }
+  @keyframes bingo-letter {
+    0% { opacity: 0; transform: translateY(-120px) scale(0.3) rotate(-15deg); }
+    60% { opacity: 1; transform: translateY(12px) scale(1.2) rotate(6deg); }
+    100% { opacity: 1; transform: translateY(0) scale(1) rotate(0); }
+  }
+  .bingo-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 12px;
+    color: rgba(245, 242, 234, 0.5);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    z-index: 2;
+    animation: bingo-hint-fade 2s ease-in-out 1.5s both;
+  }
+  @keyframes bingo-hint-fade {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  /* 紙吹雪 */
+  .confetti-container {
+    position: absolute; inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .confetti {
+    position: absolute;
+    top: -30px;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall linear infinite;
+    will-change: transform;
+  }
+  .confetti.sq { border-radius: 1px; }
+  .confetti.rd { border-radius: 50%; }
+  .confetti.rc { width: 14px; height: 6px; border-radius: 2px; }
+  @keyframes confetti-fall {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.6; }
+  }
+
   .section-label { font-size: 11px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
   .ranges { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 32px; }
   .range { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 12px; padding: 16px 8px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; }
@@ -250,6 +358,8 @@
     <button class="btn-reset" id="resetBtn">リセット</button>
   </div>
 
+  <button class="btn-bingo host-only" id="bingoBtn">B I N G O !</button>
+
   <div>
     <div class="section-label" id="rangesLabel">出題範囲 — タップで切り替え</div>
     <div class="ranges" id="ranges"></div>
@@ -297,6 +407,15 @@
       <button class="secondary" id="quizCloseBtn">閉じる</button>
     </div>
   </div>
+</div>
+
+<!-- BINGO! 当選オーバーレイ -->
+<div class="bingo-overlay" id="bingoOverlay">
+  <div class="confetti-container" id="confettiContainer"></div>
+  <div class="bingo-text">
+    <span>B</span><span>I</span><span>N</span><span>G</span><span>O</span><span>!</span>
+  </div>
+  <div class="bingo-hint host-only">画面をタップして閉じる</div>
 </div>
 
 <script type="module">
@@ -423,7 +542,8 @@ function startApp() {
     latest: null,
     sound: false,
     quiz: null,
-    usedQuizzes: new Set()
+    usedQuizzes: new Set(),
+    celebration: false
   };
   let gameRef = null;
 
@@ -471,9 +591,10 @@ function startApp() {
             state.latest = (typeof data.latest === "number") ? data.latest : null;
             state.quiz = data.quiz || null;
             state.usedQuizzes = new Set(data.usedQuizzes || []);
+            state.celebration = !!data.celebration;
           } else {
             state.called = new Set(); state.history = []; state.latest = null;
-            state.quiz = null;
+            state.quiz = null; state.celebration = false;
           }
           renderAll();
         }, (err) => { showStatus("error", "同期エラー: " + err.message); });
@@ -488,6 +609,7 @@ function startApp() {
             state.latest = (typeof data.latest === "number") ? data.latest : null;
             state.quiz = data.quiz || null;
             state.usedQuizzes = new Set(data.usedQuizzes || []);
+            state.celebration = !!data.celebration;
             // 安全装置:全範囲OFFなら全ONに戻す
             const anyEnabled = Object.values(state.enabled).some(Boolean);
             if (!anyEnabled) {
@@ -517,6 +639,7 @@ function startApp() {
       latest: state.latest,
       quiz: state.quiz,
       usedQuizzes: Array.from(state.usedQuizzes),
+      celebration: state.celebration,
       updatedAt: Date.now()
     }).catch(err => {
       console.error("Sync error:", err);
@@ -640,7 +763,7 @@ function startApp() {
     }).join("");
   }
   function renderAll() {
-    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory(); renderQuiz();
+    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory(); renderQuiz(); renderCelebration();
     const drawBtn = document.getElementById("drawBtn");
     if (drawBtn) drawBtn.disabled = available().length === 0;
   }
@@ -657,21 +780,23 @@ function startApp() {
     const optsEl = document.getElementById("quizOptions");
     const numLabels = ["①", "②", "③", "④"];
     if (VIEW_MODE) {
-      // 参加者側:選択肢は非表示。答え表示後は正解のみハイライトで表示
+      // 参加者側:選択肢は非表示。答え公開後は正解のみハイライトで表示
       if (state.quiz.showAnswer) {
         optsEl.innerHTML = '<li class="quiz-option correct"><span class="quiz-option-num">' + numLabels[q.answer] + '</span>' + q.options[q.answer] + '</li>';
       } else {
         optsEl.innerHTML = '';
       }
     } else {
-      // ホスト側:常に全選択肢を表示
+      // ホスト側:常に全選択肢を表示、正解は最初からハイライト
       optsEl.innerHTML = q.options.map((opt, i) => {
-        const isCorrect = state.quiz.showAnswer && i === q.answer;
+        const isCorrect = i === q.answer;
         return '<li class="quiz-option' + (isCorrect ? ' correct' : '') + '"><span class="quiz-option-num">' + numLabels[i] + '</span>' + opt + '</li>';
       }).join('');
     }
     const hintEl = document.getElementById("quizHint");
-    if (state.quiz.showAnswer && q.hint) {
+    // ホストは常にヒント表示、参加者は答え公開後のみ
+    const showHint = !VIEW_MODE || state.quiz.showAnswer;
+    if (showHint && q.hint) {
       hintEl.textContent = "💡 " + q.hint;
       hintEl.classList.add("show");
     } else {
@@ -679,7 +804,7 @@ function startApp() {
       hintEl.textContent = "";
     }
     const revealBtn = document.getElementById("quizRevealBtn");
-    if (revealBtn) revealBtn.textContent = state.quiz.showAnswer ? "答えを隠す" : "答えを表示";
+    if (revealBtn) revealBtn.textContent = state.quiz.showAnswer ? "参加者から隠す" : "参加者に公開";
     modal.classList.add("open");
   }
 
@@ -710,6 +835,61 @@ function startApp() {
     if (VIEW_MODE) return;
     state.quiz = null;
     renderQuiz();
+    syncToFirebase();
+  }
+
+  // 当選演出(BINGO!)
+  let confettiCreated = false;
+  function createConfetti() {
+    const container = document.getElementById("confettiContainer");
+    if (!container) return;
+    container.innerHTML = "";
+    const colors = ["#d97706", "#ef4444", "#22c55e", "#eab308", "#a855f7", "#3b82f6", "#ec4899", "#fbbf24"];
+    const shapes = ["sq", "rd", "rc"];
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement("div");
+      c.className = "confetti " + shapes[Math.floor(Math.random() * shapes.length)];
+      c.style.left = (Math.random() * 100) + "%";
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDelay = (Math.random() * 3) + "s";
+      c.style.animationDuration = (2.5 + Math.random() * 2) + "s";
+      container.appendChild(c);
+    }
+    confettiCreated = true;
+  }
+
+  function renderCelebration() {
+    const overlay = document.getElementById("bingoOverlay");
+    if (!overlay) return;
+    if (state.celebration) {
+      if (!overlay.classList.contains("open")) {
+        createConfetti();
+        // Re-trigger letter animation by cloning the text element
+        const textEl = overlay.querySelector(".bingo-text");
+        if (textEl) {
+          const parent = textEl.parentNode;
+          const clone = textEl.cloneNode(true);
+          parent.replaceChild(clone, textEl);
+        }
+        overlay.classList.add("open");
+      }
+    } else {
+      overlay.classList.remove("open");
+    }
+  }
+
+  function triggerCelebration() {
+    if (VIEW_MODE) return;
+    state.celebration = true;
+    renderCelebration();
+    syncToFirebase();
+  }
+
+  function dismissCelebration() {
+    if (VIEW_MODE) return;
+    if (!state.celebration) return;
+    state.celebration = false;
+    renderCelebration();
     syncToFirebase();
   }
 
@@ -833,13 +1013,15 @@ function startApp() {
     document.getElementById("quizRevealBtn").addEventListener("click", toggleAnswer);
     document.getElementById("quizNextBtn").addEventListener("click", nextQuestion);
     document.getElementById("quizCloseBtn").addEventListener("click", closeQuiz);
+    document.getElementById("bingoBtn").addEventListener("click", triggerCelebration);
+    document.getElementById("bingoOverlay").addEventListener("click", dismissCelebration);
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
       if (e.code === "Space") { e.preventDefault(); draw(); }
       else if (e.key === "r" || e.key === "R") reset();
       else if (e.key === "f" || e.key === "F") toggleFullscreen();
       else if (e.key === "q" || e.key === "Q") showQuiz();
-      else if (e.key === "Escape") { hideQR(); closeQuiz(); }
+      else if (e.key === "Escape") { hideQR(); closeQuiz(); dismissCelebration(); }
     });
   } else {
     document.addEventListener("click", () => {
