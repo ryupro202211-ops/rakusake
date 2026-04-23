@@ -106,7 +106,18 @@
   .grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; margin-bottom: 24px; }
   .cell { aspect-ratio: 1; background: #1a1815; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: "Unbounded", sans-serif; font-size: clamp(10px, 1.3vw, 14px); font-weight: 400; color: rgba(245, 242, 234, 0.25); border: 1px solid rgba(245, 242, 234, 0.05); transition: all 0.2s; }
   .cell.called { background: #2a2620; color: rgba(245, 242, 234, 0.65); font-weight: 700; border-color: rgba(245, 242, 234, 0.1); }
-  .cell.latest { background: #d97706; color: #0f0e0c; font-weight: 900; border-color: #d97706; transform: scale(1.1); box-shadow: 0 0 16px rgba(217, 119, 6, 0.4); }
+  .cell.latest { background: #d97706; color: #0f0e0c; font-weight: 900; border-color: #d97706; transform: scale(1.1); box-shadow: 0 0 16px rgba(217, 119, 6, 0.5); }
+  .cell.latest.just-landed { animation: cell-light-up 0.9s cubic-bezier(0.34, 1.3, 0.64, 1) both, cell-pulse 2.5s ease-in-out 0.9s infinite; }
+  @keyframes cell-light-up {
+    0% { transform: scale(1); box-shadow: 0 0 0 rgba(217, 119, 6, 0); background: #2a2620; border-color: rgba(245, 242, 234, 0.1); }
+    35% { transform: scale(1.55); box-shadow: 0 0 50px rgba(255, 184, 77, 1), 0 0 100px rgba(217, 119, 6, 0.6); background: #ffcc66; border-color: #ffcc66; }
+    70% { transform: scale(1.05); box-shadow: 0 0 14px rgba(217, 119, 6, 0.4); background: #d97706; border-color: #d97706; }
+    100% { transform: scale(1.1); box-shadow: 0 0 16px rgba(217, 119, 6, 0.5); background: #d97706; border-color: #d97706; }
+  }
+  @keyframes cell-pulse {
+    0%, 100% { box-shadow: 0 0 16px rgba(217, 119, 6, 0.5); transform: scale(1.1); }
+    50% { box-shadow: 0 0 28px rgba(217, 119, 6, 0.9); transform: scale(1.14); }
+  }
 
   .history { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.08); border-radius: 12px; padding: 16px 20px; font-size: 13px; color: rgba(245, 242, 234, 0.7); line-height: 1.8; min-height: 48px; word-break: break-all; }
   .history-item { font-family: "Unbounded", sans-serif; font-weight: 700; margin-right: 6px; }
@@ -548,9 +559,11 @@ function startApp() {
         displayedLatest = finalNumber;
         animationInProgress = false;
         animationTimer = null;
+        renderGrid();
+        const landedCell = document.querySelector('.cell[data-n="' + finalNumber + '"]');
+        if (landedCell) landedCell.classList.add("just-landed");
         if (state.sound) playChime();
         if (drawBtn) drawBtn.disabled = available().length === 0;
-        // 光エフェクトをフェードアウト(着地後0.6秒残して余韻を出す)
         setTimeout(() => {
           if (lightEffects) lightEffects.classList.remove("active");
         }, 600);
@@ -607,9 +620,9 @@ function startApp() {
     let html = "";
     for (let i = 1; i <= 75; i++) {
       let cls = "cell";
-      if (i === state.latest) cls += " latest";
-      else if (state.called.has(i)) cls += " called";
-      html += '<div class="' + cls + '">' + i + '</div>';
+      if (i === displayedLatest) cls += " latest";
+      else if (state.called.has(i) && !(animationInProgress && i === state.latest)) cls += " called";
+      html += '<div class="' + cls + '" data-n="' + i + '">' + i + '</div>';
     }
     el.innerHTML = html;
   }
@@ -642,11 +655,21 @@ function startApp() {
     document.getElementById("quizTotal").textContent = "全" + QUIZ_QUESTIONS.length + "問中";
     document.getElementById("quizQuestion").textContent = q.q;
     const optsEl = document.getElementById("quizOptions");
-    optsEl.innerHTML = q.options.map((opt, i) => {
-      const isCorrect = state.quiz.showAnswer && i === q.answer;
-      const numLabels = ["①", "②", "③", "④"];
-      return '<li class="quiz-option' + (isCorrect ? ' correct' : '') + '"><span class="quiz-option-num">' + numLabels[i] + '</span>' + opt + '</li>';
-    }).join('');
+    const numLabels = ["①", "②", "③", "④"];
+    if (VIEW_MODE) {
+      // 参加者側:選択肢は非表示。答え表示後は正解のみハイライトで表示
+      if (state.quiz.showAnswer) {
+        optsEl.innerHTML = '<li class="quiz-option correct"><span class="quiz-option-num">' + numLabels[q.answer] + '</span>' + q.options[q.answer] + '</li>';
+      } else {
+        optsEl.innerHTML = '';
+      }
+    } else {
+      // ホスト側:常に全選択肢を表示
+      optsEl.innerHTML = q.options.map((opt, i) => {
+        const isCorrect = state.quiz.showAnswer && i === q.answer;
+        return '<li class="quiz-option' + (isCorrect ? ' correct' : '') + '"><span class="quiz-option-num">' + numLabels[i] + '</span>' + opt + '</li>';
+      }).join('');
+    }
     const hintEl = document.getElementById("quizHint");
     if (state.quiz.showAnswer && q.hint) {
       hintEl.textContent = "💡 " + q.hint;
