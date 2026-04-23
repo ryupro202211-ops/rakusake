@@ -18,11 +18,26 @@
                       radial-gradient(circle at 85% 80%, rgba(217, 119, 6, 0.08), transparent 50%);
     pointer-events: none; z-index: 0;
   }
-  .app { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .app { max-width: 1100px; margin: 0 auto; position: relative; z-index: 2; }
   .app.hidden { display: none; }
   body.view-mode .host-only { display: none !important; }
   body.view-mode .range { cursor: default; }
   body.view-mode .range:hover { border-color: rgba(245, 242, 234, 0.1); }
+
+  /* 背景の光エフェクト */
+  .light-effects { position: fixed; inset: 0; pointer-events: none; z-index: 1; overflow: hidden; opacity: 0; transition: opacity 0.6s ease-out; }
+  .light-effects.active { opacity: 1; transition: opacity 0.3s ease-in; }
+  .light-orb { position: absolute; border-radius: 50%; filter: blur(90px); will-change: transform, opacity; }
+  .orb-1 { width: 500px; height: 500px; background: #d97706; top: -10%; left: -5%; animation: drift-1 6s ease-in-out infinite; }
+  .orb-2 { width: 400px; height: 400px; background: #ef4444; top: 30%; right: -10%; animation: drift-2 7s ease-in-out infinite; }
+  .orb-3 { width: 350px; height: 350px; background: #a855f7; bottom: 10%; left: 20%; animation: drift-3 8s ease-in-out infinite; }
+  .orb-4 { width: 300px; height: 300px; background: #22c55e; top: 60%; left: 60%; animation: drift-4 9s ease-in-out infinite; }
+  .orb-5 { width: 250px; height: 250px; background: #3b82f6; top: 5%; right: 30%; animation: drift-5 5s ease-in-out infinite; }
+  @keyframes drift-1 { 0%, 100% { transform: translate(0, 0); opacity: 0.45; } 50% { transform: translate(220px, 120px); opacity: 0.65; } }
+  @keyframes drift-2 { 0%, 100% { transform: translate(0, 0); opacity: 0.4; } 50% { transform: translate(-170px, 220px); opacity: 0.6; } }
+  @keyframes drift-3 { 0%, 100% { transform: translate(0, 0); opacity: 0.5; } 50% { transform: translate(260px, -120px); opacity: 0.3; } }
+  @keyframes drift-4 { 0%, 100% { transform: translate(0, 0); opacity: 0.35; } 50% { transform: translate(-210px, -200px); opacity: 0.55; } }
+  @keyframes drift-5 { 0%, 100% { transform: translate(0, 0); opacity: 0.3; } 50% { transform: translate(120px, 310px); opacity: 0.45; } }
 
   header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 242, 234, 0.15); gap: 12px; }
   .brand { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 0.08em; }
@@ -44,6 +59,9 @@
 
   .display { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 24px; padding: 64px 24px; text-align: center; margin-bottom: 24px; min-height: 340px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .display-inner { display: flex; align-items: baseline; gap: 24px; animation: drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
+  .display-inner.rolling { animation: none; opacity: 0.9; }
+  .display-inner.rolling .letter, .display-inner.rolling .number { transform: scale(0.95); transition: none; }
+  .display.animating { box-shadow: inset 0 0 0 2px rgba(217, 119, 6, 0.4); transition: box-shadow 0.2s; }
   @keyframes drop {
     0% { transform: translateY(-40px) scale(0.7); opacity: 0; }
     60% { transform: translateY(8px) scale(1.05); opacity: 1; }
@@ -140,11 +158,42 @@
     .range-letter { font-size: 22px; }
     .grid { grid-template-columns: repeat(10, 1fr); }
   }
+  /* Quiz modal */
+  .quiz-modal { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.95); display: none; align-items: center; justify-content: center; z-index: 150; padding: 24px; }
+  .quiz-modal.open { display: flex; }
+  .quiz-content { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 20px; padding: 32px; max-width: 640px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 242, 234, 0.1); }
+  .quiz-number { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 16px; color: #d97706; letter-spacing: 0.1em; }
+  .quiz-total { font-size: 12px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.05em; }
+  .quiz-question { font-size: 22px; font-weight: 500; line-height: 1.5; margin-bottom: 28px; color: #f5f2ea; }
+  .quiz-options { list-style: none; padding: 0; margin: 0 0 20px; display: flex; flex-direction: column; gap: 10px; }
+  .quiz-option { padding: 16px 20px; background: #0f0e0c; border: 1px solid rgba(245, 242, 234, 0.12); border-radius: 10px; font-size: 16px; display: flex; align-items: center; gap: 14px; transition: all 0.25s; }
+  .quiz-option-num { font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 13px; color: rgba(245, 242, 234, 0.5); min-width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(245, 242, 234, 0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .quiz-option.correct { background: rgba(34, 197, 94, 0.15); border-color: #22c55e; color: #f5f2ea; }
+  .quiz-option.correct .quiz-option-num { background: #22c55e; color: #0f0e0c; border-color: #22c55e; }
+  .quiz-hint { font-size: 13px; color: rgba(245, 242, 234, 0.85); line-height: 1.6; padding: 14px 18px; background: rgba(217, 119, 6, 0.1); border-left: 3px solid #d97706; border-radius: 0 8px 8px 0; margin-bottom: 20px; display: none; }
+  .quiz-hint.show { display: block; }
+  .quiz-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+  .quiz-actions button { flex: 1; min-width: 100px; padding: 14px; border-radius: 10px; font-family: inherit; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .quiz-actions button.primary { background: #d97706; color: #0f0e0c; border: none; font-weight: 700; }
+  .quiz-actions button.primary:hover { background: #ea8a1a; }
+  .quiz-actions button.secondary { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.2); }
+  .quiz-actions button.secondary:hover { background: rgba(245, 242, 234, 0.08); }
+
   :fullscreen body { padding: 32px; }
   :fullscreen .display { min-height: 60vh; }
 </style>
 </head>
 <body>
+
+<!-- 背景の光エフェクト(ルーレット中に発光) -->
+<div class="light-effects" id="lightEffects">
+  <div class="light-orb orb-1"></div>
+  <div class="light-orb orb-2"></div>
+  <div class="light-orb orb-3"></div>
+  <div class="light-orb orb-4"></div>
+  <div class="light-orb orb-5"></div>
+</div>
 
 <!-- 認証モーダル(初期は非表示、必要時のみ表示) -->
 <div class="auth-modal" id="authModal">
@@ -168,6 +217,7 @@
       <div class="sub" id="modeSub">BINGO CALLER</div>
     </div>
     <div class="header-actions host-only">
+      <button class="icon-btn" id="quizBtn" title="クイズ(Q)">?</button>
       <button class="icon-btn" id="qrBtn" title="参加者QR">⚏</button>
       <button class="icon-btn" id="soundBtn" title="効果音">♪</button>
       <button class="icon-btn" id="fullscreenBtn" title="フルスクリーン">⛶</button>
@@ -203,6 +253,7 @@
   <div class="footer host-only">
     <span class="kbd">SPACE</span> 抽選
     <span class="kbd">R</span> リセット
+    <span class="kbd">Q</span> クイズ
     <span class="kbd">F</span> フルスクリーン
   </div>
 </div>
@@ -220,6 +271,23 @@
   </div>
 </div>
 
+<div class="quiz-modal" id="quizModal">
+  <div class="quiz-content">
+    <div class="quiz-header">
+      <div class="quiz-number" id="quizNumber">Q 1</div>
+      <div class="quiz-total" id="quizTotal">全30問中</div>
+    </div>
+    <div class="quiz-question" id="quizQuestion"></div>
+    <ul class="quiz-options" id="quizOptions"></ul>
+    <div class="quiz-hint" id="quizHint"></div>
+    <div class="quiz-actions host-only">
+      <button class="primary" id="quizRevealBtn">答えを表示</button>
+      <button class="secondary" id="quizNextBtn">別の問題</button>
+      <button class="secondary" id="quizCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -228,6 +296,43 @@ import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/fir
 // ▼▼▼ 管理者パスワード — ここを好きな文字列に変更してください ▼▼▼
 // ============================================================
 const ADMIN_PASSWORD = "rakusake2026";
+// ============================================================
+
+// ============================================================
+// クイズ問題(30問)
+// ============================================================
+const QUIZ_QUESTIONS = [
+  { q: "日本で「乾杯」の発祥とされる飲み物は?", options: ["ワイン", "ビール", "日本酒"], answer: 1, hint: "1865年、横浜でイギリス公使がビールで乾杯したのが記録上の最古" },
+  { q: "日本酒の「一合」は何ml?", options: ["150ml", "180ml", "200ml"], answer: 1, hint: "一合 = 180ml" },
+  { q: "ビール中ジョッキの標準容量は?", options: ["350ml", "約435ml", "500ml"], answer: 1, hint: "店によって差があるが、中ジョッキはおおよそ435ml" },
+  { q: "ピルスナービールの発祥地がある国は?", options: ["ドイツ", "チェコ", "ベルギー"], answer: 1, hint: "チェコのピルゼン市が発祥" },
+  { q: "「フランベ」とは料理にお酒を入れてどうすること?", options: ["漬ける", "火をつける", "冷やす"], answer: 1, hint: "アルコールに火をつけて風味を出す調理法" },
+  { q: "ワインの年代や産地を当てる専門家の肩書きは?", options: ["バリスタ", "バーテンダー", "ソムリエ"], answer: 2, hint: "ソムリエ。バリスタはコーヒーの専門家" },
+  { q: "日本酒「純米大吟醸」を名乗れる精米歩合の上限は?", options: ["60%以下", "50%以下", "40%以下"], answer: 1, hint: "精米歩合=削った後に残ったお米の割合。大吟醸は50%以下" },
+  { q: "「ハイボール」はウイスキーを何で割った飲み物?", options: ["水", "炭酸水", "お湯"], answer: 1, hint: "ウイスキー+炭酸水" },
+  { q: "1ダースは12個。半ダースは?", options: ["4個", "6個", "8個"], answer: 1, hint: "半ダース = 6個。酔うと意外と出てこない" },
+  { q: "日本で一番多い苗字は「佐藤」。2番目は?", options: ["田中", "鈴木", "高橋"], answer: 1, hint: "1位 佐藤、2位 鈴木、3位 高橋" },
+  { q: "時計の2時〜3時の間で、短針と長針が重なるのは何回?", options: ["0回", "1回", "2回"], answer: 1, hint: "1時間に約1回だけ" },
+  { q: "1週間は何時間?", options: ["148時間", "168時間", "188時間"], answer: 1, hint: "24時間 × 7日 = 168時間" },
+  { q: "東京都の市の数は?(2024年時点)", options: ["23", "26", "30"], answer: 1, hint: "23区とは別に、八王子・町田など26の市がある" },
+  { q: "日本で人口が最も少ない都道府県は?", options: ["島根県", "鳥取県", "高知県"], answer: 1, hint: "鳥取県。島根県は2番目に少ない" },
+  { q: "東京23区で面積が最大の区は?", options: ["練馬区", "大田区", "世田谷区"], answer: 1, hint: "大田区が最大。羽田空港も含まれる" },
+  { q: "日本で最も早い日の出を迎える都道府県は?", options: ["北海道", "東京都", "沖縄県"], answer: 1, hint: "東京都の南鳥島が日本最東端のため" },
+  { q: "日本の祝日の数は年間いくつ?(2024年時点)", options: ["14", "16", "18"], answer: 1, hint: "2024年現在16日" },
+  { q: "日本にある世界遺産の数は?(2024年時点)", options: ["約10", "約25", "約50"], answer: 1, hint: "2024年時点で25件" },
+  { q: "47都道府県で「東」が先頭につく県は何個?", options: ["1個", "2個", "3個"], answer: 0, hint: "東京都のみ。東京都は「都」だが県と同格" },
+  { q: "地球の赤道1周の距離は約何km?", options: ["約4万km", "約10万km", "約40万km"], answer: 0, hint: "約40,000km" },
+  { q: "1年は約何時間?", options: ["約7,000時間", "約8,760時間", "約10,000時間"], answer: 1, hint: "24時間 × 365日 = 8,760時間" },
+  { q: "「ラーメン」の語源とされる中国語は?", options: ["拉麺(ラーミェン)", "老麺(ラオミェン)", "柳麺(リュウメン)"], answer: 0, hint: "「拉」は引っ張る意味で、手延べ麺のこと" },
+  { q: "「カラオケ」の『カラ』の意味は?", options: ["空(から)", "唐(から)", "殻(から)"], answer: 0, hint: "「空のオーケストラ」=空オケが語源" },
+  { q: "次のうち日本語由来の英単語は?", options: ["tsunami のみ", "typhoon のみ", "両方とも"], answer: 2, hint: "tsunami は明確に日本語由来。typhoon も一説では日本語「台風」由来とされる" },
+  { q: "日本の硬貨で穴が開いているのは?", options: ["5円玉のみ", "50円玉のみ", "5円玉と50円玉"], answer: 2, hint: "5円玉と50円玉の2種類" },
+  { q: "「三日坊主」の語源になった場所は?", options: ["寺院", "寺子屋", "道場"], answer: 0, hint: "お寺の修行の厳しさに耐えられず3日で辞めた人に由来" },
+  { q: "ビールで「プロスト!」と乾杯する国は?", options: ["ドイツ", "フランス", "イタリア"], answer: 0, hint: "ドイツ語で Prost! = 乾杯" },
+  { q: "100歳以上まで生きる確率が高いのは?", options: ["男性", "女性", "ほぼ同じ"], answer: 1, hint: "日本の100歳以上の約88%は女性" },
+  { q: "次回の楽SAKEターミナル、開催月は?", options: ["5月", "6月", "7月"], answer: 0, hint: "毎月開催しているので次回は5月" },
+  { q: "楽SAKEターミナルの『ターミナル』に込められた意味は?", options: ["終着駅", "結節点・ハブ", "待合室"], answer: 1, hint: "人と人が出会い、次の一歩を踏み出す結節点" }
+];
 // ============================================================
 
 // ============================================================
@@ -305,9 +410,10 @@ function startApp() {
     called: new Set(),
     history: [],
     latest: null,
-    sound: false
+    sound: false,
+    quiz: null,
+    usedQuizzes: new Set()
   };
-  let lastLatest = null;
   let gameRef = null;
 
   function letterOf(n) {
@@ -352,8 +458,11 @@ function startApp() {
             state.called = new Set(data.called || []);
             state.history = data.history || [];
             state.latest = (typeof data.latest === "number") ? data.latest : null;
+            state.quiz = data.quiz || null;
+            state.usedQuizzes = new Set(data.usedQuizzes || []);
           } else {
             state.called = new Set(); state.history = []; state.latest = null;
+            state.quiz = null;
           }
           renderAll();
         }, (err) => { showStatus("error", "同期エラー: " + err.message); });
@@ -366,6 +475,8 @@ function startApp() {
             state.called = new Set(data.called || []);
             state.history = data.history || [];
             state.latest = (typeof data.latest === "number") ? data.latest : null;
+            state.quiz = data.quiz || null;
+            state.usedQuizzes = new Set(data.usedQuizzes || []);
             // 安全装置:全範囲OFFなら全ONに戻す
             const anyEnabled = Object.values(state.enabled).some(Boolean);
             if (!anyEnabled) {
@@ -393,6 +504,8 @@ function startApp() {
       called: Array.from(state.called),
       history: state.history,
       latest: state.latest,
+      quiz: state.quiz,
+      usedQuizzes: Array.from(state.usedQuizzes),
       updatedAt: Date.now()
     }).catch(err => {
       console.error("Sync error:", err);
@@ -400,17 +513,79 @@ function startApp() {
     });
   }
 
+  let displayedLatest = null;
+  let justResumed = true;
+  let animationInProgress = false;
+  let animationTimer = null;
+
+  function showFinalNumber(n) {
+    const el = document.getElementById("display");
+    const L = letterOf(n);
+    el.classList.remove("animating");
+    el.innerHTML = '<div class="display-inner"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + n + '</span></div>';
+  }
+
+  function showRollingNumber(n) {
+    const el = document.getElementById("display");
+    const L = letterOf(n);
+    el.classList.add("animating");
+    el.innerHTML = '<div class="display-inner rolling"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + n + '</span></div>';
+  }
+
+  function animateDraw(finalNumber) {
+    animationInProgress = true;
+    const lightEffects = document.getElementById("lightEffects");
+    if (lightEffects) lightEffects.classList.add("active");
+    const drawBtn = document.getElementById("drawBtn");
+    if (drawBtn) drawBtn.disabled = true;
+    const duration = 2500;
+    const startTime = performance.now();
+
+    function tick() {
+      const elapsed = performance.now() - startTime;
+      if (elapsed >= duration) {
+        showFinalNumber(finalNumber);
+        displayedLatest = finalNumber;
+        animationInProgress = false;
+        animationTimer = null;
+        if (state.sound) playChime();
+        if (drawBtn) drawBtn.disabled = available().length === 0;
+        // 光エフェクトをフェードアウト(着地後0.6秒残して余韻を出す)
+        setTimeout(() => {
+          if (lightEffects) lightEffects.classList.remove("active");
+        }, 600);
+        return;
+      }
+      const randN = 1 + Math.floor(Math.random() * 75);
+      showRollingNumber(randN);
+      const progress = elapsed / duration;
+      const delay = 40 + 350 * progress * progress * progress;
+      animationTimer = setTimeout(tick, delay);
+    }
+    tick();
+  }
+
   function renderDisplay() {
     const el = document.getElementById("display");
     if (state.latest === null) {
+      if (animationTimer) { clearTimeout(animationTimer); animationTimer = null; }
+      animationInProgress = false;
+      displayedLatest = null;
+      el.classList.remove("animating");
       const msg = VIEW_MODE ? "ホストが番号を引くのを待っています..." : '<strong>「番号を引く」</strong>ボタン または スペースキーで開始';
       el.innerHTML = '<div class="placeholder">' + msg + '</div>';
-    } else {
-      const L = letterOf(state.latest);
-      el.innerHTML = '<div class="display-inner"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + state.latest + '</span></div>';
-      if (VIEW_MODE && state.sound && state.latest !== lastLatest && lastLatest !== null) playChime();
+      return;
     }
-    lastLatest = state.latest;
+    if (state.latest === displayedLatest) return;
+    if (justResumed) {
+      showFinalNumber(state.latest);
+      displayedLatest = state.latest;
+      justResumed = false;
+      return;
+    }
+    if (!animationInProgress) {
+      animateDraw(state.latest);
+    }
   }
   function renderRanges() {
     const el = document.getElementById("ranges");
@@ -452,9 +627,67 @@ function startApp() {
     }).join("");
   }
   function renderAll() {
-    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory();
+    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory(); renderQuiz();
     const drawBtn = document.getElementById("drawBtn");
     if (drawBtn) drawBtn.disabled = available().length === 0;
+  }
+
+  // クイズ関連
+  function renderQuiz() {
+    const modal = document.getElementById("quizModal");
+    if (!state.quiz) { modal.classList.remove("open"); return; }
+    const q = QUIZ_QUESTIONS[state.quiz.index];
+    if (!q) { modal.classList.remove("open"); return; }
+    document.getElementById("quizNumber").textContent = "Q " + (state.quiz.index + 1);
+    document.getElementById("quizTotal").textContent = "全" + QUIZ_QUESTIONS.length + "問中";
+    document.getElementById("quizQuestion").textContent = q.q;
+    const optsEl = document.getElementById("quizOptions");
+    optsEl.innerHTML = q.options.map((opt, i) => {
+      const isCorrect = state.quiz.showAnswer && i === q.answer;
+      const numLabels = ["①", "②", "③", "④"];
+      return '<li class="quiz-option' + (isCorrect ? ' correct' : '') + '"><span class="quiz-option-num">' + numLabels[i] + '</span>' + opt + '</li>';
+    }).join('');
+    const hintEl = document.getElementById("quizHint");
+    if (state.quiz.showAnswer && q.hint) {
+      hintEl.textContent = "💡 " + q.hint;
+      hintEl.classList.add("show");
+    } else {
+      hintEl.classList.remove("show");
+      hintEl.textContent = "";
+    }
+    const revealBtn = document.getElementById("quizRevealBtn");
+    if (revealBtn) revealBtn.textContent = state.quiz.showAnswer ? "答えを隠す" : "答えを表示";
+    modal.classList.add("open");
+  }
+
+  function showQuiz() {
+    if (VIEW_MODE) return;
+    nextQuestion();
+  }
+  function nextQuestion() {
+    if (VIEW_MODE) return;
+    if (state.usedQuizzes.size >= QUIZ_QUESTIONS.length) state.usedQuizzes = new Set();
+    const candidates = [];
+    for (let i = 0; i < QUIZ_QUESTIONS.length; i++) {
+      if (!state.usedQuizzes.has(i)) candidates.push(i);
+    }
+    const idx = candidates[Math.floor(Math.random() * candidates.length)];
+    state.usedQuizzes.add(idx);
+    state.quiz = { index: idx, showAnswer: false };
+    renderQuiz();
+    syncToFirebase();
+  }
+  function toggleAnswer() {
+    if (VIEW_MODE || !state.quiz) return;
+    state.quiz.showAnswer = !state.quiz.showAnswer;
+    renderQuiz();
+    syncToFirebase();
+  }
+  function closeQuiz() {
+    if (VIEW_MODE) return;
+    state.quiz = null;
+    renderQuiz();
+    syncToFirebase();
   }
 
   function playChime() {
@@ -480,13 +713,13 @@ function startApp() {
 
   function draw() {
     if (VIEW_MODE) return;
+    if (animationInProgress) return;
     const av = available();
     if (av.length === 0) return;
     const pick = av[Math.floor(Math.random() * av.length)];
     state.called.add(pick);
     state.history.push(pick);
     state.latest = pick;
-    playChime();
     renderAll();
     syncToFirebase();
   }
@@ -573,12 +806,17 @@ function startApp() {
     document.getElementById("closeQrBtn").addEventListener("click", hideQR);
     document.getElementById("copyUrlBtn").addEventListener("click", copyUrl);
     document.getElementById("qrModal").addEventListener("click", (e) => { if (e.target.id === "qrModal") hideQR(); });
+    document.getElementById("quizBtn").addEventListener("click", showQuiz);
+    document.getElementById("quizRevealBtn").addEventListener("click", toggleAnswer);
+    document.getElementById("quizNextBtn").addEventListener("click", nextQuestion);
+    document.getElementById("quizCloseBtn").addEventListener("click", closeQuiz);
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
       if (e.code === "Space") { e.preventDefault(); draw(); }
       else if (e.key === "r" || e.key === "R") reset();
       else if (e.key === "f" || e.key === "F") toggleFullscreen();
-      else if (e.key === "Escape") hideQR();
+      else if (e.key === "q" || e.key === "Q") showQuiz();
+      else if (e.key === "Escape") { hideQR(); closeQuiz(); }
     });
   } else {
     document.addEventListener("click", () => {
