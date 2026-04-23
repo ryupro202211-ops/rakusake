@@ -11,57 +11,27 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html, body { height: 100%; overflow-x: hidden; }
-  body {
-    font-family: "Noto Sans JP", sans-serif;
-    background: #0f0e0c;
-    color: #f5f2ea;
-    min-height: 100vh;
-    padding: 24px;
-    position: relative;
-  }
+  body { font-family: "Noto Sans JP", sans-serif; background: #0f0e0c; color: #f5f2ea; min-height: 100vh; padding: 24px; position: relative; }
   body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
+    content: ""; position: fixed; inset: 0;
     background-image: radial-gradient(circle at 20% 10%, rgba(220, 38, 38, 0.08), transparent 50%),
                       radial-gradient(circle at 85% 80%, rgba(217, 119, 6, 0.08), transparent 50%);
-    pointer-events: none;
-    z-index: 0;
+    pointer-events: none; z-index: 0;
   }
   .app { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
+  .app.hidden { display: none; }
   body.view-mode .host-only { display: none !important; }
 
-  header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 24px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid rgba(245, 242, 234, 0.15);
-    gap: 12px;
-  }
+  header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 242, 234, 0.15); gap: 12px; }
   .brand { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 0.08em; }
   .brand span { color: #d97706; }
   .sub { font-size: 12px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.1em; }
   .header-actions { display: flex; gap: 8px; }
-  .icon-btn {
-    background: transparent; color: #f5f2ea;
-    border: 1px solid rgba(245, 242, 234, 0.2);
-    width: 40px; height: 40px; border-radius: 8px;
-    cursor: pointer; font-size: 16px; font-family: inherit;
-    transition: all 0.2s;
-  }
+  .icon-btn { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.2); width: 40px; height: 40px; border-radius: 8px; cursor: pointer; font-size: 16px; font-family: inherit; transition: all 0.2s; }
   .icon-btn:hover { background: rgba(245, 242, 234, 0.08); }
   .icon-btn.active { background: #d97706; border-color: #d97706; color: #0f0e0c; }
 
-  .viewer-badge {
-    display: flex; align-items: center; gap: 8px;
-    padding: 6px 14px;
-    background: rgba(239, 68, 68, 0.15);
-    border: 1px solid rgba(239, 68, 68, 0.3);
-    border-radius: 999px;
-    font-size: 12px; font-weight: 700; color: #ef4444; letter-spacing: 0.1em;
-  }
+  .viewer-badge { display: flex; align-items: center; gap: 8px; padding: 6px 14px; background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 999px; font-size: 12px; font-weight: 700; color: #ef4444; letter-spacing: 0.1em; }
   .viewer-dot { width: 8px; height: 8px; background: #ef4444; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite; }
   @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(1.3); } }
 
@@ -70,15 +40,7 @@
   .status-bar.warn { background: rgba(234, 179, 8, 0.12); color: #eab308; }
   .status-bar.error { background: rgba(239, 68, 68, 0.12); color: #ef4444; }
 
-  .display {
-    background: #1a1815;
-    border: 1px solid rgba(245, 242, 234, 0.1);
-    border-radius: 24px;
-    padding: 64px 24px; text-align: center;
-    margin-bottom: 24px; min-height: 340px;
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
+  .display { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 24px; padding: 64px 24px; text-align: center; margin-bottom: 24px; min-height: 340px; display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; }
   .display-inner { display: flex; align-items: baseline; gap: 24px; animation: drop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1); }
   @keyframes drop {
     0% { transform: translateY(-40px) scale(0.7); opacity: 0; }
@@ -97,31 +59,16 @@
   .placeholder strong { color: #d97706; font-weight: 700; }
 
   .controls { display: flex; gap: 12px; margin-bottom: 32px; }
-  .btn-draw {
-    flex: 1; background: #d97706; color: #0f0e0c;
-    border: none; border-radius: 12px;
-    font-family: "Unbounded", sans-serif; font-weight: 700;
-    font-size: 18px; letter-spacing: 0.05em; padding: 20px;
-    cursor: pointer; transition: all 0.15s;
-  }
+  .btn-draw { flex: 1; background: #d97706; color: #0f0e0c; border: none; border-radius: 12px; font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 18px; letter-spacing: 0.05em; padding: 20px; cursor: pointer; transition: all 0.15s; }
   .btn-draw:hover:not(:disabled) { background: #ea8a1a; transform: translateY(-1px); }
   .btn-draw:active:not(:disabled) { transform: translateY(0); }
   .btn-draw:disabled { opacity: 0.3; cursor: not-allowed; }
-  .btn-reset {
-    background: transparent; color: #f5f2ea;
-    border: 1px solid rgba(245, 242, 234, 0.25); border-radius: 12px;
-    font-family: inherit; font-weight: 500; font-size: 14px;
-    padding: 0 28px; cursor: pointer; transition: all 0.2s;
-  }
+  .btn-reset { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.25); border-radius: 12px; font-family: inherit; font-weight: 500; font-size: 14px; padding: 0 28px; cursor: pointer; transition: all 0.2s; }
   .btn-reset:hover { background: rgba(245, 242, 234, 0.08); }
 
   .section-label { font-size: 11px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 12px; }
   .ranges { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 32px; }
-  .range {
-    background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.1);
-    border-radius: 12px; padding: 16px 8px; text-align: center;
-    cursor: pointer; transition: all 0.2s; user-select: none;
-  }
+  .range { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 12px; padding: 16px 8px; text-align: center; cursor: pointer; transition: all 0.2s; user-select: none; }
   .range:hover { border-color: rgba(245, 242, 234, 0.3); }
   .range.off { opacity: 0.3; }
   .range-letter { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 28px; margin-bottom: 4px; }
@@ -137,13 +84,7 @@
   .stats strong { color: #f5f2ea; font-weight: 700; }
 
   .grid { display: grid; grid-template-columns: repeat(15, 1fr); gap: 4px; margin-bottom: 24px; }
-  .cell {
-    aspect-ratio: 1; background: #1a1815; border-radius: 6px;
-    display: flex; align-items: center; justify-content: center;
-    font-family: "Unbounded", sans-serif; font-size: clamp(10px, 1.3vw, 14px);
-    font-weight: 400; color: rgba(245, 242, 234, 0.25);
-    border: 1px solid rgba(245, 242, 234, 0.05); transition: all 0.2s;
-  }
+  .cell { aspect-ratio: 1; background: #1a1815; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-family: "Unbounded", sans-serif; font-size: clamp(10px, 1.3vw, 14px); font-weight: 400; color: rgba(245, 242, 234, 0.25); border: 1px solid rgba(245, 242, 234, 0.05); transition: all 0.2s; }
   .cell.called { background: #2a2620; color: rgba(245, 242, 234, 0.65); font-weight: 700; border-color: rgba(245, 242, 234, 0.1); }
   .cell.latest { background: #d97706; color: #0f0e0c; font-weight: 900; border-color: #d97706; transform: scale(1.1); box-shadow: 0 0 16px rgba(217, 119, 6, 0.4); }
 
@@ -158,6 +99,24 @@
   .footer { margin-top: 32px; padding-top: 16px; border-top: 1px solid rgba(245, 242, 234, 0.08); font-size: 11px; color: rgba(245, 242, 234, 0.3); letter-spacing: 0.05em; text-align: center; }
   .kbd { display: inline-block; padding: 2px 8px; background: rgba(245, 242, 234, 0.08); border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 4px; font-family: "Unbounded", sans-serif; font-size: 10px; margin: 0 2px; }
 
+  /* Auth modal */
+  .auth-modal { position: fixed; inset: 0; background: #0f0e0c; display: none; align-items: center; justify-content: center; z-index: 200; padding: 24px; }
+  .auth-modal.open { display: flex; }
+  .auth-content { max-width: 360px; width: 100%; background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 20px; padding: 40px 32px; text-align: center; }
+  .auth-brand { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 0.08em; margin-bottom: 8px; }
+  .auth-brand span { color: #d97706; }
+  .auth-title { font-size: 12px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 32px; }
+  #authInput { width: 100%; padding: 14px 16px; background: #0f0e0c; border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 10px; color: #f5f2ea; font-size: 15px; font-family: inherit; margin-bottom: 12px; }
+  #authInput:focus { outline: none; border-color: #d97706; }
+  #authError { color: #ef4444; font-size: 12px; margin-bottom: 12px; min-height: 16px; }
+  .auth-actions { display: flex; flex-direction: column; gap: 8px; }
+  .auth-actions button { padding: 14px; border-radius: 10px; font-family: inherit; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .auth-actions button.primary { background: #d97706; color: #0f0e0c; border: 1px solid #d97706; font-weight: 700; font-family: "Unbounded", sans-serif; letter-spacing: 0.05em; }
+  .auth-actions button.primary:hover { background: #ea8a1a; }
+  .auth-actions button.secondary { background: transparent; color: rgba(245, 242, 234, 0.6); border: 1px solid rgba(245, 242, 234, 0.15); }
+  .auth-actions button.secondary:hover { background: rgba(245, 242, 234, 0.05); color: #f5f2ea; }
+
+  /* QR Modal */
   .qr-modal { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.92); display: none; align-items: center; justify-content: center; z-index: 100; padding: 24px; }
   .qr-modal.open { display: flex; }
   .qr-content { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 20px; padding: 32px; text-align: center; max-width: 400px; width: 100%; }
@@ -184,7 +143,23 @@
 </style>
 </head>
 <body>
-<div class="app">
+
+<!-- 認証モーダル(初期は非表示、必要時のみ表示) -->
+<div class="auth-modal" id="authModal">
+  <div class="auth-content">
+    <div class="auth-brand">楽SAKE <span>BINGO</span></div>
+    <div class="auth-title">管理者ログイン</div>
+    <input type="password" id="authInput" placeholder="パスワード" autocomplete="off">
+    <div id="authError"></div>
+    <div class="auth-actions">
+      <button class="primary" id="authSubmit">ログイン</button>
+      <button class="secondary" id="authViewer">観戦モードで見る</button>
+    </div>
+  </div>
+</div>
+
+<!-- メインUI(初期は非表示、認証後または観戦モードで表示) -->
+<div class="app hidden" id="appRoot">
   <header>
     <div>
       <div class="brand">楽SAKE <span>BINGO</span></div>
@@ -194,6 +169,7 @@
       <button class="icon-btn" id="qrBtn" title="参加者QR">⚏</button>
       <button class="icon-btn" id="soundBtn" title="効果音">♪</button>
       <button class="icon-btn" id="fullscreenBtn" title="フルスクリーン">⛶</button>
+      <button class="icon-btn" id="logoutBtn" title="ログアウト">⎋</button>
     </div>
     <div id="viewerBadgeWrap" style="display:none;">
       <div class="viewer-badge"><span class="viewer-dot"></span>LIVE観戦</div>
@@ -247,9 +223,13 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/fireba
 import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // ============================================================
+// ▼▼▼ 管理者パスワード — ここを好きな文字列に変更してください ▼▼▼
+// ============================================================
+const ADMIN_PASSWORD = "rakusake2026";
+// ============================================================
+
+// ============================================================
 // ▼▼▼ Firebase設定 — ここを編集してください ▼▼▼
-// Firebase Console → プロジェクト設定 → マイアプリ → SDKの設定
-// から取得した設定を下記の値に上書きしてください
 // ============================================================
 const firebaseConfig = {
   apiKey: "AIzaSyCB2IdCPIuBvOhdAOzmTwQ25mely-RTgSE",
@@ -262,314 +242,359 @@ const firebaseConfig = {
 };
 // ============================================================
 
+const AUTH_KEY = "rakusake_bingo_admin_v1";
 const VIEW_MODE = new URLSearchParams(location.search).has("view");
 const HAS_FIREBASE = firebaseConfig.apiKey && firebaseConfig.apiKey !== "YOUR_API_KEY";
 
-if (VIEW_MODE) {
-  document.body.classList.add("view-mode");
-  document.getElementById("modeSub").textContent = "VIEWER";
-  document.getElementById("viewerBadgeWrap").style.display = "block";
+function isAdminAuthed() {
+  return localStorage.getItem(AUTH_KEY) === ADMIN_PASSWORD;
 }
 
-const ranges = [
-  { letter: "B", min: 1, max: 15 },
-  { letter: "I", min: 16, max: 30 },
-  { letter: "N", min: 31, max: 45 },
-  { letter: "G", min: 46, max: 60 },
-  { letter: "O", min: 61, max: 75 }
-];
-const state = {
-  enabled: { B: true, I: true, N: true, G: true, O: true },
-  called: new Set(),
-  history: [],
-  latest: null,
-  sound: false
-};
-let lastLatest = null;
-let gameRef = null;
+function showAuthModal() {
+  const modal = document.getElementById("authModal");
+  const input = document.getElementById("authInput");
+  const error = document.getElementById("authError");
+  const submitBtn = document.getElementById("authSubmit");
+  const viewerBtn = document.getElementById("authViewer");
+  modal.classList.add("open");
+  setTimeout(() => input.focus(), 100);
 
-function letterOf(n) {
-  if (n <= 15) return "B";
-  if (n <= 30) return "I";
-  if (n <= 45) return "N";
-  if (n <= 60) return "G";
-  return "O";
-}
-function available() {
-  const out = [];
-  ranges.forEach(r => {
-    if (!state.enabled[r.letter]) return;
-    for (let i = r.min; i <= r.max; i++) if (!state.called.has(i)) out.push(i);
-  });
-  return out;
-}
-function remainingIn(letter) {
-  const r = ranges.find(x => x.letter === letter);
-  let c = 0;
-  for (let i = r.min; i <= r.max; i++) if (!state.called.has(i)) c++;
-  return c;
-}
-
-function showStatus(type, msg) {
-  const el = document.getElementById("statusBar");
-  el.className = "status-bar " + type;
-  el.textContent = msg;
-}
-
-// Firebase初期化
-if (HAS_FIREBASE) {
-  try {
-    const app = initializeApp(firebaseConfig);
-    const db = getDatabase(app);
-    gameRef = ref(db, "game/current");
-
-    if (VIEW_MODE) {
-      onValue(gameRef, (snap) => {
-        const data = snap.val();
-        if (data) {
-          state.enabled = data.enabled || state.enabled;
-          state.called = new Set(data.called || []);
-          state.history = data.history || [];
-          state.latest = (typeof data.latest === "number") ? data.latest : null;
-        } else {
-          state.called = new Set();
-          state.history = [];
-          state.latest = null;
-        }
-        renderAll();
-      }, (err) => {
-        showStatus("error", "同期エラー: " + err.message);
-      });
-      showStatus("ok", "ホストと同期中");
+  function tryLogin() {
+    if (input.value === ADMIN_PASSWORD) {
+      localStorage.setItem(AUTH_KEY, ADMIN_PASSWORD);
+      modal.classList.remove("open");
+      document.getElementById("appRoot").classList.remove("hidden");
+      startApp();
     } else {
-      get(gameRef).then(snap => {
-        const data = snap.val();
-        if (data) {
-          state.enabled = data.enabled || state.enabled;
-          state.called = new Set(data.called || []);
-          state.history = data.history || [];
-          state.latest = (typeof data.latest === "number") ? data.latest : null;
-          renderAll();
-        }
-      }).catch(err => console.error("Initial load error:", err));
-      showStatus("ok", "接続中 — 参加者と同期");
+      error.textContent = "パスワードが違います";
+      input.value = "";
+      input.focus();
     }
-  } catch (e) {
-    showStatus("error", "Firebase初期化エラー: " + e.message);
-    console.error(e);
   }
-} else {
+  submitBtn.addEventListener("click", tryLogin);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { e.preventDefault(); tryLogin(); }
+  });
+  viewerBtn.addEventListener("click", () => {
+    location.href = location.pathname + "?view";
+  });
+}
+
+// ============================================================
+// メインアプリ本体
+// ============================================================
+function startApp() {
   if (VIEW_MODE) {
-    showStatus("error", "Firebase設定が必要です(HTMLファイル内のfirebaseConfigを編集してください)");
-  } else {
-    showStatus("warn", "ローカルモード(参加者同期なし)");
+    document.body.classList.add("view-mode");
+    document.getElementById("modeSub").textContent = "VIEWER";
+    document.getElementById("viewerBadgeWrap").style.display = "block";
   }
-}
 
-function syncToFirebase() {
-  if (!gameRef || VIEW_MODE) return;
-  set(gameRef, {
-    enabled: state.enabled,
-    called: Array.from(state.called),
-    history: state.history,
-    latest: state.latest,
-    updatedAt: Date.now()
-  }).catch(err => {
-    console.error("Sync error:", err);
-    showStatus("error", "同期エラー: " + err.message);
-  });
-}
+  const ranges = [
+    { letter: "B", min: 1, max: 15 },
+    { letter: "I", min: 16, max: 30 },
+    { letter: "N", min: 31, max: 45 },
+    { letter: "G", min: 46, max: 60 },
+    { letter: "O", min: 61, max: 75 }
+  ];
+  const state = {
+    enabled: { B: true, I: true, N: true, G: true, O: true },
+    called: new Set(),
+    history: [],
+    latest: null,
+    sound: false
+  };
+  let lastLatest = null;
+  let gameRef = null;
 
-// 描画
-function renderDisplay() {
-  const el = document.getElementById("display");
-  if (state.latest === null) {
-    const msg = VIEW_MODE ? "ホストが番号を引くのを待っています..." : '<strong>「番号を引く」</strong>ボタン または スペースキーで開始';
-    el.innerHTML = '<div class="placeholder">' + msg + '</div>';
-  } else {
-    const L = letterOf(state.latest);
-    el.innerHTML = '<div class="display-inner"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + state.latest + '</span></div>';
-    if (VIEW_MODE && state.sound && state.latest !== lastLatest && lastLatest !== null) {
-      playChime();
+  function letterOf(n) {
+    if (n <= 15) return "B";
+    if (n <= 30) return "I";
+    if (n <= 45) return "N";
+    if (n <= 60) return "G";
+    return "O";
+  }
+  function available() {
+    const out = [];
+    ranges.forEach(r => {
+      if (!state.enabled[r.letter]) return;
+      for (let i = r.min; i <= r.max; i++) if (!state.called.has(i)) out.push(i);
+    });
+    return out;
+  }
+  function remainingIn(letter) {
+    const r = ranges.find(x => x.letter === letter);
+    let c = 0;
+    for (let i = r.min; i <= r.max; i++) if (!state.called.has(i)) c++;
+    return c;
+  }
+
+  function showStatus(type, msg) {
+    const el = document.getElementById("statusBar");
+    el.className = "status-bar " + type;
+    el.textContent = msg;
+  }
+
+  if (HAS_FIREBASE) {
+    try {
+      const app = initializeApp(firebaseConfig);
+      const db = getDatabase(app);
+      gameRef = ref(db, "game/current");
+
+      if (VIEW_MODE) {
+        onValue(gameRef, (snap) => {
+          const data = snap.val();
+          if (data) {
+            state.enabled = data.enabled || state.enabled;
+            state.called = new Set(data.called || []);
+            state.history = data.history || [];
+            state.latest = (typeof data.latest === "number") ? data.latest : null;
+          } else {
+            state.called = new Set(); state.history = []; state.latest = null;
+          }
+          renderAll();
+        }, (err) => { showStatus("error", "同期エラー: " + err.message); });
+        showStatus("ok", "ホストと同期中");
+      } else {
+        get(gameRef).then(snap => {
+          const data = snap.val();
+          if (data) {
+            state.enabled = data.enabled || state.enabled;
+            state.called = new Set(data.called || []);
+            state.history = data.history || [];
+            state.latest = (typeof data.latest === "number") ? data.latest : null;
+            // 安全装置:全範囲OFFなら全ONに戻す
+            const anyEnabled = Object.values(state.enabled).some(Boolean);
+            if (!anyEnabled) {
+              state.enabled = { B: true, I: true, N: true, G: true, O: true };
+              syncToFirebase();
+            }
+            renderAll();
+          }
+        }).catch(err => console.error("Initial load error:", err));
+        showStatus("ok", "接続中 — 参加者と同期");
+      }
+    } catch (e) {
+      showStatus("error", "Firebase初期化エラー: " + e.message);
+      console.error(e);
     }
+  } else {
+    if (VIEW_MODE) showStatus("error", "Firebase設定が必要です");
+    else showStatus("warn", "ローカルモード(参加者同期なし)");
   }
-  lastLatest = state.latest;
-}
-function renderRanges() {
-  const el = document.getElementById("ranges");
-  el.innerHTML = ranges.map(r => {
-    const on = state.enabled[r.letter];
-    return '<div class="range c-' + r.letter + (on ? "" : " off") + '" data-letter="' + r.letter + '"><div class="range-letter">' + r.letter + '</div><div class="range-span">' + r.min + "〜" + r.max + '</div><div class="range-remaining">残 ' + remainingIn(r.letter) + '</div></div>';
-  }).join("");
-  el.querySelectorAll(".range").forEach(node => {
-    node.addEventListener("click", () => {
-      if (VIEW_MODE) return;
-      state.enabled[node.dataset.letter] = !state.enabled[node.dataset.letter];
-      renderAll();
-      syncToFirebase();
-    });
-  });
-}
-function renderGrid() {
-  const el = document.getElementById("grid");
-  let html = "";
-  for (let i = 1; i <= 75; i++) {
-    let cls = "cell";
-    if (i === state.latest) cls += " latest";
-    else if (state.called.has(i)) cls += " called";
-    html += '<div class="' + cls + '">' + i + '</div>';
-  }
-  el.innerHTML = html;
-}
-function renderStats() {
-  const enabledCount = Object.values(state.enabled).filter(Boolean).length;
-  const remaining = available().length;
-  document.getElementById("stats").innerHTML = '<span>出題済み <strong>' + state.called.size + ' / 75</strong></span><span>有効範囲 <strong>' + enabledCount + '列</strong> / 残 <strong>' + remaining + '</strong> 個</span>';
-}
-function renderHistory() {
-  const el = document.getElementById("history");
-  if (state.history.length === 0) { el.textContent = "まだ1つも引かれていません"; return; }
-  el.innerHTML = state.history.map(n => {
-    const L = letterOf(n);
-    return '<span class="history-item ' + L + '">' + L + '-' + n + '</span>';
-  }).join("");
-}
-function renderAll() {
-  renderDisplay();
-  renderRanges();
-  renderGrid();
-  renderStats();
-  renderHistory();
-  const drawBtn = document.getElementById("drawBtn");
-  if (drawBtn) drawBtn.disabled = available().length === 0;
-}
 
-// 効果音
-function playChime() {
-  if (!state.sound) return;
-  try {
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const now = ctx.currentTime;
-    [523.25, 659.25, 783.99].forEach((freq, i) => {
-      const osc = ctx.createOscillator();
-      const gain = ctx.createGain();
-      osc.type = "sine";
-      osc.frequency.value = freq;
-      gain.gain.setValueAtTime(0, now + i * 0.08);
-      gain.gain.linearRampToValueAtTime(0.15, now + i * 0.08 + 0.02);
-      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.4);
-      osc.connect(gain).connect(ctx.destination);
-      osc.start(now + i * 0.08);
-      osc.stop(now + i * 0.08 + 0.4);
+  function syncToFirebase() {
+    if (!gameRef || VIEW_MODE) return;
+    set(gameRef, {
+      enabled: state.enabled,
+      called: Array.from(state.called),
+      history: state.history,
+      latest: state.latest,
+      updatedAt: Date.now()
+    }).catch(err => {
+      console.error("Sync error:", err);
+      showStatus("error", "同期エラー: " + err.message);
     });
-    setTimeout(() => ctx.close(), 800);
-  } catch (e) {}
-}
-
-// 操作
-function draw() {
-  if (VIEW_MODE) return;
-  const av = available();
-  if (av.length === 0) return;
-  const pick = av[Math.floor(Math.random() * av.length)];
-  state.called.add(pick);
-  state.history.push(pick);
-  state.latest = pick;
-  playChime();
-  renderAll();
-  syncToFirebase();
-}
-let resetArmed = false;
-let resetTimer = null;
-function reset() {
-  if (VIEW_MODE) return;
-  const btn = document.getElementById("resetBtn");
-  if (state.history.length === 0) {
-    state.called.clear(); state.history = []; state.latest = null;
-    renderAll(); syncToFirebase(); return;
   }
-  if (!resetArmed) {
-    resetArmed = true;
-    btn.textContent = "もう一度押して確定";
-    btn.style.background = "#ef4444";
-    btn.style.color = "#fff";
-    btn.style.borderColor = "#ef4444";
+
+  function renderDisplay() {
+    const el = document.getElementById("display");
+    if (state.latest === null) {
+      const msg = VIEW_MODE ? "ホストが番号を引くのを待っています..." : '<strong>「番号を引く」</strong>ボタン または スペースキーで開始';
+      el.innerHTML = '<div class="placeholder">' + msg + '</div>';
+    } else {
+      const L = letterOf(state.latest);
+      el.innerHTML = '<div class="display-inner"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + state.latest + '</span></div>';
+      if (VIEW_MODE && state.sound && state.latest !== lastLatest && lastLatest !== null) playChime();
+    }
+    lastLatest = state.latest;
+  }
+  function renderRanges() {
+    const el = document.getElementById("ranges");
+    el.innerHTML = ranges.map(r => {
+      const on = state.enabled[r.letter];
+      return '<div class="range c-' + r.letter + (on ? "" : " off") + '" data-letter="' + r.letter + '"><div class="range-letter">' + r.letter + '</div><div class="range-span">' + r.min + "〜" + r.max + '</div><div class="range-remaining">残 ' + remainingIn(r.letter) + '</div></div>';
+    }).join("");
+    el.querySelectorAll(".range").forEach(node => {
+      node.addEventListener("click", () => {
+        if (VIEW_MODE) return;
+        state.enabled[node.dataset.letter] = !state.enabled[node.dataset.letter];
+        renderAll();
+        syncToFirebase();
+      });
+    });
+  }
+  function renderGrid() {
+    const el = document.getElementById("grid");
+    let html = "";
+    for (let i = 1; i <= 75; i++) {
+      let cls = "cell";
+      if (i === state.latest) cls += " latest";
+      else if (state.called.has(i)) cls += " called";
+      html += '<div class="' + cls + '">' + i + '</div>';
+    }
+    el.innerHTML = html;
+  }
+  function renderStats() {
+    const enabledCount = Object.values(state.enabled).filter(Boolean).length;
+    const remaining = available().length;
+    document.getElementById("stats").innerHTML = '<span>出題済み <strong>' + state.called.size + ' / 75</strong></span><span>有効範囲 <strong>' + enabledCount + '列</strong> / 残 <strong>' + remaining + '</strong> 個</span>';
+  }
+  function renderHistory() {
+    const el = document.getElementById("history");
+    if (state.history.length === 0) { el.textContent = "まだ1つも引かれていません"; return; }
+    el.innerHTML = state.history.map(n => {
+      const L = letterOf(n);
+      return '<span class="history-item ' + L + '">' + L + '-' + n + '</span>';
+    }).join("");
+  }
+  function renderAll() {
+    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory();
+    const drawBtn = document.getElementById("drawBtn");
+    if (drawBtn) drawBtn.disabled = available().length === 0;
+  }
+
+  function playChime() {
+    if (!state.sound) return;
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const now = ctx.currentTime;
+      [523.25, 659.25, 783.99].forEach((freq, i) => {
+        const osc = ctx.createOscillator();
+        const gain = ctx.createGain();
+        osc.type = "sine";
+        osc.frequency.value = freq;
+        gain.gain.setValueAtTime(0, now + i * 0.08);
+        gain.gain.linearRampToValueAtTime(0.15, now + i * 0.08 + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.4);
+        osc.connect(gain).connect(ctx.destination);
+        osc.start(now + i * 0.08);
+        osc.stop(now + i * 0.08 + 0.4);
+      });
+      setTimeout(() => ctx.close(), 800);
+    } catch (e) {}
+  }
+
+  function draw() {
+    if (VIEW_MODE) return;
+    const av = available();
+    if (av.length === 0) return;
+    const pick = av[Math.floor(Math.random() * av.length)];
+    state.called.add(pick);
+    state.history.push(pick);
+    state.latest = pick;
+    playChime();
+    renderAll();
+    syncToFirebase();
+  }
+
+  let resetArmed = false;
+  let resetTimer = null;
+  function reset() {
+    if (VIEW_MODE) return;
+    const btn = document.getElementById("resetBtn");
+    if (state.history.length === 0) {
+      state.called.clear(); state.history = []; state.latest = null;
+      state.enabled = { B: true, I: true, N: true, G: true, O: true };
+      renderAll(); syncToFirebase(); return;
+    }
+    if (!resetArmed) {
+      resetArmed = true;
+      btn.textContent = "もう一度押して確定";
+      btn.style.background = "#ef4444";
+      btn.style.color = "#fff";
+      btn.style.borderColor = "#ef4444";
+      clearTimeout(resetTimer);
+      resetTimer = setTimeout(() => {
+        resetArmed = false;
+        btn.textContent = "リセット";
+        btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
+      }, 3000);
+      return;
+    }
     clearTimeout(resetTimer);
-    resetTimer = setTimeout(() => {
-      resetArmed = false;
-      btn.textContent = "リセット";
-      btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
-    }, 3000);
-    return;
+    resetArmed = false;
+    btn.textContent = "リセット";
+    btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
+    state.called.clear(); state.history = []; state.latest = null;
+    state.enabled = { B: true, I: true, N: true, G: true, O: true };
+    renderAll(); syncToFirebase();
   }
-  clearTimeout(resetTimer);
-  resetArmed = false;
-  btn.textContent = "リセット";
-  btn.style.background = ""; btn.style.color = ""; btn.style.borderColor = "";
-  state.called.clear(); state.history = []; state.latest = null;
-  renderAll(); syncToFirebase();
-}
-function toggleSound() {
-  state.sound = !state.sound;
-  document.getElementById("soundBtn").classList.toggle("active", state.sound);
-}
-function toggleFullscreen() {
-  if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(() => {}); }
-  else { document.exitFullscreen(); }
-}
 
-// QR
-function showQR() {
-  const viewerUrl = location.origin + location.pathname + "?view";
-  const container = document.getElementById("qrcode");
-  container.innerHTML = "";
-  if (window.QRCode) {
-    new window.QRCode(container, {
-      text: viewerUrl, width: 240, height: 240,
-      colorDark: "#0f0e0c", colorLight: "#f5f2ea",
-      correctLevel: window.QRCode.CorrectLevel.M
+  function toggleSound() {
+    state.sound = !state.sound;
+    document.getElementById("soundBtn").classList.toggle("active", state.sound);
+  }
+  function toggleFullscreen() {
+    if (!document.fullscreenElement) document.documentElement.requestFullscreen().catch(() => {});
+    else document.exitFullscreen();
+  }
+  function logout() {
+    if (!confirm("管理者からログアウトしますか?このブラウザで再度操作するにはパスワードが必要になります。")) return;
+    localStorage.removeItem(AUTH_KEY);
+    location.reload();
+  }
+
+  function showQR() {
+    const viewerUrl = location.origin + location.pathname + "?view";
+    const container = document.getElementById("qrcode");
+    container.innerHTML = "";
+    if (window.QRCode) {
+      new window.QRCode(container, {
+        text: viewerUrl, width: 240, height: 240,
+        colorDark: "#0f0e0c", colorLight: "#f5f2ea",
+        correctLevel: window.QRCode.CorrectLevel.M
+      });
+    }
+    document.getElementById("viewerUrl").textContent = viewerUrl;
+    document.getElementById("qrModal").classList.add("open");
+  }
+  function hideQR() { document.getElementById("qrModal").classList.remove("open"); }
+  function copyUrl() {
+    const url = document.getElementById("viewerUrl").textContent;
+    navigator.clipboard.writeText(url).then(() => {
+      const btn = document.getElementById("copyUrlBtn");
+      const original = btn.textContent;
+      btn.textContent = "コピーしました";
+      setTimeout(() => { btn.textContent = original; }, 1500);
     });
   }
-  document.getElementById("viewerUrl").textContent = viewerUrl;
-  document.getElementById("qrModal").classList.add("open");
-}
-function hideQR() { document.getElementById("qrModal").classList.remove("open"); }
-function copyUrl() {
-  const url = document.getElementById("viewerUrl").textContent;
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = document.getElementById("copyUrlBtn");
-    const original = btn.textContent;
-    btn.textContent = "コピーしました";
-    setTimeout(() => { btn.textContent = original; }, 1500);
-  });
+
+  if (!VIEW_MODE) {
+    document.getElementById("drawBtn").addEventListener("click", draw);
+    document.getElementById("resetBtn").addEventListener("click", reset);
+    document.getElementById("soundBtn").addEventListener("click", toggleSound);
+    document.getElementById("fullscreenBtn").addEventListener("click", toggleFullscreen);
+    document.getElementById("logoutBtn").addEventListener("click", logout);
+    document.getElementById("qrBtn").addEventListener("click", showQR);
+    document.getElementById("closeQrBtn").addEventListener("click", hideQR);
+    document.getElementById("copyUrlBtn").addEventListener("click", copyUrl);
+    document.getElementById("qrModal").addEventListener("click", (e) => { if (e.target.id === "qrModal") hideQR(); });
+    document.addEventListener("keydown", (e) => {
+      if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
+      if (e.code === "Space") { e.preventDefault(); draw(); }
+      else if (e.key === "r" || e.key === "R") reset();
+      else if (e.key === "f" || e.key === "F") toggleFullscreen();
+      else if (e.key === "Escape") hideQR();
+    });
+  } else {
+    document.addEventListener("click", () => {
+      if (!state.sound) state.sound = true;
+    }, { once: true });
+  }
+
+  renderAll();
 }
 
-// イベント登録
-if (!VIEW_MODE) {
-  document.getElementById("drawBtn").addEventListener("click", draw);
-  document.getElementById("resetBtn").addEventListener("click", reset);
-  document.getElementById("soundBtn").addEventListener("click", toggleSound);
-  document.getElementById("fullscreenBtn").addEventListener("click", toggleFullscreen);
-  document.getElementById("qrBtn").addEventListener("click", showQR);
-  document.getElementById("closeQrBtn").addEventListener("click", hideQR);
-  document.getElementById("copyUrlBtn").addEventListener("click", copyUrl);
-  document.getElementById("qrModal").addEventListener("click", (e) => { if (e.target.id === "qrModal") hideQR(); });
-  document.addEventListener("keydown", (e) => {
-    if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
-    if (e.code === "Space") { e.preventDefault(); draw(); }
-    else if (e.key === "r" || e.key === "R") { reset(); }
-    else if (e.key === "f" || e.key === "F") { toggleFullscreen(); }
-    else if (e.key === "Escape") { hideQR(); }
-  });
+// ============================================================
+// 起動処理
+// ============================================================
+if (VIEW_MODE || isAdminAuthed()) {
+  document.getElementById("appRoot").classList.remove("hidden");
+  startApp();
 } else {
-  // 観戦モードでも効果音ボタンは有効にしたい
-  // 観戦者のタップで AudioContext を有効化する必要があるため、画面タップで sound を ON に
-  document.addEventListener("click", () => {
-    if (!state.sound) { state.sound = true; }
-  }, { once: true });
+  showAuthModal();
 }
-
-renderAll();
 </script>
 </body>
 </html>
