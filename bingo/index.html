@@ -21,6 +21,8 @@
   .app { max-width: 1100px; margin: 0 auto; position: relative; z-index: 1; }
   .app.hidden { display: none; }
   body.view-mode .host-only { display: none !important; }
+  body.view-mode .range { cursor: default; }
+  body.view-mode .range:hover { border-color: rgba(245, 242, 234, 0.1); }
 
   header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid rgba(245, 242, 234, 0.15); gap: 12px; }
   .brand { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 20px; letter-spacing: 0.08em; }
@@ -187,8 +189,8 @@
     <button class="btn-reset" id="resetBtn">リセット</button>
   </div>
 
-  <div class="host-only">
-    <div class="section-label">出題範囲 — タップで切り替え</div>
+  <div>
+    <div class="section-label" id="rangesLabel">出題範囲 — タップで切り替え</div>
     <div class="ranges" id="ranges"></div>
   </div>
 
@@ -288,6 +290,7 @@ function startApp() {
     document.body.classList.add("view-mode");
     document.getElementById("modeSub").textContent = "VIEWER";
     document.getElementById("viewerBadgeWrap").style.display = "block";
+    document.getElementById("rangesLabel").textContent = "出題範囲";
   }
 
   const ranges = [
