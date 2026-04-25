@@ -507,7 +507,7 @@
     <div class="rules-section">
       <div class="rules-section-title"><span class="rules-section-num">1</span>基本ルール</div>
       <div class="rules-text">
-        <strong>5×5</strong> のビンゴカードに書かれた数字のうち、引かれた番号と一致するマスを塗っていきます。<br>
+        <strong>5×5</strong> のビンゴカードに書かれた数字のうち、引かれた番号と一致するマスを開けていきます。<br>
         中央の <strong>FREE</strong> マスは最初から空いています。
       </div>
     </div>
@@ -832,16 +832,14 @@ function startApp() {
 
   function showFinalNumber(n) {
     const el = document.getElementById("display");
-    const L = letterOf(n);
     el.classList.remove("animating");
-    el.innerHTML = '<div class="display-inner"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + n + '</span></div>';
+    el.innerHTML = '<div class="display-inner"><span class="number">' + n + '</span></div>';
   }
 
   function showRollingNumber(n) {
     const el = document.getElementById("display");
-    const L = letterOf(n);
     el.classList.add("animating");
-    el.innerHTML = '<div class="display-inner rolling"><span class="letter c-' + L + '">' + L + '</span><span class="dash">/</span><span class="number">' + n + '</span></div>';
+    el.innerHTML = '<div class="display-inner rolling"><span class="number">' + n + '</span></div>';
   }
 
   function animateDraw(finalNumber) {
@@ -937,7 +935,7 @@ function startApp() {
     if (state.history.length === 0) { el.textContent = "まだ1つも引かれていません"; return; }
     el.innerHTML = state.history.map(n => {
       const L = letterOf(n);
-      return '<span class="history-item ' + L + '">' + L + '-' + n + '</span>';
+      return '<span class="history-item ' + L + '">' + n + '</span>';
     }).join("");
   }
   function renderAll() {
