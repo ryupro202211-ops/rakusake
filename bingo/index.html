@@ -328,6 +328,48 @@
   .quiz-actions button.secondary { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.2); }
   .quiz-actions button.secondary:hover { background: rgba(245, 242, 234, 0.08); }
 
+  /* ルール説明モーダル */
+  .rules-modal { position: fixed; inset: 0; background: rgba(15, 14, 12, 0.95); display: none; align-items: center; justify-content: center; z-index: 150; padding: 24px; overflow-y: auto; }
+  .rules-modal.open { display: flex; }
+  .rules-content { background: #1a1815; border: 1px solid rgba(245, 242, 234, 0.15); border-radius: 20px; padding: 32px; max-width: 720px; width: 100%; max-height: 90vh; overflow-y: auto; }
+  .rules-title { font-family: "Unbounded", sans-serif; font-weight: 900; font-size: 22px; letter-spacing: 0.05em; color: #d97706; text-align: center; margin-bottom: 8px; }
+  .rules-subtitle { font-size: 12px; color: rgba(245, 242, 234, 0.5); letter-spacing: 0.15em; text-transform: uppercase; text-align: center; margin-bottom: 28px; }
+
+  .rules-section { margin-bottom: 28px; padding-bottom: 24px; border-bottom: 1px solid rgba(245, 242, 234, 0.08); }
+  .rules-section:last-of-type { border-bottom: none; }
+  .rules-section-title { font-family: "Unbounded", sans-serif; font-weight: 700; font-size: 14px; color: #d97706; letter-spacing: 0.1em; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .rules-section-num { display: inline-flex; width: 28px; height: 28px; border-radius: 50%; background: #d97706; color: #0f0e0c; align-items: center; justify-content: center; font-weight: 900; font-size: 13px; }
+  .rules-text { font-size: 16px; line-height: 1.7; color: #f5f2ea; }
+  .rules-text strong { color: #fbbf24; font-weight: 700; }
+
+  /* ビンゴ達成パターンの可視化 */
+  .bingo-patterns { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+  .pattern-mini { background: #0f0e0c; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 10px; padding: 14px; text-align: center; }
+  .pattern-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 3px; max-width: 110px; margin: 0 auto 8px; }
+  .pattern-cell { aspect-ratio: 1; background: rgba(245, 242, 234, 0.06); border-radius: 2px; }
+  .pattern-cell.on { background: #d97706; box-shadow: 0 0 6px rgba(217, 119, 6, 0.5); }
+  .pattern-label { font-size: 12px; color: rgba(245, 242, 234, 0.7); font-weight: 700; }
+
+  /* ルール画面のクイズ部分 */
+  .rules-quiz-flow { display: flex; gap: 8px; margin-top: 14px; align-items: stretch; }
+  .rules-flow-step { flex: 1; background: #0f0e0c; border: 1px solid rgba(245, 242, 234, 0.1); border-radius: 10px; padding: 14px 10px; text-align: center; font-size: 13px; line-height: 1.5; color: #f5f2ea; }
+  .rules-flow-step .num { display: block; font-family: "Unbounded", sans-serif; font-weight: 900; color: #d97706; font-size: 18px; margin-bottom: 6px; }
+  .rules-flow-arrow { display: flex; align-items: center; color: rgba(245, 242, 234, 0.3); font-size: 18px; }
+
+  .rules-actions { display: flex; gap: 8px; margin-top: 28px; }
+  .rules-actions button { flex: 1; padding: 14px; border-radius: 10px; font-family: inherit; font-size: 14px; cursor: pointer; transition: all 0.2s; }
+  .rules-actions button.primary { background: #d97706; color: #0f0e0c; border: none; font-weight: 700; }
+  .rules-actions button.primary:hover { background: #ea8a1a; }
+  .rules-actions button.secondary { background: transparent; color: #f5f2ea; border: 1px solid rgba(245, 242, 234, 0.2); }
+  .rules-actions button.secondary:hover { background: rgba(245, 242, 234, 0.08); }
+
+  @media (max-width: 640px) {
+    .bingo-patterns { grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+    .pattern-grid { max-width: 80px; }
+    .rules-quiz-flow { flex-direction: column; }
+    .rules-flow-arrow { display: none; }
+  }
+
   :fullscreen body { padding: 32px; }
   :fullscreen .display { min-height: 60vh; }
 </style>
@@ -365,7 +407,9 @@
       <div class="sub" id="modeSub">BINGO CALLER</div>
     </div>
     <div class="header-actions host-only">
+      <button class="icon-btn" id="rulesBtn" title="ルール説明">📖</button>
       <button class="icon-btn" id="quizBtn" title="クイズ(Q)">?</button>
+      <button class="icon-btn" id="surveyBtn" title="アンケート">📋</button>
       <button class="icon-btn" id="qrBtn" title="参加者QR">⚏</button>
       <button class="icon-btn" id="soundBtn" title="効果音">♪</button>
       <button class="icon-btn" id="fullscreenBtn" title="フルスクリーン">⛶</button>
@@ -454,6 +498,94 @@
   <div class="bingo-hint host-only">画面をタップして閉じる</div>
 </div>
 
+<!-- ルール説明モーダル -->
+<div class="rules-modal" id="rulesModal">
+  <div class="rules-content">
+    <div class="rules-title">ビンゴ大会のルール</div>
+    <div class="rules-subtitle">楽SAKEターミナル</div>
+
+    <div class="rules-section">
+      <div class="rules-section-title"><span class="rules-section-num">1</span>基本ルール</div>
+      <div class="rules-text">
+        <strong>5×5</strong> のビンゴカードに書かれた数字のうち、引かれた番号と一致するマスを塗っていきます。<br>
+        中央の <strong>FREE</strong> マスは最初から空いています。
+      </div>
+    </div>
+
+    <div class="rules-section">
+      <div class="rules-section-title"><span class="rules-section-num">2</span>ビンゴ達成パターン</div>
+      <div class="rules-text">
+        <strong>縦・横・ななめ</strong> のいずれか1列が5個揃ったら「ビンゴ!」
+      </div>
+      <div class="bingo-patterns">
+        <div class="pattern-mini">
+          <div class="pattern-grid" id="patHorizontal"></div>
+          <div class="pattern-label">よこ</div>
+        </div>
+        <div class="pattern-mini">
+          <div class="pattern-grid" id="patVertical"></div>
+          <div class="pattern-label">たて</div>
+        </div>
+        <div class="pattern-mini">
+          <div class="pattern-grid" id="patDiagonal"></div>
+          <div class="pattern-label">ななめ</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="rules-section">
+      <div class="rules-section-title"><span class="rules-section-num">3</span>クイズに正解した人が番号を引ける</div>
+      <div class="rules-text">
+        ホストが出すクイズに正解した人が、次のビンゴ番号を引く権利を獲得!<br>
+        クイズには <strong>3つの形式</strong> があります。
+      </div>
+      <div class="rules-quiz-flow" style="margin-top: 14px;">
+        <div class="rules-flow-step"><span class="num">①</span>チーム戦<br><span style="font-size: 11px; color: rgba(245,242,234,0.6); display:block; margin-top: 4px;">テーブルごとに相談して回答</span></div>
+        <div class="rules-flow-step"><span class="num">②</span>挙手制<br><span style="font-size: 11px; color: rgba(245,242,234,0.6); display:block; margin-top: 4px;">わかった人が早い者勝ちで挙手</span></div>
+        <div class="rules-flow-step"><span class="num">③</span>範囲指定<br><span style="font-size: 11px; color: rgba(245,242,234,0.6); display:block; margin-top: 4px;">正解者は B〜O から好きな範囲を選んで抽選</span></div>
+      </div>
+      <div class="rules-text" style="margin-top: 12px; font-size: 14px; color: rgba(245, 242, 234, 0.8);">
+        どの形式かは出題のたびに発表します。みんなが楽しめるよう色々試してみましょう!
+      </div>
+    </div>
+
+    <div class="rules-section">
+      <div class="rules-section-title"><span class="rules-section-num">4</span>ビンゴが出たら</div>
+      <div class="rules-text">
+        元気よく <strong>「ビンゴ!」</strong> と叫んでください!<br>
+        司会者がカードを確認し、景品をプレゼント。<br>
+        早く揃った人ほど好きな景品を選べます。
+      </div>
+    </div>
+
+    <div class="rules-section">
+      <div class="rules-section-title"><span class="rules-section-num">5</span>スマホで観戦</div>
+      <div class="rules-text">
+        各テーブルにあるQRコードを読み取ると、引かれた番号がスマホでリアルタイムに見られます。<br>
+        <strong>操作はせず、見るだけ</strong>でOK!
+      </div>
+    </div>
+
+    <div class="rules-actions">
+      <button class="primary host-only" id="rulesCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
+<!-- アンケートモーダル -->
+<div class="qr-modal" id="surveyModal">
+  <div class="qr-content">
+    <div class="qr-title">参加者アンケート</div>
+    <div class="qr-subtitle" id="surveySubtitle">QRコードを読み取るか、ボタンから回答してください</div>
+    <div id="surveyQrcode"></div>
+    <a class="btn-draw" id="surveyOpenBtn" href="#" target="_blank" rel="noopener" style="display: block; text-align: center; text-decoration: none; margin-top: 12px;">アンケートに回答する</a>
+    <div class="qr-actions host-only" style="margin-top: 12px;">
+      <button class="btn-reset" id="surveyCopyBtn">URLをコピー</button>
+      <button class="btn-reset" id="surveyCloseBtn">閉じる</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
@@ -462,6 +594,12 @@ import { getDatabase, ref, onValue, set, get } from "https://www.gstatic.com/fir
 // ▼▼▼ 管理者パスワード — ここを好きな文字列に変更してください ▼▼▼
 // ============================================================
 const ADMIN_PASSWORD = "rakusake2026";
+// ============================================================
+
+// ============================================================
+// アンケートURL — 必要に応じて変更してください
+// ============================================================
+const SURVEY_URL = "https://docs.google.com/forms/d/e/1FAIpQLSfsXEZgxAM5qWbCG58uCAZRt_VJ429hOLktxrd5leo-YKljZw/viewform?usp=sharing&ouid=104017511235024357423";
 // ============================================================
 
 // ============================================================
@@ -579,7 +717,9 @@ function startApp() {
     sound: false,
     quiz: null,
     usedQuizzes: new Set(),
-    celebration: false
+    celebration: false,
+    showSurvey: false,
+    showRules: false
   };
   let gameRef = null;
 
@@ -628,9 +768,11 @@ function startApp() {
             state.quiz = data.quiz || null;
             state.usedQuizzes = new Set(data.usedQuizzes || []);
             state.celebration = !!data.celebration;
+            state.showSurvey = !!data.showSurvey;
+            state.showRules = !!data.showRules;
           } else {
             state.called = new Set(); state.history = []; state.latest = null;
-            state.quiz = null; state.celebration = false;
+            state.quiz = null; state.celebration = false; state.showSurvey = false; state.showRules = false;
           }
           renderAll();
         }, (err) => { showStatus("error", "同期エラー: " + err.message); });
@@ -646,6 +788,8 @@ function startApp() {
             state.quiz = data.quiz || null;
             state.usedQuizzes = new Set(data.usedQuizzes || []);
             state.celebration = !!data.celebration;
+            state.showSurvey = !!data.showSurvey;
+            state.showRules = !!data.showRules;
             // 安全装置:全範囲OFFなら全ONに戻す
             const anyEnabled = Object.values(state.enabled).some(Boolean);
             if (!anyEnabled) {
@@ -676,6 +820,8 @@ function startApp() {
       quiz: state.quiz,
       usedQuizzes: Array.from(state.usedQuizzes),
       celebration: state.celebration,
+      showSurvey: state.showSurvey,
+      showRules: state.showRules,
       updatedAt: Date.now()
     }).catch(err => {
       console.error("Sync error:", err);
@@ -799,7 +945,7 @@ function startApp() {
     }).join("");
   }
   function renderAll() {
-    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory(); renderQuiz(); renderCelebration();
+    renderDisplay(); renderRanges(); renderGrid(); renderStats(); renderHistory(); renderQuiz(); renderCelebration(); renderSurvey(); renderRules();
     const drawBtn = document.getElementById("drawBtn");
     if (drawBtn) drawBtn.disabled = available().length === 0;
   }
@@ -963,6 +1109,99 @@ function startApp() {
     syncToFirebase();
   }
 
+  // アンケート表示
+  let surveyQrRendered = false;
+  function renderSurvey() {
+    const modal = document.getElementById("surveyModal");
+    if (!modal) return;
+    if (state.showSurvey) {
+      // QRコードは初回だけ生成
+      if (!surveyQrRendered) {
+        const container = document.getElementById("surveyQrcode");
+        container.innerHTML = "";
+        if (window.QRCode) {
+          new window.QRCode(container, {
+            text: SURVEY_URL,
+            width: 220,
+            height: 220,
+            colorDark: "#0f0e0c",
+            colorLight: "#f5f2ea",
+            correctLevel: window.QRCode.CorrectLevel.M
+          });
+        }
+        const link = document.getElementById("surveyOpenBtn");
+        if (link) link.href = SURVEY_URL;
+        surveyQrRendered = true;
+      }
+      modal.classList.add("open");
+    } else {
+      modal.classList.remove("open");
+    }
+  }
+  function toggleSurvey() {
+    if (VIEW_MODE) return;
+    state.showSurvey = !state.showSurvey;
+    renderSurvey();
+    syncToFirebase();
+  }
+  function closeSurvey() {
+    if (VIEW_MODE) return;
+    state.showSurvey = false;
+    renderSurvey();
+    syncToFirebase();
+  }
+  function copySurveyUrl() {
+    navigator.clipboard.writeText(SURVEY_URL).then(() => {
+      const btn = document.getElementById("surveyCopyBtn");
+      const original = btn.textContent;
+      btn.textContent = "コピーしました";
+      setTimeout(() => { btn.textContent = original; }, 1500);
+    });
+  }
+
+  // ルール説明モーダル
+  let rulesPatternsRendered = false;
+  function renderRulesPatterns() {
+    if (rulesPatternsRendered) return;
+    function buildPattern(elementId, onCells) {
+      const el = document.getElementById(elementId);
+      if (!el) return;
+      el.innerHTML = "";
+      for (let i = 0; i < 25; i++) {
+        const c = document.createElement("div");
+        c.className = "pattern-cell" + (onCells.includes(i) ? " on" : "");
+        el.appendChild(c);
+      }
+    }
+    // 5x5 grid - index 0=top-left, 24=bottom-right
+    buildPattern("patHorizontal", [10, 11, 12, 13, 14]); // 中央の横列
+    buildPattern("patVertical",   [2, 7, 12, 17, 22]);   // 中央の縦列
+    buildPattern("patDiagonal",   [0, 6, 12, 18, 24]);   // 左上→右下のななめ
+    rulesPatternsRendered = true;
+  }
+  function renderRules() {
+    const modal = document.getElementById("rulesModal");
+    if (!modal) return;
+    if (state.showRules) {
+      renderRulesPatterns();
+      modal.classList.add("open");
+    } else {
+      modal.classList.remove("open");
+    }
+  }
+  function toggleRules() {
+    if (VIEW_MODE) return;
+    state.showRules = !state.showRules;
+    renderRules();
+    syncToFirebase();
+  }
+  function closeRules() {
+    if (VIEW_MODE) return;
+    state.showRules = false;
+    renderRules();
+    syncToFirebase();
+  }
+
   function playChime() {
     if (!state.sound) return;
     try {
@@ -1086,13 +1325,20 @@ function startApp() {
     document.getElementById("quizCloseBtn").addEventListener("click", closeQuiz);
     document.getElementById("bingoBtn").addEventListener("click", triggerCelebration);
     document.getElementById("bingoOverlay").addEventListener("click", dismissCelebration);
+    document.getElementById("surveyBtn").addEventListener("click", toggleSurvey);
+    document.getElementById("surveyCloseBtn").addEventListener("click", closeSurvey);
+    document.getElementById("surveyCopyBtn").addEventListener("click", copySurveyUrl);
+    document.getElementById("surveyModal").addEventListener("click", (e) => { if (e.target.id === "surveyModal") closeSurvey(); });
+    document.getElementById("rulesBtn").addEventListener("click", toggleRules);
+    document.getElementById("rulesCloseBtn").addEventListener("click", closeRules);
+    document.getElementById("rulesModal").addEventListener("click", (e) => { if (e.target.id === "rulesModal") closeRules(); });
     document.addEventListener("keydown", (e) => {
       if (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA") return;
       if (e.code === "Space") { e.preventDefault(); draw(); }
       else if (e.key === "r" || e.key === "R") reset();
       else if (e.key === "f" || e.key === "F") toggleFullscreen();
       else if (e.key === "q" || e.key === "Q") showQuiz();
-      else if (e.key === "Escape") { hideQR(); closeQuiz(); dismissCelebration(); }
+      else if (e.key === "Escape") { hideQR(); closeQuiz(); dismissCelebration(); closeSurvey(); closeRules(); }
     });
   } else {
     document.addEventListener("click", () => {
