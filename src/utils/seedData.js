@@ -1,4 +1,4 @@
-export const DATA_VERSION = '1778500000005';
+export const DATA_VERSION = '1778500000006';
 
 export const initialEvents = [
     {
