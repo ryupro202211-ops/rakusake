@@ -82,17 +82,12 @@ export const deleteEvent = (id) => {
     triggerUpdate();
 };
 
-// Seed initial data if empty
+// Seed initial data — always overwrite when DATA_VERSION changes
 export const seedInitialData = () => {
     try {
-        // First, try to clear old versions to ensure we have space
         clearOldVersions();
-
-        const events = getEvents();
-        if (events.length === 0) {
-            safeSetItem(STORAGE_KEY, JSON.stringify(initialEvents));
-            triggerUpdate();
-        }
+        safeSetItem(STORAGE_KEY, JSON.stringify(initialEvents));
+        triggerUpdate();
     } catch (e) {
         console.error("Failed to seed initial data", e);
     }
