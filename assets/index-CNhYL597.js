@@ -13,15 +13,15 @@ Please change the parent <Route path="${M}"> to <Route path="${M==="/"?"*":`${M}
           .hamburger-btn { display: flex !important; }
           .nav-links { display: none !important; }
         }
-      `})]})},z0=u=>({fontSize:"0.9rem",fontWeight:"bold",color:u?"var(--color-text)":"#fff",opacity:1,transition:"color 0.3s",cursor:"pointer",padding:"8px 12px"}),nu=({href:u,showBg:o,children:s,onClick:i})=>p.jsx("a",{href:u,style:z0(o),onClick:i,children:s}),zl={fontSize:"1.3rem",fontWeight:"bold",color:"var(--color-text)",textDecoration:"none",padding:"0.5rem 1rem"},d0="https://line.me/R/ti/p/@667fodcp",M1=()=>p.jsxs("footer",{style:{padding:"0",background:"#fff",borderTop:"1px solid #eee",marginTop:"auto"},children:[p.jsx("div",{style:{background:"linear-gradient(135deg, #2d3436 0%, #636e72 100%)",padding:"3rem 0",textAlign:"center",color:"#fff"},children:p.jsxs("div",{className:"container",children:[p.jsx("h3",{style:{fontSize:"1.5rem",marginBottom:"0.8rem",color:"#fff"},children:"次回のイベントに参加しませんか？"}),p.jsx("p",{style:{opacity:.8,marginBottom:"1.5rem",fontSize:"0.95rem"},children:"一人参加OK・20〜30代中心・お酒好きが集まる交流イベント"}),p.jsxs("div",{style:{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap"},children:[p.jsx("a",{href:"#events",className:"btn-primary",children:"イベントを見る"}),p.jsxs("a",{href:d0,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"8px",padding:"14px 28px",background:"#06C755",color:"#fff",borderRadius:"50px",fontWeight:"bold",fontSize:"1rem",textDecoration:"none",transition:"all 0.3s"},children:[p.jsx("svg",{width:"18",height:"18",viewBox:"0 0 24 24",fill:"currentColor",children:p.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE登録"]})]})]})}),p.jsx("div",{style:{padding:"2.5rem 0"},children:p.jsxs("div",{className:"container",style:{textAlign:"center"},children:[p.jsx("div",{style:{margin:"0 0 1.2rem"},children:p.jsx("img",{src:"/rakusake/images/S__2351117_0.jpg",alt:"楽SAKEターミナル",style:{height:"60px",width:"auto",borderRadius:"10px"}})}),p.jsxs("div",{style:{marginBottom:"1.5rem"},children:[p.jsx("a",{href:"#about",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"コンセプト"}),p.jsx("a",{href:"#events",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"イベント一覧"}),p.jsx("a",{href:"#first-timer",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"初めての方へ"})]}),p.jsxs("div",{style:{display:"flex",justifyContent:"center",gap:"1.5rem",marginBottom:"1.5rem"},children:[p.jsxs("a",{href:"https://www.instagram.com/raku_sake_terminal/",target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"6px",color:"#E1306C",textDecoration:"none",fontWeight:"bold",fontSize:"0.9rem"},children:[p.jsxs("svg",{xmlns:"http://www.w3.org/2000/svg",width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[p.jsx("rect",{x:"2",y:"2",width:"20",height:"20",rx:"5",ry:"5"}),p.jsx("path",{d:"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"}),p.jsx("line",{x1:"17.5",y1:"6.5",x2:"17.51",y2:"6.5"})]}),"Instagram"]}),p.jsxs("a",{href:d0,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"6px",color:"#06C755",textDecoration:"none",fontWeight:"bold",fontSize:"0.9rem"},children:[p.jsx("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"currentColor",children:p.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE公式"]})]}),p.jsxs("p",{style:{fontSize:"0.8rem",color:"#888"},children:["© ",new Date().getFullYear()," 楽SAKEターミナル All rights reserved."]}),p.jsxs("p",{style:{fontSize:"0.7rem",color:"#bbb",marginTop:"0.5rem"},children:["運営：",p.jsx("a",{href:"https://ryupro202211-ops.github.io/ryupro/",target:"_blank",rel:"noopener noreferrer",style:{color:"#bbb",textDecoration:"none"},children:"合同会社ryupro"})]})]})})]}),X1="1778500000010",w1=[{title:"手持ち花火会 〜 飲み会のあとは、手持ち花火で夏を締めくくろう 〜",date:"2026-07-11",summary:"パチパチはじける光に、自然と笑顔があふれる。お酒を楽しんだあとは、みんなで手持ち花火で夏の思い出をつくろう。",description:`<p>
-パチパチはじける光に、自然と笑顔があふれる。<br>
-楽SAKEターミナルの7月は、手持ち花火会を開催します。
+      `})]})},z0=u=>({fontSize:"0.9rem",fontWeight:"bold",color:u?"var(--color-text)":"#fff",opacity:1,transition:"color 0.3s",cursor:"pointer",padding:"8px 12px"}),nu=({href:u,showBg:o,children:s,onClick:i})=>p.jsx("a",{href:u,style:z0(o),onClick:i,children:s}),zl={fontSize:"1.3rem",fontWeight:"bold",color:"var(--color-text)",textDecoration:"none",padding:"0.5rem 1rem"},d0="https://line.me/R/ti/p/@667fodcp",M1=()=>p.jsxs("footer",{style:{padding:"0",background:"#fff",borderTop:"1px solid #eee",marginTop:"auto"},children:[p.jsx("div",{style:{background:"linear-gradient(135deg, #2d3436 0%, #636e72 100%)",padding:"3rem 0",textAlign:"center",color:"#fff"},children:p.jsxs("div",{className:"container",children:[p.jsx("h3",{style:{fontSize:"1.5rem",marginBottom:"0.8rem",color:"#fff"},children:"次回のイベントに参加しませんか？"}),p.jsx("p",{style:{opacity:.8,marginBottom:"1.5rem",fontSize:"0.95rem"},children:"一人参加OK・20〜30代中心・お酒好きが集まる交流イベント"}),p.jsxs("div",{style:{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap"},children:[p.jsx("a",{href:"#events",className:"btn-primary",children:"イベントを見る"}),p.jsxs("a",{href:d0,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"8px",padding:"14px 28px",background:"#06C755",color:"#fff",borderRadius:"50px",fontWeight:"bold",fontSize:"1rem",textDecoration:"none",transition:"all 0.3s"},children:[p.jsx("svg",{width:"18",height:"18",viewBox:"0 0 24 24",fill:"currentColor",children:p.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE登録"]})]})]})}),p.jsx("div",{style:{padding:"2.5rem 0"},children:p.jsxs("div",{className:"container",style:{textAlign:"center"},children:[p.jsx("div",{style:{margin:"0 0 1.2rem"},children:p.jsx("img",{src:"/rakusake/images/S__2351117_0.jpg",alt:"楽SAKEターミナル",style:{height:"60px",width:"auto",borderRadius:"10px"}})}),p.jsxs("div",{style:{marginBottom:"1.5rem"},children:[p.jsx("a",{href:"#about",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"コンセプト"}),p.jsx("a",{href:"#events",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"イベント一覧"}),p.jsx("a",{href:"#first-timer",style:{margin:"0 12px",color:"var(--color-text)",fontSize:"0.9rem",fontWeight:"bold"},children:"初めての方へ"})]}),p.jsxs("div",{style:{display:"flex",justifyContent:"center",gap:"1.5rem",marginBottom:"1.5rem"},children:[p.jsxs("a",{href:"https://www.instagram.com/raku_sake_terminal/",target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"6px",color:"#E1306C",textDecoration:"none",fontWeight:"bold",fontSize:"0.9rem"},children:[p.jsxs("svg",{xmlns:"http://www.w3.org/2000/svg",width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[p.jsx("rect",{x:"2",y:"2",width:"20",height:"20",rx:"5",ry:"5"}),p.jsx("path",{d:"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"}),p.jsx("line",{x1:"17.5",y1:"6.5",x2:"17.51",y2:"6.5"})]}),"Instagram"]}),p.jsxs("a",{href:d0,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"6px",color:"#06C755",textDecoration:"none",fontWeight:"bold",fontSize:"0.9rem"},children:[p.jsx("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"currentColor",children:p.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE公式"]})]}),p.jsxs("p",{style:{fontSize:"0.8rem",color:"#888"},children:["© ",new Date().getFullYear()," 楽SAKEターミナル All rights reserved."]}),p.jsxs("p",{style:{fontSize:"0.7rem",color:"#bbb",marginTop:"0.5rem"},children:["運営：",p.jsx("a",{href:"https://ryupro202211-ops.github.io/ryupro/",target:"_blank",rel:"noopener noreferrer",style:{color:"#bbb",textDecoration:"none"},children:"合同会社ryupro"})]})]})})]}),X1="1778500000011",w1=[{title:"手持ち花火会 〜 飲み会のあとは、手持ち花火で夏を締めくくろう 〜",date:"2026-07-11",summary:"パチパチはじける光に、自然と笑顔があふれる。お酒を楽しんだあとは、みんなで手持ち花火で夏の思い出をつくろう。",description:`<p>
+パチパチはじける光に、自然と笑顔があふれる！<br>
+楽SAKEターミナルの7月は、手持ち花火会を開催します🎆
 </p>
 
 <p>
-お酒を楽しんだあとは、みんなで夏の思い出をつくろう。<br>
-火花の下で、気づいたら隣の人と笑い合っている。<br>
-そんな土曜の夕暮れどきにしたいと思っています。
+お酒を楽しんだあとは、みんなで夏の思い出をつくろう！！<br>
+火花を眺めていたら、気づけば隣の人と笑い合っている😊<br>
+普段とは違ったわくわくする土曜日のひと時にしたいと思っています！
 </p>
 
 <h2>「楽SAKEターミナル」とは</h2>
@@ -32,19 +32,14 @@ Please change the parent <Route path="${M}"> to <Route path="${M==="/"?"*":`${M}
 </p>
 
 <p>
-日本酒・ワイン・クラフトビール。<br>
-ジャンルにとらわれず、「最高の一杯」を片手に。
-</p>
-
-<p>
 本当に提供しているのは、お酒の知識ではなく、<br>
 同世代との出会いと、ゆるいつながりです。
 </p>
 
 <p>
-お酒に詳しくなくても大丈夫。<br>
-強くなくても、あまり飲めなくても大丈夫。<br>
-一人で来る方が多いので、初めてでも自然に馴染めます。
+お酒に詳しくなくても大丈夫♬<br>
+強くなくても、あまり飲めなくても大丈夫♪<br>
+一人で来る方が多いので、初めてでも自然に馴染めます✨
 </p>
 
 <h2>こんな方におすすめ</h2>
@@ -54,17 +49,19 @@ Please change the parent <Route path="${M}"> to <Route path="${M==="/"?"*":`${M}
 ✨ 土曜の夕方から、ちょっと非日常を味わいたい方<br>
 ✨ 同世代の知り合いを増やしたい方<br>
 ✨ 夏の夜に花火を楽しみたい方<br>
-✨ お酒は好き。詳しくなくてもいい。という方<br>
+✨ お酒が飲める方<br>
+✨ お酒が飲めない方<br>
 ✨ 一人で参加するつもりだけど、ちゃんと話せる場がいい方
 </p>
 
 <h2>🎇 当日の流れ</h2>
 
 <ul>
-<li>18:00　受付・乾杯</li>
-<li>18:30　交流タイム</li>
-<li>19:00　手持ち花火スタート🎇</li>
-<li>19:30　自由時間・写真タイム</li>
+<li>18:00　受付</li>
+<li>18:10　乾杯</li>
+<li>18:30　手持ち花火スタート🎇</li>
+<li>19:10　自由時間・写真タイム</li>
+<li>19:30　片付け</li>
 <li>20:00　解散</li>
 </ul>
 
@@ -75,17 +72,17 @@ Please change the parent <Route path="${M}"> to <Route path="${M==="/"?"*":`${M}
 
 <h2>📋 会場</h2>
 
-<p>未定（決まり次第お知らせします）</p>
+<p>豊洲ぐるりパーク（東京都江東区豊洲6丁目）</p>
 
 <p>🎇 花火は会場で用意するので手ぶらでOK</p>
 
 <h2>💰 参加費</h2>
 
 <ul>
-<li>男性：5,000円</li>
-<li>男性（20代）：4,000円</li>
-<li>女性：4,000円</li>
-<li>学生：3,000円</li>
+<li>男性：4,000円</li>
+<li>男性（20代）：3,000円</li>
+<li>女性：3,000円</li>
+<li>学生：2,500円</li>
 </ul>
 
 <p>
@@ -136,6 +133,13 @@ Please change the parent <Route path="${M}"> to <Route path="${M==="/"?"*":`${M}
 ◎ <strong>マサ</strong>　元料理人のお笑い隊長！どんな場でも笑いの渦を巻き起こす⭐️<br>
 ◎ <strong>つな</strong>　ヨガインストラクター兼バレエダンサー！突き抜けた明るさで会場に華を咲かせます💃<br>
 ◎ <strong>のぞ</strong>　大分から来た元気っ娘！たまに飛び出す大分弁がチャームポイント🍗
+</p>
+
+<h2>💬 もっと楽SAKEを楽しみたい方へ</h2>
+
+<p>
+イベント当日、楽SAKEターミナルの公式LINEをご案内します。<br>
+次回イベントの先行案内や、楽SAKEメンバー限定の小さな集まりなど、Instagramでは流していない情報をお届けしています。
 </p>
 
 <h2>お申し込みはこちら</h2>
