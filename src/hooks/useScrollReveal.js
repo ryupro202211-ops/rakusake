@@ -14,7 +14,7 @@ export const useScrollReveal = () => {
         );
 
         const elements = document.querySelectorAll(
-            '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale'
+            '.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale, .stagger-children'
         );
         elements.forEach((el) => observer.observe(el));
 

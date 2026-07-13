@@ -30,7 +30,7 @@ const Testimonials = () => {
             <div className="container">
                 <h2 style={{ width: '100%', textAlign: 'center' }}>参加者の声</h2>
 
-                <div style={{
+                <div className={`stagger-children${isVisible ? ' visible' : ''}`} style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
                     gap: '2rem', marginTop: '2rem',
@@ -40,9 +40,6 @@ const Testimonials = () => {
                             background: '#fff', borderRadius: 'var(--radius-lg)', padding: '2rem',
                             border: 'none', position: 'relative',
                             boxShadow: '0 2px 20px rgba(0,0,0,0.05)',
-                            opacity: isVisible ? 1 : 0,
-                            transform: isVisible ? 'translateY(0)' : 'translateY(25px)',
-                            transition: `all 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${i * 0.15}s`,
                         }}
                             onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-6px)'; e.currentTarget.style.boxShadow = '0 12px 40px rgba(255,159,28,0.12)'; }}
                             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)'; }}

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
+import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
@@ -71,6 +72,8 @@ const Events = () => {
     const [upcomingEvents, setUpcomingEvents] = useState([]);
     const [pastEvents, setPastEvents] = useState([]);
     const [showAllPast, setShowAllPast] = useState(false);
+    const [gridRef, gridVisible] = useIntersectionObserver({ threshold: 0.1, triggerOnce: true });
+    const [pastRef, pastVisible] = useIntersectionObserver({ threshold: 0.05, triggerOnce: true });
 
     useEffect(() => {
         const fetchEvents = () => {
@@ -104,7 +107,7 @@ const Events = () => {
                     </h3>
                     {upcomingEvents.length > 0 ? (
                         <>
-                            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                            <div ref={gridRef} className={`stagger-children${gridVisible ? ' visible' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                                 {upcomingEvents.map(event => <EventCard key={event.id} {...event} />)}
                             </div>
                         </>
@@ -147,7 +150,7 @@ const Events = () => {
                         <h3 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.3rem', color: 'var(--color-text)' }}>
                             過去のイベント
                         </h3>
-                        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+                        <div ref={pastRef} className={`stagger-children${pastVisible ? ' visible' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                             {(showAllPast ? pastEvents : pastEvents.slice(0, 3)).map(event => <EventCard key={event.id} {...event} isPast={true} />)}
                         </div>
                         {pastEvents.length > 3 && !showAllPast && (

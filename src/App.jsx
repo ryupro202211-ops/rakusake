@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import ScrollProgress from './components/ScrollProgress';
 import Home from './pages/Home';
 import Admin from './pages/Admin';
 import EventDetail from './pages/EventDetail';
@@ -13,6 +14,7 @@ function AppContent() {
 
   return (
     <div className="App">
+      <ScrollProgress />
       <Header />
       <main>
         <Routes>

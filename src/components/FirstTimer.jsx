@@ -35,7 +35,7 @@ const FirstTimer = () => {
                     初参加でも安心して楽しめるポイント
                 </p>
 
-                <div style={{
+                <div className={`stagger-children${isVisible ? ' visible' : ''}`} style={{
                     display: 'grid',
                     gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
                     gap: '1.5rem',
@@ -45,12 +45,12 @@ const FirstTimer = () => {
                             background: '#fff', borderRadius: '20px', padding: '2rem',
                             boxShadow: '0 4px 15px rgba(0,0,0,0.04)',
                             border: '1px solid #f0f0f0',
-                            opacity: isVisible ? 1 : 0,
-                            transform: isVisible ? 'translateY(0)' : 'translateY(20px)',
-                            transition: `all 0.5s ease-out ${i * 0.1}s`,
                             textAlign: 'center',
-                        }}>
-                            <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{item.icon}</div>
+                        }}
+                            onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,159,28,0.15)'; }}
+                            onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.04)'; }}
+                        >
+                            <div className="animate-float" style={{ fontSize: '2.5rem', marginBottom: '1rem', animationDelay: `${i * 0.7}s` }}>{item.icon}</div>
                             <h3 style={{ fontSize: '1.15rem', marginBottom: '0.8rem', color: 'var(--color-primary)' }}>{item.title}</h3>
                             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--color-text-muted)' }}>{item.desc}</p>
                         </div>

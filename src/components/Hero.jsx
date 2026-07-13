@@ -34,10 +34,10 @@ const Hero = () => {
             position: 'relative', overflow: 'hidden',
         }}>
             {/* Background image */}
-            <div style={{
+            <div className="hero-bg-zoom" style={{
                 position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
                 backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
-                backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0, filter: 'blur(3px)', transform: 'scale(1.02)',
+                backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0, filter: 'blur(3px)',
             }} />
             {/* Dark overlay for text readability */}
             <div style={{
@@ -147,8 +147,8 @@ const Hero = () => {
                 </div>
 
                 {/* Scroll down indicator */}
-                <div className="delay-500 animate-fade-in" style={{ marginTop: '3rem', opacity: 0.5 }}>
-                    <a href="#about" style={{ color: '#fff', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
+                <div className="delay-500 animate-fade-in" style={{ marginTop: '3rem', opacity: 0.6 }}>
+                    <a href="#about" className="animate-bounce-soft" style={{ display: 'inline-block', color: '#fff', textDecoration: 'none', fontSize: '0.8rem', letterSpacing: '0.1em' }}>
                         ▼ SCROLL
                     </a>
                 </div>
