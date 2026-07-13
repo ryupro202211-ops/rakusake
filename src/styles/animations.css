@@ -78,16 +78,18 @@
 .delay-300 { animation-delay: 0.3s; }
 .delay-500 { animation-delay: 0.5s; }
 
-/* Scroll-triggered animations */
+/* Scroll-triggered animations (fade + rise + focus-in blur) */
 .scroll-reveal {
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: blur(6px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1), filter 0.9s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .scroll-reveal.visible {
   opacity: 1;
   transform: translateY(0);
+  filter: blur(0);
 }
 
 .scroll-reveal-left {
@@ -127,12 +129,14 @@
 .stagger-children > * {
   opacity: 0;
   transform: translateY(30px) scale(0.98);
-  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  filter: blur(4px);
+  transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1), transform 0.7s cubic-bezier(0.16, 1, 0.3, 1), filter 0.7s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
 }
 
 .stagger-children.visible > * {
   opacity: 1;
   transform: translateY(0) scale(1);
+  filter: blur(0);
 }
 
 .stagger-children.visible > *:nth-child(1) { transition-delay: 0.05s; }
@@ -216,6 +220,56 @@
   animation: bounce-soft 2s ease-in-out infinite;
 }
 
+/* Rising sake bubbles in hero */
+@keyframes bubble-rise {
+  0% {
+    transform: translateY(0) translateX(0) scale(0.6);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-45vh) translateX(12px) scale(1);
+    opacity: 0.5;
+  }
+  100% {
+    transform: translateY(-95vh) translateX(-8px) scale(1.15);
+    opacity: 0;
+  }
+}
+
+.hero-bubble {
+  position: absolute;
+  bottom: -30px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.12) 60%, transparent);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  pointer-events: none;
+  animation: bubble-rise linear infinite;
+}
+
+/* Shimmering gradient text */
+@keyframes shimmer-sweep {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.shimmer-text {
+  background: linear-gradient(100deg, var(--color-secondary) 20%, #fff8e7 40%, #ffffff 50%, #fff8e7 60%, var(--color-secondary) 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: shimmer-sweep 4s linear infinite;
+}
+
+/* Image slider: pause on hover */
+.slider-track:hover {
+  animation-play-state: paused;
+}
+
 /* Respect reduced-motion preference */
 @media (prefers-reduced-motion: reduce) {
   .scroll-reveal,
@@ -225,12 +279,19 @@
   .stagger-children > * {
     opacity: 1;
     transform: none;
+    filter: none;
     transition: none;
   }
 
   .hero-bg-zoom,
   .animate-float,
-  .animate-bounce-soft {
+  .animate-bounce-soft,
+  .hero-bubble,
+  .shimmer-text {
     animation: none;
+  }
+
+  .hero-bubble {
+    display: none;
   }
 }

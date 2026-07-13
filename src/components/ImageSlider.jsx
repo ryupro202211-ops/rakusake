@@ -55,7 +55,7 @@ const ImageSlider = () => {
                 イベントの様子
             </h3>
 
-            <div style={trackStyle}>
+            <div className="slider-track" style={trackStyle}>
                 {/* First set of images */}
                 {images.map((img, index) => (
                     <div style={slideStyle} key={`slide-1-${index}`}>

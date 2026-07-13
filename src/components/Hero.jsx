@@ -1,11 +1,41 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
+// Deterministic bubble configs (size, horizontal position, duration, delay)
+const BUBBLES = [
+    { size: 14, left: '8%', duration: 9, delay: 0 },
+    { size: 8, left: '18%', duration: 12, delay: 3 },
+    { size: 20, left: '27%', duration: 10, delay: 6 },
+    { size: 10, left: '38%', duration: 13, delay: 1.5 },
+    { size: 16, left: '49%', duration: 8.5, delay: 4.5 },
+    { size: 7, left: '58%', duration: 11, delay: 7 },
+    { size: 18, left: '68%', duration: 9.5, delay: 2 },
+    { size: 9, left: '77%', duration: 12.5, delay: 5 },
+    { size: 13, left: '86%', duration: 10.5, delay: 8 },
+    { size: 11, left: '93%', duration: 11.5, delay: 0.8 },
+];
+
 const Hero = () => {
     const [latestEvent, setLatestEvent] = useState(null);
+    const parallaxRef = useRef(null);
+
+    // Parallax: background layer drifts slower than scroll
+    useEffect(() => {
+        let raf = 0;
+        const onScroll = () => {
+            cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(() => {
+                if (parallaxRef.current) {
+                    parallaxRef.current.style.transform = `translateY(${window.scrollY * 0.35}px)`;
+                }
+            });
+        };
+        window.addEventListener('scroll', onScroll, { passive: true });
+        return () => { window.removeEventListener('scroll', onScroll); cancelAnimationFrame(raf); };
+    }, []);
 
     useEffect(() => {
         const fetchLatestEvent = () => {
@@ -33,25 +63,39 @@ const Hero = () => {
             minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center',
             position: 'relative', overflow: 'hidden',
         }}>
-            {/* Background image */}
-            <div className="hero-bg-zoom" style={{
-                position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
-                backgroundSize: 'cover', backgroundPosition: 'center', zIndex: 0, filter: 'blur(3px)',
-            }} />
+            {/* Background image (parallax wrapper + Ken Burns inner layer) */}
+            <div ref={parallaxRef} style={{
+                position: 'absolute', top: '-15%', left: 0, width: '100%', height: '130%',
+                zIndex: 0, willChange: 'transform',
+            }}>
+                <div className="hero-bg-zoom" style={{
+                    position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
+                    backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
+                    backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(3px)',
+                }} />
+            </div>
             {/* Dark overlay for text readability */}
             <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
                 background: 'linear-gradient(to bottom, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.45) 100%)',
                 zIndex: 1,
             }} />
+            {/* Rising sake bubbles */}
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, zIndex: 1, overflow: 'hidden', pointerEvents: 'none' }}>
+                {BUBBLES.map((b, i) => (
+                    <span key={i} className="hero-bubble" style={{
+                        width: `${b.size}px`, height: `${b.size}px`, left: b.left,
+                        animationDuration: `${b.duration}s`, animationDelay: `${b.delay}s`,
+                    }} />
+                ))}
+            </div>
 
             <div className="container" style={{ zIndex: 2, textAlign: 'center', color: '#fff', padding: '100px 20px 60px', maxWidth: '900px', width: '100%' }}>
                 <div className="animate-fade-in">
                     {/* Functional main copy */}
-                    <p style={{
+                    <p className="shimmer-text" style={{
                         fontSize: 'clamp(0.85rem, 1.8vw, 1.1rem)', letterSpacing: '0.15em',
-                        color: 'var(--color-secondary)', marginBottom: '1rem', fontWeight: 'bold',
+                        marginBottom: '1rem', fontWeight: 'bold',
                     }}>
                         東京で毎月開催 | お酒 × 企画の交流イベント
                     </p>

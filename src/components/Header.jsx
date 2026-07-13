@@ -4,13 +4,21 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === '/' || location.pathname === '';
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 50);
+      // Hide when scrolling down past the hero, reveal on any upward scroll
+      setHidden(y > lastY && y > 400);
+      lastY = y;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -29,7 +37,8 @@ const Header = () => {
     <header style={{
       position: 'fixed', top: 0, left: 0, width: '100%', zIndex: menuOpen ? 10001 : 1000,
       padding: '12px 0',
-      transition: 'all 0.3s ease',
+      transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+      transform: hidden && !menuOpen ? 'translateY(-100%)' : 'translateY(0)',
       backgroundColor: showBg ? 'rgba(255,255,255,0.95)' : 'transparent',
       backdropFilter: showBg ? 'blur(10px)' : 'none',
       boxShadow: showBg ? '0 2px 20px rgba(0,0,0,0.06)' : 'none',

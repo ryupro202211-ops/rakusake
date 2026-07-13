@@ -5,6 +5,24 @@ import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
+// 3D tilt: card leans toward the cursor
+const handleTiltMove = (e) => {
+    const card = e.currentTarget;
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transition = 'transform 0.1s ease-out, box-shadow 0.3s ease';
+    card.style.transform = `perspective(900px) rotateX(${(-y * 5).toFixed(2)}deg) rotateY(${(x * 7).toFixed(2)}deg) translateY(-8px)`;
+    card.style.boxShadow = '0 24px 48px rgba(255,159,28,0.2)';
+};
+
+const handleTiltLeave = (e) => {
+    const card = e.currentTarget;
+    card.style.transition = 'transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s ease';
+    card.style.transform = 'perspective(900px) rotateX(0deg) rotateY(0deg) translateY(0)';
+    card.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
+};
+
 const EventCard = ({ id, title, date, description, summary, isPast = false, image, remainingSeats }) => (
     <Link to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
         <div style={{
@@ -14,8 +32,8 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
             boxShadow: '0 2px 20px rgba(0,0,0,0.06)', position: 'relative',
             border: '1px solid rgba(0,0,0,0.04)',
         }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.12)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)'; }}
+            onMouseMove={handleTiltMove}
+            onMouseLeave={handleTiltLeave}
         >
             {image && (
                 <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
