@@ -8,11 +8,14 @@ import Events from '../components/Events';
 import Atmosphere from '../components/Atmosphere';
 import ImageSlider from '../components/ImageSlider';
 import { seedInitialData } from '../utils/storage';
+import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Home = () => {
     useEffect(() => {
         seedInitialData();
     }, []);
+
+    useScrollReveal();
 
     useEffect(() => {
         const hash = window.location.hash;
@@ -30,13 +33,13 @@ const Home = () => {
     return (
         <>
             <Hero />
-            <Stats />
-            <Testimonials />
-            <About />
-            <FirstTimer />
-            <Events />
-            <Atmosphere />
-            <ImageSlider />
+            <div className="scroll-reveal"><Stats /></div>
+            <div className="scroll-reveal"><Testimonials /></div>
+            <div className="scroll-reveal"><About /></div>
+            <div className="scroll-reveal"><FirstTimer /></div>
+            <div className="scroll-reveal"><Events /></div>
+            <div className="scroll-reveal"><Atmosphere /></div>
+            <div className="scroll-reveal"><ImageSlider /></div>
         </>
     );
 };
