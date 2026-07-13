@@ -8,36 +8,49 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
     <Link to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
         <div style={{
             height: '100%', display: 'flex', flexDirection: 'column',
-            transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-            background: '#fff', borderRadius: '24px', overflow: 'hidden',
-            boxShadow: '0 10px 25px rgba(0,0,0,0.08)', position: 'relative', top: 0,
+            transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
+            background: '#fff', borderRadius: 'var(--radius-lg)', overflow: 'hidden',
+            boxShadow: '0 2px 20px rgba(0,0,0,0.06)', position: 'relative',
+            border: '1px solid rgba(0,0,0,0.04)',
         }}
-            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-10px)'; e.currentTarget.style.boxShadow = '0 20px 40px rgba(255,159,28,0.2)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 10px 25px rgba(0,0,0,0.08)'; }}
+            onMouseEnter={e => { e.currentTarget.style.transform = 'translateY(-8px)'; e.currentTarget.style.boxShadow = '0 20px 50px rgba(0,0,0,0.12)'; }}
+            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)'; }}
         >
             {image && (
-                <div style={{ height: '200px', overflow: 'hidden' }}>
-                    <img src={image.startsWith('data:') ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.5s' }}
-                        onMouseOver={e => e.target.style.transform = 'scale(1.1)'}
+                <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
+                    <img src={image.startsWith('data:') ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                        onMouseOver={e => e.target.style.transform = 'scale(1.05)'}
                         onMouseOut={e => e.target.style.transform = 'scale(1.0)'}
                         onError={e => e.target.style.display = 'none'}
                     />
+                    <div style={{
+                        position: 'absolute', top: '12px', left: '12px',
+                        fontSize: '0.75rem', fontWeight: 'bold',
+                        color: '#fff',
+                        background: isPast ? 'rgba(0,0,0,0.5)' : 'var(--color-primary)',
+                        padding: '5px 14px', borderRadius: '20px',
+                        backdropFilter: 'blur(4px)',
+                    }}>
+                        {isPast ? '開催済み' : '開催予定'}
+                    </div>
                 </div>
             )}
             <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.8rem' }}>
-                    <span style={{
-                        fontSize: '0.8rem', fontWeight: 'bold',
-                        color: isPast ? '#a0a0a0' : 'var(--color-primary)',
-                        background: isPast ? '#f0f0f0' : 'rgba(255,159,28,0.15)',
-                        padding: '4px 12px', borderRadius: '20px',
-                    }}>
-                        {isPast ? '開催済み' : '開催予定'}
-                    </span>
-                    <span style={{ fontSize: '0.9rem', color: '#888', fontWeight: 'bold' }}>{date}</span>
-                </div>
-                <h3 style={{ fontSize: '1.3rem', marginBottom: '0.8rem', lineHeight: 1.4, textAlign: 'left' }}>{title}</h3>
-                <p style={{ fontSize: '0.95rem', lineHeight: '1.6', color: 'var(--color-text-muted)', flexGrow: 1 }}>
+                {!image && (
+                    <div style={{ marginBottom: '0.8rem' }}>
+                        <span style={{
+                            fontSize: '0.75rem', fontWeight: 'bold',
+                            color: isPast ? '#a0a0a0' : 'var(--color-primary)',
+                            background: isPast ? '#f5f5f5' : 'rgba(255,159,28,0.1)',
+                            padding: '5px 14px', borderRadius: '20px',
+                        }}>
+                            {isPast ? '開催済み' : '開催予定'}
+                        </span>
+                    </div>
+                )}
+                <span style={{ fontSize: '0.8rem', color: '#999', fontWeight: '600', marginBottom: '0.5rem' }}>{date}</span>
+                <h3 style={{ fontSize: '1.2rem', marginBottom: '0.8rem', lineHeight: 1.5, textAlign: 'left', fontWeight: '700' }}>{title}</h3>
+                <p style={{ fontSize: '0.9rem', lineHeight: '1.7', color: 'var(--color-text-muted)', flexGrow: 1 }}>
                     {summary || (description && description.substring(0, 50) + '...')}
                 </p>
                 {!isPast && remainingSeats != null && (
@@ -45,6 +58,10 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
                         残り{remainingSeats}席
                     </p>
                 )}
+                <div style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '600' }}>
+                    詳しく見る
+                    <span style={{ transition: 'transform 0.3s' }}>→</span>
+                </div>
             </div>
         </div>
     </Link>
