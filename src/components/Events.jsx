@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
+import SeatsBar from './SeatsBar';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
@@ -23,7 +24,7 @@ const handleTiltLeave = (e) => {
     card.style.boxShadow = '0 2px 20px rgba(0,0,0,0.06)';
 };
 
-const EventCard = ({ id, title, date, description, summary, isPast = false, image, remainingSeats }) => (
+const EventCard = ({ id, title, date, description, summary, isPast = false, image, remainingSeats, capacity }) => (
     <Link to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
         <div style={{
             height: '100%', display: 'flex', flexDirection: 'column',
@@ -73,9 +74,11 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
                     {summary || (description && description.substring(0, 50) + '...')}
                 </p>
                 {!isPast && remainingSeats != null && (
-                    <p style={{ fontSize: '0.85rem', color: '#ff4d4d', fontWeight: 'bold', marginTop: '0.8rem' }}>
-                        残り{remainingSeats}席
-                    </p>
+                    <div style={{ marginTop: '1rem' }}>
+                        {capacity != null
+                            ? <SeatsBar capacity={capacity} remaining={remainingSeats} variant="light" />
+                            : <p style={{ fontSize: '0.85rem', color: '#ff4d4d', fontWeight: 'bold' }}>残り{remainingSeats}席</p>}
+                    </div>
                 )}
                 <div style={{ marginTop: '1rem', display: 'flex', alignItems: 'center', gap: '6px', color: 'var(--color-primary)', fontSize: '0.85rem', fontWeight: '600' }}>
                     詳しく見る

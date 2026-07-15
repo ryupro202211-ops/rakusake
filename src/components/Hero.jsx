@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
+import Countdown from './Countdown';
+import SeatsBar from './SeatsBar';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
@@ -138,15 +140,15 @@ const Hero = () => {
                             {latestEvent.summary && (
                                 <p style={{ fontSize: '0.95rem', opacity: 0.8, marginBottom: '1.2rem', lineHeight: 1.6 }}>{latestEvent.summary}</p>
                             )}
+
+                            <Countdown date={latestEvent.date} time={latestEvent.startTime} variant="dark" />
+
+                            <SeatsBar capacity={latestEvent.capacity} remaining={latestEvent.remainingSeats} variant="dark" />
+
                             {latestEvent.venue && (
                                 <p style={{ fontSize: '0.85rem', opacity: 0.7, marginBottom: '1rem' }}>
                                     📍 {latestEvent.venue}
                                     {latestEvent.fee && ` | 💰 ${latestEvent.fee}`}
-                                </p>
-                            )}
-                            {latestEvent.remainingSeats != null && (
-                                <p style={{ fontSize: '0.85rem', color: '#ff6b6b', fontWeight: 'bold', marginBottom: '1rem' }}>
-                                    🔥 残り{latestEvent.remainingSeats}席
                                 </p>
                             )}
                             <div style={{ textAlign: 'center' }}>
