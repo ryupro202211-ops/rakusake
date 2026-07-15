@@ -46,7 +46,7 @@ const Header = () => {
       <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
           <img
-            src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
+            src={`${import.meta.env.BASE_URL}images/logo_e.png`}
             alt="楽SAKEターミナル"
             style={{ height: '40px', width: 'auto', borderRadius: '6px', transition: 'all 0.3s' }}
           />

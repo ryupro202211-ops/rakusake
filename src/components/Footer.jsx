@@ -48,7 +48,7 @@ const Footer = () => {
                 <div className="container" style={{ textAlign: 'center' }}>
                     <div style={{ margin: '0 0 1.5rem' }}>
                         <img
-                            src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
+                            src={`${import.meta.env.BASE_URL}images/logo_e.png`}
                             alt="楽SAKEターミナル"
                             style={{ height: '50px', width: 'auto', borderRadius: '10px' }}
                         />

@@ -104,7 +104,7 @@ const Hero = () => {
 
                     <div style={{ marginBottom: '1.2rem' }}>
                         <img
-                            src={`${import.meta.env.BASE_URL}images/S__2351117_0.jpg`}
+                            src={`${import.meta.env.BASE_URL}images/logo_e.png`}
                             alt="楽SAKEターミナル"
                             style={{
                                 height: 'clamp(80px, 15vw, 140px)', width: 'auto', borderRadius: '16px',
