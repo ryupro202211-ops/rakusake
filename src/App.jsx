@@ -29,14 +29,20 @@ function AppContent() {
 }
 
 function App() {
-  // Dismiss the splash screen once the app has mounted (min display 900ms)
+  // Dismiss the splash screen once the app has mounted (min display 1800ms)
   useEffect(() => {
+    // Always open at the top of the page (disable browser scroll restoration)
+    if ('scrollRestoration' in window.history) {
+      window.history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const splash = document.getElementById('splash');
     if (!splash) return;
     const t = setTimeout(() => {
       splash.classList.add('splash-hide');
       setTimeout(() => splash.remove(), 700);
-    }, 900);
+    }, 1800);
     return () => clearTimeout(t);
   }, []);
 
