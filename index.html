@@ -41,11 +41,58 @@
   <meta name="twitter:title" content="楽SAKEターミナル | 東京で毎月開催のお酒×交流イベント" />
   <meta name="twitter:description" content="東京で毎月開催！一人参加OK・20〜30代中心のお酒×交流イベント。新しい仲間と最高の一杯を。" />
   <meta name="twitter:image" content="https://ryupro202211-ops.github.io/rakusake/images/S__2351117_0.jpg" />
+  <!-- Splash screen (shown until React mounts) -->
+  <style>
+    #splash {
+      position: fixed; inset: 0; z-index: 99999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 22px;
+      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 55%, #0f3460 100%);
+      transition: opacity 0.6s ease, visibility 0.6s;
+    }
+    #splash.splash-hide { opacity: 0; visibility: hidden; pointer-events: none; }
+    #splash img {
+      height: 110px; width: auto; border-radius: 20px;
+      animation: splash-pulse 1.6s ease-in-out infinite;
+      box-shadow: 0 0 45px rgba(255, 159, 28, 0.35);
+    }
+    @keyframes splash-pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.06); }
+    }
+    #splash .splash-bar {
+      width: 130px; height: 3px; border-radius: 2px; overflow: hidden;
+      background: rgba(255, 255, 255, 0.15);
+    }
+    #splash .splash-bar::after {
+      content: ''; display: block; width: 40%; height: 100%;
+      background: linear-gradient(90deg, #ff9f1c, #ffcf6b);
+      border-radius: 2px;
+      animation: splash-slide 1.1s ease-in-out infinite;
+    }
+    @keyframes splash-slide {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(320%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      #splash img, #splash .splash-bar::after { animation: none; }
+    }
+  </style>
 </head>
 
 <body>
+  <div id="splash">
+    <img src="%BASE_URL%images/S__2351117_0.jpg" alt="楽SAKEターミナル" />
+    <div class="splash-bar"></div>
+  </div>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <!-- Failsafe: hide splash even if the app fails to mount -->
+  <script>
+    setTimeout(function () {
+      var s = document.getElementById('splash');
+      if (s) { s.classList.add('splash-hide'); setTimeout(function () { s.remove(); }, 700); }
+    }, 7000);
+  </script>
 </body>
 
 </html>

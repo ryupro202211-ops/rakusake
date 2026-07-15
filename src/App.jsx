@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
@@ -29,7 +29,17 @@ function AppContent() {
 }
 
 function App() {
-  console.log('App component rendering');
+  // Dismiss the splash screen once the app has mounted (min display 900ms)
+  useEffect(() => {
+    const splash = document.getElementById('splash');
+    if (!splash) return;
+    const t = setTimeout(() => {
+      splash.classList.add('splash-hide');
+      setTimeout(() => splash.remove(), 700);
+    }, 900);
+    return () => clearTimeout(t);
+  }, []);
+
   return (
     <Router basename={import.meta.env.BASE_URL}>
       <AppContent />
