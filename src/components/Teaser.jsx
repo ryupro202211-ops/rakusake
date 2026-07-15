@@ -7,9 +7,9 @@ const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 const TEASER = {
     enabled: true,
     month: '8月',
-    hint: '夜空',
-    emoji: '🌌',
-    message: '真夏の夜、みんなで空を見上げる何か…？ヒントは「夜空」。詳細は近日解禁！',
+    hint: '夏祭り',
+    emoji: '🏮',
+    message: '浴衣で屋台で縁日で…？夏の夜を彩る「夏祭り」企画を準備中。詳細は近日解禁！',
 };
 
 const Teaser = () => {
