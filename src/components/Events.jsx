@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import SeatsBar from './SeatsBar';
+import Teaser from './Teaser';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
@@ -133,35 +134,7 @@ const Events = () => {
                             </div>
                         </>
                     ) : (
-                        <div style={{
-                            textAlign: 'center', padding: '3rem', background: '#fff',
-                            maxWidth: '600px', margin: '0 auto', borderRadius: '24px',
-                            border: '2px dashed #ddd',
-                        }}>
-                            <p style={{ fontSize: '1.1rem', color: 'var(--color-text)', fontWeight: 'bold', marginBottom: '0.5rem' }}>
-                                次回イベントは準備中です
-                            </p>
-                            <p style={{ color: 'var(--color-text-muted)', marginBottom: '1.5rem', fontSize: '0.95rem' }}>
-                                LINE登録で最速の告知を受け取ろう
-                            </p>
-                            <a
-                                href={LINE_URL}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                style={{
-                                    display: 'inline-flex', alignItems: 'center', gap: '8px',
-                                    padding: '12px 28px', background: '#06C755', color: '#fff',
-                                    borderRadius: '50px', fontWeight: 'bold', fontSize: '0.95rem',
-                                    textDecoration: 'none', transition: 'all 0.3s',
-                                    boxShadow: '0 4px 12px rgba(6,199,85,0.3)',
-                                }}
-                            >
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                                    <path d="M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"/>
-                                </svg>
-                                LINE登録で最速告知
-                            </a>
-                        </div>
+                        <Teaser embedded />
                     )}
                 </div>
 

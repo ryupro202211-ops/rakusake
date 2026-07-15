@@ -12,14 +12,14 @@ const TEASER = {
     message: '浴衣で屋台で縁日で…？夏の夜を彩る「夏祭り」企画を準備中。詳細は近日解禁！',
 };
 
-const Teaser = () => {
+const Teaser = ({ embedded = false }) => {
     const [ref, isVisible] = useIntersectionObserver({ threshold: 0.2, triggerOnce: true });
 
     if (!TEASER.enabled) return null;
 
     return (
-        <section ref={ref} style={{ padding: '80px 0', background: '#fff' }}>
-            <div className="container" style={{ maxWidth: '760px' }}>
+        <section ref={ref} style={{ padding: embedded ? '0' : '80px 0', background: embedded ? 'transparent' : '#fff' }}>
+            <div className="container" style={{ maxWidth: '760px', padding: embedded ? 0 : undefined }}>
                 <div style={{
                     position: 'relative', overflow: 'hidden',
                     borderRadius: 'var(--radius-lg)', padding: '3rem 2rem', textAlign: 'center',

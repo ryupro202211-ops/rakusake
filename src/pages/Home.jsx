@@ -5,7 +5,6 @@ import Testimonials from '../components/Testimonials';
 import About from '../components/About';
 import FirstTimer from '../components/FirstTimer';
 import Events from '../components/Events';
-import Teaser from '../components/Teaser';
 import Atmosphere from '../components/Atmosphere';
 import ImageSlider from '../components/ImageSlider';
 import { seedInitialData } from '../utils/storage';
@@ -39,7 +38,6 @@ const Home = () => {
             <div className="scroll-reveal"><About /></div>
             <div className="scroll-reveal"><FirstTimer /></div>
             <div className="scroll-reveal"><Events /></div>
-            <div className="scroll-reveal"><Teaser /></div>
             <div className="scroll-reveal"><Atmosphere /></div>
             <div className="scroll-reveal"><ImageSlider /></div>
         </>
