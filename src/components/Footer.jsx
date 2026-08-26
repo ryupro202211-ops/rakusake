@@ -50,6 +50,7 @@ const Footer = () => {
                         <img
                             src={`${import.meta.env.BASE_URL}images/logo_e.png`}
                             alt="楽SAKEターミナル"
+                            loading="lazy"
                             style={{ height: '50px', width: 'auto', borderRadius: '10px' }}
                         />
                     </div>

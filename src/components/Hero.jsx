@@ -72,7 +72,7 @@ const Hero = () => {
             }}>
                 <div className="hero-bg-zoom" style={{
                     position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-                    backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.png)`,
+                    backgroundImage: `url(${import.meta.env.BASE_URL}images/hero_party.jpg)`,
                     backgroundSize: 'cover', backgroundPosition: 'center', filter: 'blur(3px)',
                 }} />
             </div>

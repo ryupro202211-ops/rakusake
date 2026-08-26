@@ -59,13 +59,13 @@ const ImageSlider = () => {
                 {/* First set of images */}
                 {images.map((img, index) => (
                     <div style={slideStyle} key={`slide-1-${index}`}>
-                        <img src={img} alt={`Slide ${index}`} style={imgStyle} />
+                        <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
                     </div>
                 ))}
                 {/* Duplicate set for seamless loop */}
                 {images.map((img, index) => (
                     <div style={slideStyle} key={`slide-2-${index}`}>
-                        <img src={img} alt={`Slide ${index}`} style={imgStyle} />
+                        <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
                     </div>
                 ))}
             </div>
