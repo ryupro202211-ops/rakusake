@@ -15,3 +15,15 @@ Use case: illustration-story. Asset: single square illustrated website icon for 
 - calendar.webp: one desk calendar with blank date squares and a bold orange check mark, representing successful events. No numbers.
 
 These are decorative illustrations, not portraits of participants. Adjacent headings provide accessible labels.
+
+## Dedicated illustrations (no repeated artwork)
+
+Use case: illustration-story. Single square decorative website icon for RakuSAKE event community. Sophisticated friendly hand-drawn editorial ink illustration, bold charcoal #242922 outlines, terracotta orange #b84a19 and warm ivory #f6f4eb flat fills, subtle print texture. Simple silhouette legible at 80px, centered filling 75% of square, clear padding. Truly transparent background. No text, numbers, letters, watermark, gradient, shadow or outer frame. Subject:
+
+- community.webp: five small simplified adult human figures arranged in a welcoming circle seen from slightly above, representing cumulative participants; not a portrait of three friends.
+- solo.webp: one admission ticket with a single person silhouette cutout symbol, representing coming alone; no text or numbers.
+- conversation.webp: two overlapping speech bubbles, one contains a little heart and the other three dots, warm new conversations.
+- bbq.webp: one compact round barbecue grill with skewers and small rising aroma lines, representing varied outdoor activities.
+- handshake.webp: two hands meeting in a friendly handshake, short contrasting orange and ivory sleeves, anatomically clear and simple.
+
+Each of the ten placements uses a different image: Stats uses calendar/community/solo, Testimonials uses conversation/bbq/handshake, and FirstTimer uses welcome/friends/shirt/cheers.
