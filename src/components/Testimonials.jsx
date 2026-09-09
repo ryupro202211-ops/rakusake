@@ -7,19 +7,19 @@ const testimonials = [
         text: '一人で参加しましたが、スタッフの方が自然に話しかけてくれて、気づいたら友達が3人もできてました！',
         name: 'Kさん',
         detail: '20代女性・初参加',
-        icon: 'welcome',
+        icon: 'conversation',
     },
     {
         text: '企画が毎回違うので飽きない。前回はBBQ、今回は流しそうめん。次も楽しみです。',
         name: 'Tさん',
         detail: '30代男性・リピーター',
-        icon: 'calendar',
+        icon: 'bbq',
     },
     {
         text: '人見知りで不安でしたが、同じテーブルの人とお酒の話で盛り上がって最後まで居ちゃいました（笑）',
         name: 'Mさん',
         detail: '20代男性・初参加',
-        icon: 'cheers',
+        icon: 'handshake',
     },
 ];
 

@@ -3,8 +3,8 @@ import IllustratedIcon from './IllustratedIcon';
 
 const stats = [
     { value: 20, suffix: '回+', label: '累計開催回数', icon: 'calendar' },
-    { value: 400, suffix: '名+', label: '累計参加者数', icon: 'friends' },
-    { value: 60, suffix: '%', label: '一人参加率', icon: 'welcome' },
+    { value: 400, suffix: '名+', label: '累計参加者数', icon: 'community' },
+    { value: 60, suffix: '%', label: '一人参加率', icon: 'solo' },
 ];
 
 const AnimatedNumber = ({ target, suffix, isVisible }) => {
