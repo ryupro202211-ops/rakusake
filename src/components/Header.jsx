@@ -87,7 +87,7 @@ const Header = () => {
             <Link to="/" style={{ ...navLinkStyle(showBg), textDecoration: 'none' }}>ホーム</Link>
           )}
           <a
-            href="#events"
+            href={`${import.meta.env.BASE_URL}#next-event`}
             onClick={() => setMenuOpen(false)}
             style={{
               display: 'inline-block', padding: '10px 24px',
@@ -133,7 +133,7 @@ const Header = () => {
           ) : (
             <Link to="/" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>ホーム</Link>
           )}
-          <a href="#events" onClick={() => setMenuOpen(false)} className="btn-primary" style={{ fontSize: '1.1rem', padding: '14px 40px' }}>
+          <a href={`${import.meta.env.BASE_URL}#next-event`} onClick={() => setMenuOpen(false)} className="btn-primary" style={{ fontSize: '1.1rem', padding: '14px 40px' }}>
             申し込む
           </a>
         </div>,

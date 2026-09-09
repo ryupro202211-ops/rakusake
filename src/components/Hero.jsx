@@ -37,7 +37,7 @@ const Hero = () => {
                         <a href={LINE_URL} target="_blank" rel="noopener noreferrer">公式LINE <span aria-hidden="true">↗</span></a>
                     </div>
                 </div>
-                <div className="hero-feature">
+                <div id="next-event" className="hero-feature" style={{ scrollMarginTop: '90px' }}>
                     {latestEvent ? (
                         <article className="next-event-ticket">
                             <div className="ticket-topline"><span>NEXT EVENT</span><span>次の休日の予定</span></div>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { getEvents } from '../utils/storage';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 import SeatsBar from './SeatsBar';
-import Teaser from './Teaser';
 
 const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
@@ -110,7 +109,8 @@ const Events = () => {
             });
             upcoming.sort((a, b) => (a.date || '').localeCompare(b.date || ''));
             past.sort((a, b) => (b.date || '').localeCompare(a.date || ''));
-            setUpcomingEvents(upcoming);
+            // The first upcoming event is already featured in Hero.
+            setUpcomingEvents(upcoming.slice(1));
             setPastEvents(past);
         };
         fetchEvents();
@@ -121,23 +121,17 @@ const Events = () => {
     return (
         <section id="events" className="section-padding" style={{ background: '#fcfcfc' }}>
             <div className="container">
-                <div className="editorial-heading"><div><p className="editorial-kicker">01 / EVENTS</p><h2>次の楽しみを、見つけよう。</h2></div><p>気になる企画に、ふらっと。<br />一人でも、友達と一緒でも。</p></div>
+                <div className="editorial-heading"><div><p className="editorial-kicker">01 / EVENTS</p><h2>イベント一覧</h2></div><a href="#next-event">開催予定のイベント ↑</a></div>
 
                 {/* Upcoming */}
-                <div style={{ marginBottom: '4rem' }}>
+                {upcomingEvents.length > 0 && <div style={{ marginBottom: '4rem' }}>
                     <h3 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: '1.3rem', color: 'var(--color-text-muted)' }}>
                         開催予定のイベント
                     </h3>
-                    {upcomingEvents.length > 0 ? (
-                        <>
                             <div ref={gridRef} className={`stagger-children${gridVisible ? ' visible' : ''}`} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
                                 {upcomingEvents.map(event => <EventCard key={event.id} {...event} />)}
                             </div>
-                        </>
-                    ) : (
-                        <Teaser embedded />
-                    )}
-                </div>
+                </div>}
 
                 {/* Past */}
                 {pastEvents.length > 0 && (
