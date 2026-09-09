@@ -40,13 +40,13 @@ const Stats = () => {
     return (
         <section ref={ref} style={{
             padding: '5rem 0',
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+            background: '#242922',
             position: 'relative',
             overflow: 'hidden',
         }}>
             <div style={{
                 position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                background: 'radial-gradient(circle at 20% 50%, rgba(255,159,28,0.15), transparent 50%), radial-gradient(circle at 80% 50%, rgba(46,196,182,0.1), transparent 50%)',
+                background: 'radial-gradient(circle at 22% 50%, rgba(237,155,99,0.16), transparent 55%)',
             }} />
             <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                 <div style={{

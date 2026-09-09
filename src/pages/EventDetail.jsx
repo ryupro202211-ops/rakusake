@@ -1,80 +1,97 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { getEventById } from '../utils/storage';
 import '../styles/App.css';
 
+const WEEKDAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+
 const EventDetail = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
     const [event, setEvent] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        const fetchedEvent = getEventById(id);
-        if (fetchedEvent) {
-            setEvent(fetchedEvent);
-        }
+        setEvent(getEventById(id) || null);
         setLoading(false);
     }, [id]);
 
-    if (loading) return <div className="container section-padding">Loading...</div>;
-
-    if (!event) {
+    if (loading) {
         return (
-            <div className="container section-padding" style={{ textAlign: 'center', marginTop: '100px' }}>
-                <h2>Event Not Found</h2>
-                <p>Could not find the event you are looking for.</p>
-                <Link to="/" className="btn-primary" style={{ marginTop: '20px' }}>Back to Home</Link>
+            <div className="editorial-page">
+                <div className="container event-detail-inner">
+                    <p className="editorial-kicker">LOADING</p>
+                </div>
             </div>
         );
     }
 
-    return (
-        <div style={{ paddingTop: '80px', minHeight: '80vh' }}>
-            {/* Hero-like Header */}
-            <div style={{
-                minHeight: '50vh',
-                position: 'relative',
-                background: event.image ? `url(${event.image.startsWith('data:') ? event.image : `${import.meta.env.BASE_URL}${event.image.replace(/^\//, '')}`})` : 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                display: 'flex',
-                alignItems: 'end',
-                paddingTop: '2rem'
-            }}>
-                <div style={{
-                    position: 'absolute',
-                    top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)'
-                }}></div>
-
-                <div className="container" style={{ position: 'relative', zIndex: 1, paddingBottom: '3rem', width: '100%' }}>
-                    <span style={{
-                        background: 'var(--color-primary)',
-                        color: '#fff',
-                        padding: '5px 15px',
-                        borderRadius: '20px',
-                        fontSize: '0.9rem',
-                        fontWeight: 'bold'
-                    }}>
-                        {event.date}
-                    </span>
-                    <h1 style={{ color: '#fff', fontSize: 'clamp(1.5rem, 4vw, 3rem)', marginTop: '1rem', textShadow: '0 2px 5px rgba(0,0,0,0.3)' }}>{event.title}</h1>
+    if (!event) {
+        return (
+            <div className="editorial-page">
+                <div className="container event-detail-inner">
+                    <p className="editorial-kicker">NOT FOUND</p>
+                    <div className="event-detail-head">
+                        <h1>イベントが見つかりませんでした</h1>
+                    </div>
+                    <p className="event-detail-meta">
+                        受付が終了したか、URLが変わった可能性があります。
+                    </p>
+                    <div className="event-detail-foot">
+                        <Link to="/" className="event-detail-back">← ホームへ戻る</Link>
+                    </div>
                 </div>
             </div>
+        );
+    }
 
-            {/* Content */}
-            <div className="container section-padding">
-                <div className="glass-panel" style={{ background: '#fff' }}>
-                    <div
-                        style={{ fontSize: '1.2rem', lineHeight: '2', color: 'var(--color-text)', wordWrap: 'break-word' }}
-                        dangerouslySetInnerHTML={{ __html: event.description }}
-                    />
+    const date = new Date(event.date + 'T00:00:00');
+    const image = event.image;
+    const imageSrc = image && (/^(data:|https?:)/.test(image) ? image : import.meta.env.BASE_URL + image.replace(/^\//, ''));
+    // The apply link lives inside the description HTML, so surface it as a CTA too.
+    const applyUrl = (event.description || '').match(/https:\/\/peatix\.com\/event\/\d+[^\s"'<]*/)?.[0];
+    const isUpcoming = event.date >= new Date().toISOString().split('T')[0];
 
-                    <div style={{ marginTop: '3rem', textAlign: 'center' }}>
-                        <Link to="/" className="btn-primary">Back to Home</Link>
+    return (
+        <div className="editorial-page">
+            <div className="container event-detail-inner">
+                <p className="editorial-kicker">RAKU SAKE TERMINAL <span>／ {isUpcoming ? 'NEXT EVENT' : 'PAST EVENT'}</span></p>
+
+                <div className="event-detail-head">
+                    <div className="event-detail-date">
+                        <time dateTime={event.date}>{date.getMonth() + 1}<span>/</span>{date.getDate()}</time>
+                        <span>
+                            {WEEKDAYS[date.getDay()]}
+                            {event.startTime && <><br />{event.startTime}{event.endTime && ' – ' + event.endTime}</>}
+                        </span>
                     </div>
+                    <h1>{event.title}</h1>
+                </div>
+
+                {imageSrc && (
+                    <div className="event-detail-art">
+                        <img src={imageSrc} alt="" aria-hidden="true" />
+                    </div>
+                )}
+
+                {(event.venue || event.fee) && (
+                    <p className="event-detail-meta">
+                        {event.venue}{event.venue && event.fee && ' ｜ '}{event.fee}
+                    </p>
+                )}
+
+                <article
+                    className="event-detail-body"
+                    dangerouslySetInnerHTML={{ __html: event.description }}
+                />
+
+                <div className="event-detail-foot">
+                    <Link to="/" className="event-detail-back">← ホームへ戻る</Link>
+                    {isUpcoming && applyUrl && (
+                        <a className="ticket-cta" href={applyUrl} target="_blank" rel="noopener noreferrer">
+                            申し込む <span aria-hidden="true">↗</span>
+                        </a>
+                    )}
                 </div>
             </div>
         </div>

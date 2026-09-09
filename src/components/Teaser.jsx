@@ -18,12 +18,12 @@ const Teaser = ({ embedded = false }) => {
     if (!TEASER.enabled) return null;
 
     return (
-        <section ref={ref} style={{ padding: embedded ? '0' : '80px 0', background: embedded ? 'transparent' : '#fff' }}>
+        <section ref={ref} style={{ padding: embedded ? '0' : '80px 0', background: embedded ? 'transparent' : '#f6f4eb' }}>
             <div className="container" style={{ maxWidth: '760px', padding: embedded ? 0 : undefined }}>
                 <div style={{
                     position: 'relative', overflow: 'hidden',
                     borderRadius: 'var(--radius-lg)', padding: '3rem 2rem', textAlign: 'center',
-                    background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 60%, #0f3460 100%)',
+                    background: '#242922',
                     color: '#fff',
                     opacity: isVisible ? 1 : 0,
                     transform: isVisible ? 'translateY(0)' : 'translateY(30px)',
@@ -32,7 +32,7 @@ const Teaser = ({ embedded = false }) => {
                     {/* Decorative glow */}
                     <div style={{
                         position: 'absolute', inset: 0,
-                        background: 'radial-gradient(circle at 50% 0%, rgba(255,159,28,0.2), transparent 60%)',
+                        background: 'radial-gradient(circle at 50% 0%, rgba(237,155,99,0.2), transparent 62%)',
                         pointerEvents: 'none',
                     }} />
                     <div style={{ position: 'relative', zIndex: 1 }}>

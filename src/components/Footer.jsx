@@ -4,16 +4,16 @@ const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
 const Footer = () => {
     return (
-        <footer style={{ padding: '0', background: '#fff', marginTop: 'auto' }}>
+        <footer style={{ padding: '0', background: '#f6f4eb', marginTop: 'auto' }}>
             {/* CTA Banner */}
             <div style={{
-                background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+                background: '#242922',
                 padding: '5rem 0', textAlign: 'center', color: '#fff',
                 position: 'relative', overflow: 'hidden',
             }}>
                 <div style={{
                     position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-                    background: 'radial-gradient(circle at 30% 40%, rgba(255,159,28,0.12), transparent 60%), radial-gradient(circle at 70% 60%, rgba(46,196,182,0.08), transparent 60%)',
+                    background: 'radial-gradient(circle at 30% 40%, rgba(237,155,99,0.14), transparent 62%)',
                 }} />
                 <div className="container" style={{ position: 'relative', zIndex: 1 }}>
                     <h3 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', marginBottom: '1rem', color: '#fff', fontWeight: '800' }}>次回のイベントに参加しませんか？</h3>
