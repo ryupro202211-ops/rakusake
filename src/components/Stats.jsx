@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import IllustratedIcon from './IllustratedIcon';
 
 const stats = [
-    { value: 20, suffix: '回+', label: '累計開催回数', icon: '🎉' },
-    { value: 400, suffix: '名+', label: '累計参加者数', icon: '👥' },
-    { value: 60, suffix: '%', label: '一人参加率', icon: '🙋' },
+    { value: 20, suffix: '回+', label: '累計開催回数', icon: 'calendar' },
+    { value: 400, suffix: '名+', label: '累計参加者数', icon: 'friends' },
+    { value: 60, suffix: '%', label: '一人参加率', icon: 'welcome' },
 ];
 
 const AnimatedNumber = ({ target, suffix, isVisible }) => {
@@ -63,7 +64,7 @@ const Stats = () => {
                             padding: '2rem 1.5rem',
                             border: '1px solid rgba(255,255,255,0.08)',
                         }}>
-                            <div style={{ fontSize: '2rem', marginBottom: '0.5rem' }}>{s.icon}</div>
+                            <div style={{ width: '100px', height: '100px', margin: '0 auto 1rem', padding: '8px', borderRadius: '50%', background: '#f6f4eb' }}><IllustratedIcon name={s.icon} size={84} /></div>
                             <p style={{ fontSize: 'clamp(2.2rem, 5vw, 3rem)', fontWeight: '800', color: '#fff', fontFamily: 'var(--font-pop)', lineHeight: 1.2 }}>
                                 <AnimatedNumber target={s.value} suffix={s.suffix} isVisible={isVisible} />
                             </p>

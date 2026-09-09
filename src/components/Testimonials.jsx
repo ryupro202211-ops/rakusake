@@ -1,4 +1,5 @@
 import React from 'react';
+import IllustratedIcon from './IllustratedIcon';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const testimonials = [
@@ -6,19 +7,19 @@ const testimonials = [
         text: '一人で参加しましたが、スタッフの方が自然に話しかけてくれて、気づいたら友達が3人もできてました！',
         name: 'Kさん',
         detail: '20代女性・初参加',
-        emoji: '✨',
+        icon: 'welcome',
     },
     {
         text: '企画が毎回違うので飽きない。前回はBBQ、今回は流しそうめん。次も楽しみです。',
         name: 'Tさん',
         detail: '30代男性・リピーター',
-        emoji: '🔥',
+        icon: 'calendar',
     },
     {
         text: '人見知りで不安でしたが、同じテーブルの人とお酒の話で盛り上がって最後まで居ちゃいました（笑）',
         name: 'Mさん',
         detail: '20代男性・初参加',
-        emoji: '😊',
+        icon: 'cheers',
     },
 ];
 
@@ -45,11 +46,11 @@ const Testimonials = () => {
                             onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; e.currentTarget.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)'; }}
                         >
                             <div style={{
-                                width: '48px', height: '48px', borderRadius: '50%',
-                                background: 'linear-gradient(135deg, var(--color-primary), var(--color-secondary))',
+                                width: '64px', height: '64px', borderRadius: '50%',
+                                background: '#f6f4eb',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '1.4rem', marginBottom: '1rem',
-                            }}>{t.emoji}</div>
+                            }}><IllustratedIcon name={t.icon} size={56} /></div>
                             <p style={{ fontSize: '0.95rem', lineHeight: 1.9, color: 'var(--color-text)', marginBottom: '1.5rem' }}>
                                 {t.text}
                             </p>

@@ -1,24 +1,25 @@
 import React from 'react';
+import IllustratedIcon from './IllustratedIcon';
 import useIntersectionObserver from '../hooks/useIntersectionObserver';
 
 const items = [
     {
-        icon: '👤',
+        icon: 'welcome',
         title: '一人参加OK',
         desc: '参加者の約60%が一人参加。スタッフが会話のきっかけを作るので安心です。',
     },
     {
-        icon: '🎂',
+        icon: 'friends',
         title: '20〜30代が中心',
         desc: '同年代の仲間と出会える場。もちろん他の年代も歓迎です。',
     },
     {
-        icon: '👕',
+        icon: 'shirt',
         title: '服装自由',
         desc: 'カジュアルでOK。仕事帰りにそのまま参加する方も多いです。',
     },
     {
-        icon: '🍺',
+        icon: 'cheers',
         title: '当日の流れ',
         desc: '受付→乾杯→フリートーク＆企画タイム。約2時間です。',
     },
@@ -50,7 +51,7 @@ const FirstTimer = () => {
                             onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,159,28,0.15)'; }}
                             onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.04)'; }}
                         >
-                            <div className="animate-float" style={{ fontSize: '2.5rem', marginBottom: '1rem', animationDelay: `${i * 0.7}s` }}>{item.icon}</div>
+                            <div style={{ marginBottom: '1rem' }}><IllustratedIcon name={item.icon} size={96} /></div>
                             <h3 style={{ fontSize: '1.15rem', marginBottom: '0.8rem', color: 'var(--color-primary)' }}>{item.title}</h3>
                             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--color-text-muted)' }}>{item.desc}</p>
                         </div>
