@@ -45,15 +45,7 @@ const ImageSlider = () => {
     return (
         <section id="event-photos" style={sliderContainerStyle}>
             {/* Title similar to other sections */}
-            <h3 style={{
-                textAlign: 'center',
-                marginBottom: '2rem',
-                color: 'var(--color-primary)',
-                fontFamily: 'var(--font-pop)',
-                fontSize: '1.5rem'
-            }}>
-                イベントの様子
-            </h3>
+            <div className="container editorial-heading"><div><p className="editorial-kicker">02 / MOMENTS</p><h2>気づけば、一緒に笑ってる。</h2></div><p>イベントの様子</p></div>
 
             <div className="slider-track" style={trackStyle}>
                 {/* First set of images */}

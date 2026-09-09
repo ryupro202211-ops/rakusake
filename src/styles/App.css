@@ -1,5 +1,6 @@
 /* Global Styles & Variables */
 @import './animations.css';
+@import './editorial.css';
 
 :root {
     --color-bg: #fafafa;

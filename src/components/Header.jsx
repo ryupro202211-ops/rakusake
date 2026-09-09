@@ -31,10 +31,10 @@ const Header = () => {
     return () => { document.body.style.overflow = ''; };
   }, [menuOpen]);
 
-  const showBg = scrolled || !isHome || menuOpen;
+  const showBg = true;
 
   return (
-    <header style={{
+    <header className={`site-header${scrolled ? ' is-scrolled' : ''}`} style={{
       position: 'fixed', top: 0, left: 0, width: '100%', zIndex: menuOpen ? 10001 : 1000,
       padding: '12px 0',
       transition: 'all 0.35s cubic-bezier(0.16, 1, 0.3, 1)',

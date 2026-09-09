@@ -9,6 +9,7 @@ const LINE_URL = 'https://line.me/R/ti/p/@667fodcp';
 
 // 3D tilt: card leans toward the cursor
 const handleTiltMove = (e) => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce), (pointer: coarse)').matches) return;
     const card = e.currentTarget;
     const r = card.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
@@ -26,8 +27,8 @@ const handleTiltLeave = (e) => {
 };
 
 const EventCard = ({ id, title, date, description, summary, isPast = false, image, remainingSeats, capacity }) => (
-    <Link to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
-        <div style={{
+    <Link className={`event-card-link${isPast ? ' is-past' : ' is-upcoming'}`} to={`/events/${id}`} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+        <div className="event-card" style={{
             height: '100%', display: 'flex', flexDirection: 'column',
             transition: 'all 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
             background: '#fff', borderRadius: 'var(--radius-lg)', overflow: 'hidden',
@@ -38,7 +39,7 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
             onMouseLeave={handleTiltLeave}
         >
             {image && (
-                <div style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
+                <div className="event-card-art" style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
                     <img src={image.startsWith('data:') ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
                         onMouseOver={e => e.target.style.transform = 'scale(1.05)'}
                         onMouseOut={e => e.target.style.transform = 'scale(1.0)'}
@@ -56,7 +57,7 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
                     </div>
                 </div>
             )}
-            <div style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
+            <div className="event-card-body" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
                 {!image && (
                     <div style={{ marginBottom: '0.8rem' }}>
                         <span style={{
@@ -120,7 +121,7 @@ const Events = () => {
     return (
         <section id="events" className="section-padding" style={{ background: '#fcfcfc' }}>
             <div className="container">
-                <h2 style={{ width: '100%', textAlign: 'center' }}>イベント一覧</h2>
+                <div className="editorial-heading"><div><p className="editorial-kicker">01 / EVENTS</p><h2>次の楽しみを、見つけよう。</h2></div><p>気になる企画に、ふらっと。<br />一人でも、友達と一緒でも。</p></div>
 
                 {/* Upcoming */}
                 <div style={{ marginBottom: '4rem' }}>

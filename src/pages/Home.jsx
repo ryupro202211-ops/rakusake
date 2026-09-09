@@ -31,16 +31,16 @@ const Home = () => {
     }, []);
 
     return (
-        <>
+        <main className="editorial-home">
             <Hero />
+            <div className="scroll-reveal"><Events /></div>
+            <div className="scroll-reveal"><ImageSlider /></div>
             <div className="scroll-reveal"><Stats /></div>
             <div className="scroll-reveal"><Testimonials /></div>
             <div className="scroll-reveal"><About /></div>
             <div className="scroll-reveal"><FirstTimer /></div>
-            <div className="scroll-reveal"><Events /></div>
             <div className="scroll-reveal"><Atmosphere /></div>
-            <div className="scroll-reveal"><ImageSlider /></div>
-        </>
+        </main>
     );
 };
 
