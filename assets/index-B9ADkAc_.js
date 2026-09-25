@@ -13,37 +13,104 @@ Please change the parent <Route path="${B}"> to <Route path="${B==="/"?"*":`${B}
           .hamburger-btn { display: flex !important; }
           .nav-links { display: none !important; }
         }
-      `})]})},Ih=i=>({fontSize:"0.9rem",fontWeight:"bold",color:i?"var(--color-text)":"#fff",opacity:1,transition:"color 0.3s",cursor:"pointer",padding:"8px 12px"}),ci=({href:i,showBg:f,children:s,onClick:r})=>d.jsx("a",{href:i,style:Ih(f),onClick:r,children:s}),La={fontSize:"1.3rem",fontWeight:"bold",color:"var(--color-text)",textDecoration:"none",padding:"0.5rem 1rem"},zh="https://line.me/R/ti/p/@667fodcp",Sy=()=>d.jsxs("footer",{style:{padding:"0",background:"#f6f4eb",marginTop:"auto"},children:[d.jsxs("div",{style:{background:"#242922",padding:"5rem 0",textAlign:"center",color:"#fff",position:"relative",overflow:"hidden"},children:[d.jsx("div",{style:{position:"absolute",top:0,left:0,right:0,bottom:0,background:"radial-gradient(circle at 30% 40%, rgba(237,155,99,0.14), transparent 62%)"}}),d.jsxs("div",{className:"container",style:{position:"relative",zIndex:1},children:[d.jsx("h3",{style:{fontSize:"clamp(1.3rem, 3vw, 1.8rem)",marginBottom:"1rem",color:"#fff",fontWeight:"800"},children:"次回のイベントに参加しませんか？"}),d.jsx("p",{style:{opacity:.7,marginBottom:"2rem",fontSize:"0.95rem",maxWidth:"500px",margin:"0 auto 2rem"},children:"一人参加OK・20〜30代中心・お酒好きが集まる交流イベント"}),d.jsxs("div",{style:{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap"},children:[d.jsx("a",{href:"#events",className:"btn-primary",children:"イベントを見る"}),d.jsxs("a",{href:zh,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"8px",padding:"16px 32px",background:"#06C755",color:"#fff",borderRadius:"50px",fontWeight:"bold",fontSize:"1rem",textDecoration:"none",transition:"all 0.4s",boxShadow:"0 4px 20px rgba(6,199,85,0.3)"},onMouseEnter:i=>{i.target.style.transform="translateY(-3px)",i.target.style.boxShadow="0 8px 30px rgba(6,199,85,0.5)"},onMouseLeave:i=>{i.target.style.transform="translateY(0)",i.target.style.boxShadow="0 4px 20px rgba(6,199,85,0.3)"},children:[d.jsx("svg",{width:"18",height:"18",viewBox:"0 0 24 24",fill:"currentColor",children:d.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE登録"]})]})]})]}),d.jsx("div",{style:{padding:"3rem 0 2rem",background:"#fafafa",borderTop:"1px solid #f0f0f0"},children:d.jsxs("div",{className:"container",style:{textAlign:"center"},children:[d.jsx("div",{style:{margin:"0 0 1.5rem"},children:d.jsx("img",{src:"/rakusake/images/logo_e.png",alt:"楽SAKEターミナル",loading:"lazy",style:{height:"50px",width:"auto",borderRadius:"10px"}})}),d.jsxs("div",{style:{marginBottom:"1.5rem",display:"flex",justifyContent:"center",gap:"2rem",flexWrap:"wrap"},children:[d.jsx("a",{href:"#about",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"コンセプト"}),d.jsx("a",{href:"#events",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"イベント一覧"}),d.jsx("a",{href:"#first-timer",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"初めての方へ"})]}),d.jsxs("div",{style:{display:"flex",justifyContent:"center",gap:"1rem",marginBottom:"2rem"},children:[d.jsx("a",{href:"https://www.instagram.com/raku_sake_terminal/",target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:"44px",height:"44px",borderRadius:"50%",background:"#f0f0f0",color:"#E1306C",textDecoration:"none",transition:"all 0.3s"},onMouseEnter:i=>{i.currentTarget.style.background="#E1306C",i.currentTarget.style.color="#fff"},onMouseLeave:i=>{i.currentTarget.style.background="#f0f0f0",i.currentTarget.style.color="#E1306C"},children:d.jsxs("svg",{xmlns:"http://www.w3.org/2000/svg",width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[d.jsx("rect",{x:"2",y:"2",width:"20",height:"20",rx:"5",ry:"5"}),d.jsx("path",{d:"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"}),d.jsx("line",{x1:"17.5",y1:"6.5",x2:"17.51",y2:"6.5"})]})}),d.jsx("a",{href:zh,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:"44px",height:"44px",borderRadius:"50%",background:"#f0f0f0",color:"#06C755",textDecoration:"none",transition:"all 0.3s"},onMouseEnter:i=>{i.currentTarget.style.background="#06C755",i.currentTarget.style.color="#fff"},onMouseLeave:i=>{i.currentTarget.style.background="#f0f0f0",i.currentTarget.style.color="#06C755"},children:d.jsx("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"currentColor",children:d.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})})})]}),d.jsxs("div",{style:{borderTop:"1px solid #eee",paddingTop:"1.5rem"},children:[d.jsxs("p",{style:{fontSize:"0.75rem",color:"#aaa"},children:["© ",new Date().getFullYear()," 楽SAKEターミナル All rights reserved."]}),d.jsxs("p",{style:{fontSize:"0.7rem",color:"#ccc",marginTop:"0.3rem"},children:["運営：",d.jsx("a",{href:"https://ryupro202211-ops.github.io/ryupro/",target:"_blank",rel:"noopener noreferrer",style:{color:"#ccc",textDecoration:"none"},children:"合同会社ryupro"})]})]})]})})]}),xy=()=>{const[i,f]=T.useState(0);return T.useEffect(()=>{const s=()=>{const r=document.documentElement.scrollHeight-window.innerHeight;f(r>0?window.scrollY/r*100:0)};return window.addEventListener("scroll",s,{passive:!0}),s(),()=>window.removeEventListener("scroll",s)},[]),d.jsx("div",{className:"scroll-progress",style:{width:`${i}%`}})},Ey="2026092300018",Ty=[{title:"【10/10(土)】秋の運動会！大人も思いきり遊ぼう♪チーム戦で楽しむ室内交流イベント（一人参加・初参加大歓迎）",date:"2026-10-10",startTime:"20:00",endTime:"22:00",summary:"玉入れ・風船運び・ジェスチャーゲームなど、チーム戦で思いきり楽しむ大人の秋の運動会。",description:`<p>大人になってから、思いきり体を動かして遊んでいますか？<br>今回は室内で楽しめる競技を中心に、チーム戦の秋の運動会を開催します。</p>
+      `})]})},Ih=i=>({fontSize:"0.9rem",fontWeight:"bold",color:i?"var(--color-text)":"#fff",opacity:1,transition:"color 0.3s",cursor:"pointer",padding:"8px 12px"}),ci=({href:i,showBg:f,children:s,onClick:r})=>d.jsx("a",{href:i,style:Ih(f),onClick:r,children:s}),La={fontSize:"1.3rem",fontWeight:"bold",color:"var(--color-text)",textDecoration:"none",padding:"0.5rem 1rem"},zh="https://line.me/R/ti/p/@667fodcp",Sy=()=>d.jsxs("footer",{style:{padding:"0",background:"#f6f4eb",marginTop:"auto"},children:[d.jsxs("div",{style:{background:"#242922",padding:"5rem 0",textAlign:"center",color:"#fff",position:"relative",overflow:"hidden"},children:[d.jsx("div",{style:{position:"absolute",top:0,left:0,right:0,bottom:0,background:"radial-gradient(circle at 30% 40%, rgba(237,155,99,0.14), transparent 62%)"}}),d.jsxs("div",{className:"container",style:{position:"relative",zIndex:1},children:[d.jsx("h3",{style:{fontSize:"clamp(1.3rem, 3vw, 1.8rem)",marginBottom:"1rem",color:"#fff",fontWeight:"800"},children:"次回のイベントに参加しませんか？"}),d.jsx("p",{style:{opacity:.7,marginBottom:"2rem",fontSize:"0.95rem",maxWidth:"500px",margin:"0 auto 2rem"},children:"一人参加OK・20〜30代中心・お酒好きが集まる交流イベント"}),d.jsxs("div",{style:{display:"flex",gap:"1rem",justifyContent:"center",flexWrap:"wrap"},children:[d.jsx("a",{href:"#events",className:"btn-primary",children:"イベントを見る"}),d.jsxs("a",{href:zh,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",gap:"8px",padding:"16px 32px",background:"#06C755",color:"#fff",borderRadius:"50px",fontWeight:"bold",fontSize:"1rem",textDecoration:"none",transition:"all 0.4s",boxShadow:"0 4px 20px rgba(6,199,85,0.3)"},onMouseEnter:i=>{i.target.style.transform="translateY(-3px)",i.target.style.boxShadow="0 8px 30px rgba(6,199,85,0.5)"},onMouseLeave:i=>{i.target.style.transform="translateY(0)",i.target.style.boxShadow="0 4px 20px rgba(6,199,85,0.3)"},children:[d.jsx("svg",{width:"18",height:"18",viewBox:"0 0 24 24",fill:"currentColor",children:d.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})}),"LINE登録"]})]})]})]}),d.jsx("div",{style:{padding:"3rem 0 2rem",background:"#fafafa",borderTop:"1px solid #f0f0f0"},children:d.jsxs("div",{className:"container",style:{textAlign:"center"},children:[d.jsx("div",{style:{margin:"0 0 1.5rem"},children:d.jsx("img",{src:"/rakusake/images/logo_e.png",alt:"楽SAKEターミナル",loading:"lazy",style:{height:"50px",width:"auto",borderRadius:"10px"}})}),d.jsxs("div",{style:{marginBottom:"1.5rem",display:"flex",justifyContent:"center",gap:"2rem",flexWrap:"wrap"},children:[d.jsx("a",{href:"#about",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"コンセプト"}),d.jsx("a",{href:"#events",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"イベント一覧"}),d.jsx("a",{href:"#first-timer",style:{color:"var(--color-text-muted)",fontSize:"0.85rem",fontWeight:"600",transition:"color 0.3s"},children:"初めての方へ"})]}),d.jsxs("div",{style:{display:"flex",justifyContent:"center",gap:"1rem",marginBottom:"2rem"},children:[d.jsx("a",{href:"https://www.instagram.com/raku_sake_terminal/",target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:"44px",height:"44px",borderRadius:"50%",background:"#f0f0f0",color:"#E1306C",textDecoration:"none",transition:"all 0.3s"},onMouseEnter:i=>{i.currentTarget.style.background="#E1306C",i.currentTarget.style.color="#fff"},onMouseLeave:i=>{i.currentTarget.style.background="#f0f0f0",i.currentTarget.style.color="#E1306C"},children:d.jsxs("svg",{xmlns:"http://www.w3.org/2000/svg",width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2",strokeLinecap:"round",strokeLinejoin:"round",children:[d.jsx("rect",{x:"2",y:"2",width:"20",height:"20",rx:"5",ry:"5"}),d.jsx("path",{d:"M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"}),d.jsx("line",{x1:"17.5",y1:"6.5",x2:"17.51",y2:"6.5"})]})}),d.jsx("a",{href:zh,target:"_blank",rel:"noopener noreferrer",style:{display:"inline-flex",alignItems:"center",justifyContent:"center",width:"44px",height:"44px",borderRadius:"50%",background:"#f0f0f0",color:"#06C755",textDecoration:"none",transition:"all 0.3s"},onMouseEnter:i=>{i.currentTarget.style.background="#06C755",i.currentTarget.style.color="#fff"},onMouseLeave:i=>{i.currentTarget.style.background="#f0f0f0",i.currentTarget.style.color="#06C755"},children:d.jsx("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"currentColor",children:d.jsx("path",{d:"M12 2C6.48 2 2 5.81 2 10.5c0 2.89 1.87 5.42 4.68 6.89-.16.57-.59 2.07-.67 2.39-.11.42.15.41.32.3.13-.09 2.09-1.38 2.94-1.94.89.13 1.81.2 2.73.2 5.52 0 10-3.81 10-8.5S17.52 2 12 2z"})})})]}),d.jsxs("div",{style:{borderTop:"1px solid #eee",paddingTop:"1.5rem"},children:[d.jsxs("p",{style:{fontSize:"0.75rem",color:"#aaa"},children:["© ",new Date().getFullYear()," 楽SAKEターミナル All rights reserved."]}),d.jsxs("p",{style:{fontSize:"0.7rem",color:"#ccc",marginTop:"0.3rem"},children:["運営：",d.jsx("a",{href:"https://ryupro202211-ops.github.io/ryupro/",target:"_blank",rel:"noopener noreferrer",style:{color:"#ccc",textDecoration:"none"},children:"合同会社ryupro"})]})]})]})})]}),xy=()=>{const[i,f]=T.useState(0);return T.useEffect(()=>{const s=()=>{const r=document.documentElement.scrollHeight-window.innerHeight;f(r>0?window.scrollY/r*100:0)};return window.addEventListener("scroll",s,{passive:!0}),s(),()=>window.removeEventListener("scroll",s)},[]),d.jsx("div",{className:"scroll-progress",style:{width:`${i}%`}})},Ey="2026092500019",Ty=[{title:"【10/10(土)】秋の運動会！大人も思いきり遊ぼう♪チーム戦で楽しむ室内交流イベント（一人参加・初参加大歓迎）",date:"2026-10-10",startTime:"20:00",endTime:"22:00",summary:"玉入れ・風船運び・ジェスチャーゲームなど、チーム戦で思いきり楽しむ大人の秋の運動会。",description:`<p><strong>一人参加・初参加歓迎の室内交流イベントです</strong>😁<br>
+参加者同士でチームを組み、玉入れ・風船運び・ジェスチャーゲーム・手押し相撲を楽しむ！<br>
+<strong>「大人の秋の運動会」</strong>を開催します✨<br>
+座って話すだけの交流会ではなく、一緒に体を動かして、応援して、笑いながら自然に交流できるイベントです。🏓🏓</p>
 
-<h2>🎯 当日の競技</h2>
+<h2>初対面でも、いきなり会話を頑張らなくて大丈夫</h2>
+<p>初対面の人に、いきなり話しかけるのは少し緊張する♪<br>
+でも、同じチームで競技に参加したり、応援したりしていると、自然と会話が始まることがあります♪</p>
+<p>今回のイベントは、室内でチームを組んで楽しむ大人の秋の運動会です！<br>
+玉入れや風船運び、ジェスチャーゲームなど、みんなで体を動かしながら楽しめる競技を行います♪</p>
+<p>「新しい人と知り合いたいけれど、交流会は少し緊張する」<br>
+「座って話すだけではなく、自然な形で交流したい」<br>
+「普段とは違うことをして思いきり遊びたい」<br>
+そんな方におすすめのイベントです。</p>
 
+<h2>今回のテーマは「秋の運動会」</h2>
+<p>参加者同士でチームを組み、競技や応援を通して交流します🤝<br>
+勝つことだけを目的にするのではなく、チームで協力したり、失敗を笑い合ったりしながら、みんなで盛り上がることを大切にしています！<br>
+運動が得意でなくても楽しめる内容なので、気軽にご参加ください😊</p>
+
+<h2>予定している競技</h2>
+<p><strong>◎玉入れ</strong><br>
+離れた場所から、丸いボールを箱に向かって投げ入れます。<br>
+チームで声を掛け合いながら、みんなで一斉にボールを投げて楽しみます。</p>
+<p><strong>◎風船運び</strong><br>
+うちわを使って、風船を落とさないように一人ずつ運びます。<br>
+風船を直接手で持たずに運ぶため、簡単そうに見えて意外と難しい競技です。<br>
+チームメンバーの応援や声掛けもポイントになります。</p>
+<p><strong>◎ジェスチャーゲーム</strong><br>
+チームの代表者が身振り手振りでお題を表現し、仲間が答えを当てます。<br>
+思ったように伝わらなかったり、予想外のジェスチャーが出てきたりすることで、自然と笑いが生まれる競技です。</p>
+<p><strong>◎地上の騎馬戦（手押し相撲）</strong><br>
+向かい合った相手と両手のひらを押し合い、バランスを崩した方が負けとなる対決です。<br>
+安全に配慮しながら、楽しめる範囲で行います。<br>
+力の強さだけではなく、バランス感覚やタイミングも重要です。</p>
+
+<h2>このイベントの楽しみ方</h2>
+<p>このイベントでは、最初から無理に会話をする必要はありません！<br>
+同じチームになった人と、<br>
+「次は誰が出ますか？」<br>
+「今の惜しかったですね」<br>
+「どうやって攻略しましょう？」<br>
+「あのジェスチャー面白かったですね」<br>
+といった、競技をきっかけにした会話が生まれます🫸</p>
+<p>ただ座って話す交流会とは違い、一緒に動いて、応援して、笑う時間を共有できることが今回の魅力です🌈<br>
+イベントが終わる頃には、最初よりも自然に話せる人が増えているかもしれません(^^♪</p>
+
+<h2>一人参加・初参加大歓迎</h2>
+<p>一人での参加や、初めて参加する方も歓迎しています！！！<br>
+「一人で参加して浮かないかな」<br>
+「知り合いがいないけれど大丈夫かな」<br>
+「交流イベントは少し苦手かも」<br>
+という方も、競技やチーム活動を通して交流できるため、参加しやすい内容です♪</p>
+<p>友人同士での参加はもちろん、仕事や普段の人間関係とは違う新しいつながりをつくりたい方も、ぜひご参加ください😊</p>
+
+<h2>こんな方におすすめ</h2>
 <ul>
-<li>玉入れ</li>
-<li>風船運び</li>
-<li>ジェスチャーゲーム</li>
-<li>手押し相撲</li>
+<li>新しい人と自然に知り合いたい方</li>
+<li>交流会で何を話せばよいか迷ってしまう方</li>
+<li>座って話すだけではないイベントに参加したい方</li>
+<li>体を動かしながら楽しく交流したい方</li>
+<li>普段とは少し違う夜を過ごしたい方</li>
+<li>チームで協力するゲームが好きな方</li>
+<li>大人になっても思いきり遊びたい方</li>
+<li>一人で参加できるイベントを探している方</li>
+<li>初参加でも楽しめるイベントを探している方</li>
 </ul>
 
-<p>一人参加・初参加の方も大歓迎です。チーム分けを行うので、自然に会話が生まれます。動きやすい服装でお越しください。</p>
+<h2>開催概要</h2>
+<p>日時：2026年10月10日（土）20:00〜22:00<br>
+テーマ：秋の運動会<br>
+内容：チーム対抗レクリエーション<br>
+会場：室内会場<br>
+参加：一人参加・初参加歓迎<br>
+※会場の詳細、参加費、持ち物などはPeatixの各項目をご確認ください。</p>
 
-<h2>📋 開催概要</h2>
+<h2>服装・持ち物</h2>
+<p>動きやすい服装と、室内で運動できる靴でお越しください。<br>
+汗をかく可能性があるため、必要に応じてタオルや飲み物もご持参ください。</p>
 
+<h2>※参加にあたってのお願い※</h2>
+<p>参加者同士が安心して楽しめるよう、以下の行為はご遠慮ください。</p>
 <ul>
-<li>日時：2026年10月10日（土）20:00〜22:00</li>
-<li>会場：芝コトブキビル201（東京都港区芝2-30-11）</li>
-<li>定員：30名</li>
+<li>他の参加者への過度な声掛けや迷惑行為</li>
+<li>マルチ商法、ネットワークビジネス、宗教などの勧誘</li>
+<li>イベントの雰囲気を損なう行為</li>
+<li>競技中の危険な行為や無理な接触</li>
 </ul>
+<p>競技は安全に配慮して行います。体調がすぐれない場合や、無理を感じた場合はスタッフにお声掛けください。</p>
 
-<h2>💰 参加費</h2>
-
-<ul>
-<li>男性：5,000円</li>
-<li>男性（20代）：4,000円</li>
-<li>女性：4,000円</li>
-<li>学生：3,000円</li>
-</ul>
-
-<p>※参加費は当日現金でお支払いください。</p>`,image:"https://cdn.peatix.com/event/5193579/cover-fVCKdYzhqvh3jAksxwk9lrXdJmxKPgkb.jpeg",capacity:30,id:"undoukai-2026-10-10",applyUrl:"https://peatix.com/sales/event/5193579/tickets"},{title:"秋の味覚BBQ 〜 旬の食材で同世代とつながる特別な休日 〜",date:"2026-09-12",startTime:"10:00",summary:"日常を離れて、同世代の新しい仲間と繋がる特別な休日🌈 きのこ・さつまいも・かぼちゃ…秋の味覚を囲む、豊洲の開放的なBBQ。",description:`<p>
+<h2>最後に</h2>
+<p>新しい出会いがほしい(^^♪<br>
+でも、最初から会話を頑張るのは少し苦手……<br>
+そんな方も、まずは一緒に体を動かしてみませんか？<br>
+玉入れで応援して、風船運びで協力して、ジェスチャーゲームで笑って、手押し相撲で盛り上がる😁<br>
+一緒に遊ぶからこそ生まれる、普段とは違うつながりがあります！<br>
+一人参加・初参加の方も大歓迎です！<br>
+皆さんのご参加をお待ちしています♪</p>`,image:"https://cdn.peatix.com/event/5193579/cover-fVCKdYzhqvh3jAksxwk9lrXdJmxKPgkb.jpeg",capacity:30,id:"undoukai-2026-10-10",applyUrl:"https://peatix.com/sales/event/5193579/tickets"},{title:"秋の味覚BBQ 〜 旬の食材で同世代とつながる特別な休日 〜",date:"2026-09-12",startTime:"10:00",summary:"日常を離れて、同世代の新しい仲間と繋がる特別な休日🌈 きのこ・さつまいも・かぼちゃ…秋の味覚を囲む、豊洲の開放的なBBQ。",description:`<p>
 いつもと同じ週末に少し変化が欲しい方、気の合う仲間や新しい繋がりを作りたい方へ✨<br>
 秋の心地よい風が抜ける開放的なBBQ会場で、旬の味覚を共に味わいながら、自然と会話が弾む特別なひとときを過ごしませんか！
 </p>
