@@ -1,6 +1,18 @@
-export const DATA_VERSION = '1778500000016';
+export const DATA_VERSION = '2026092300018';
 
 export const initialEvents = [
+    {
+        "title": "【10/10(土)】秋の運動会！大人も思いきり遊ぼう♪チーム戦で楽しむ室内交流イベント（一人参加・初参加大歓迎）",
+        "date": "2026-10-10",
+        "startTime": "20:00",
+        "endTime": "22:00",
+        "summary": "玉入れ・風船運び・ジェスチャーゲームなど、チーム戦で思いきり楽しむ大人の秋の運動会。",
+        "description": "<p>大人になってから、思いきり体を動かして遊んでいますか？<br>今回は室内で楽しめる競技を中心に、チーム戦の秋の運動会を開催します。</p>\n\n<h2>🎯 当日の競技</h2>\n\n<ul>\n<li>玉入れ</li>\n<li>風船運び</li>\n<li>ジェスチャーゲーム</li>\n<li>手押し相撲</li>\n</ul>\n\n<p>一人参加・初参加の方も大歓迎です。チーム分けを行うので、自然に会話が生まれます。動きやすい服装でお越しください。</p>\n\n<h2>📋 開催概要</h2>\n\n<ul>\n<li>日時：2026年10月10日（土）20:00〜22:00</li>\n<li>会場：芝コトブキビル201（東京都港区芝2-30-11）</li>\n<li>定員：30名</li>\n</ul>\n\n<h2>💰 参加費</h2>\n\n<ul>\n<li>男性：5,000円</li>\n<li>男性（20代）：4,000円</li>\n<li>女性：4,000円</li>\n<li>学生：3,000円</li>\n</ul>\n\n<p>※参加費は当日現金でお支払いください。</p>",
+        "image": "https://cdn.peatix.com/event/5193579/cover-fVCKdYzhqvh3jAksxwk9lrXdJmxKPgkb.jpeg",
+        "capacity": 30,
+        "id": "undoukai-2026-10-10",
+        "applyUrl": "https://peatix.com/sales/event/5193579/tickets"
+    },
     {
         "title": "秋の味覚BBQ 〜 旬の食材で同世代とつながる特別な休日 〜",
         "date": "2026-09-12",

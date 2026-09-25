@@ -86,22 +86,6 @@ const Header = () => {
           ) : (
             <Link to="/" style={{ ...navLinkStyle(showBg), textDecoration: 'none' }}>ホーム</Link>
           )}
-          <a
-            href={`${import.meta.env.BASE_URL}#next-event`}
-            onClick={() => setMenuOpen(false)}
-            style={{
-              display: 'inline-block', padding: '10px 24px',
-              background: 'var(--color-primary)', color: '#fff',
-              borderRadius: '50px', fontWeight: 'bold', fontSize: '0.9rem',
-              textDecoration: 'none', marginLeft: '8px',
-              transition: 'all 0.3s',
-              boxShadow: '0 4px 12px rgba(255,159,28,0.3)',
-            }}
-            onMouseEnter={e => { e.target.style.background = 'var(--color-accent)'; e.target.style.transform = 'translateY(-2px)'; }}
-            onMouseLeave={e => { e.target.style.background = 'var(--color-primary)'; e.target.style.transform = 'translateY(0)'; }}
-          >
-            申し込む
-          </a>
         </nav>
       </div>
 
@@ -133,9 +117,6 @@ const Header = () => {
           ) : (
             <Link to="/" onClick={() => setMenuOpen(false)} style={mobileNavStyle}>ホーム</Link>
           )}
-          <a href={`${import.meta.env.BASE_URL}#next-event`} onClick={() => setMenuOpen(false)} className="btn-primary" style={{ fontSize: '1.1rem', padding: '14px 40px' }}>
-            申し込む
-          </a>
         </div>,
         document.body
       )}

@@ -51,6 +51,10 @@ const EventDetail = () => {
     // The apply link lives inside the description HTML, so surface it as a CTA too.
     const applyUrl = (event.description || '').match(/https:\/\/peatix\.com\/event\/\d+[^\s"'<]*/)?.[0];
     const isUpcoming = event.date >= new Date().toISOString().split('T')[0];
+    const displayDescription = (event.description || '').replace(/<h2>主催<\/h2>[\s\S]*$/i, '');
+    const ticketUrl = event.applyUrl || (event.id === 'aki-bbq-2026-09-12'
+        ? 'https://peatix.com/sales/event/5193579/tickets'
+        : applyUrl);
 
     return (
         <div className="editorial-page">
@@ -82,13 +86,13 @@ const EventDetail = () => {
 
                 <article
                     className="event-detail-body"
-                    dangerouslySetInnerHTML={{ __html: event.description }}
+                    dangerouslySetInnerHTML={{ __html: displayDescription }}
                 />
 
                 <div className="event-detail-foot">
                     <Link to="/" className="event-detail-back">← ホームへ戻る</Link>
-                    {isUpcoming && applyUrl && (
-                        <a className="ticket-cta" href={applyUrl} target="_blank" rel="noopener noreferrer">
+                    {isUpcoming && ticketUrl && (
+                        <a className="ticket-cta" href={ticketUrl} target="_blank" rel="noopener noreferrer">
                             申し込む <span aria-hidden="true">↗</span>
                         </a>
                     )}
