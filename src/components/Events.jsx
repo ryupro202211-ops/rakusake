@@ -37,9 +37,10 @@ const EventCard = ({ id, title, date, description, summary, isPast = false, imag
             onMouseMove={handleTiltMove}
             onMouseLeave={handleTiltLeave}
         >
+            {isPast && <span className="done-stamp" aria-hidden="true">済</span>}
             {image && (
                 <div className="event-card-art" style={{ height: '220px', overflow: 'hidden', position: 'relative' }}>
-                    <img src={image.startsWith('data:') ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
+                    <img src={/^(data:|https?:)/.test(image) ? image : `${import.meta.env.BASE_URL}${image.replace(/^\//, '')}`} alt={title} loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)' }}
                         onMouseOver={e => e.target.style.transform = 'scale(1.05)'}
                         onMouseOut={e => e.target.style.transform = 'scale(1.0)'}
                         onError={e => e.target.style.display = 'none'}

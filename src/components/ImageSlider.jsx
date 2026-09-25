@@ -32,13 +32,13 @@ const ImageSlider = () => {
         flexShrink: 0,
     };
 
+    // Scattered polaroid tilt, repeated across both loop sets
+    const TILTS = [-3, 2.2, -1.4, 3, -2.4, 1.6, -0.8];
+
     const imgStyle = {
         width: '100%',
         height: '200px',
         objectFit: 'cover',
-        borderRadius: '16px',
-        boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-        transition: 'transform 0.3s',
         filter: 'blur(1.5px)',
     };
 
@@ -51,13 +51,17 @@ const ImageSlider = () => {
                 {/* First set of images */}
                 {images.map((img, index) => (
                     <div style={slideStyle} key={`slide-1-${index}`}>
-                        <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
+                        <figure className="polaroid" style={{ '--tilt': `${TILTS[index]}deg` }}>
+                            <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
+                        </figure>
                     </div>
                 ))}
                 {/* Duplicate set for seamless loop */}
                 {images.map((img, index) => (
                     <div style={slideStyle} key={`slide-2-${index}`}>
-                        <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
+                        <figure className="polaroid" style={{ '--tilt': `${TILTS[index]}deg` }}>
+                            <img src={img} alt={`Slide ${index}`} style={imgStyle} loading="lazy" decoding="async" />
+                        </figure>
                     </div>
                 ))}
             </div>
