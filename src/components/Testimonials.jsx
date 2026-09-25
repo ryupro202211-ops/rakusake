@@ -50,7 +50,7 @@ const Testimonials = () => {
                                 background: '#f6f4eb',
                                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                                 fontSize: '1.4rem', marginBottom: '1rem',
-                            }}><IllustratedIcon name={t.icon} size={56} /></div>
+                            }}><IllustratedIcon name={t.icon} size={56} order={i} /></div>
                             <p style={{ fontSize: '0.95rem', lineHeight: 1.9, color: 'var(--color-text)', marginBottom: '1.5rem' }}>
                                 {t.text}
                             </p>

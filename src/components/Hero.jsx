@@ -47,7 +47,7 @@ const Hero = () => {
                                 <h2>{latestEvent.title}</h2>
                                 {latestEvent.venue && <p className="ticket-venue">{latestEvent.venue}{latestEvent.fee && ' ｜ ' + latestEvent.fee}</p>}
                                 <SeatsBar capacity={latestEvent.capacity} remaining={latestEvent.remainingSeats} variant="light" />
-                                <Link to={'/events/' + latestEvent.id} className="ticket-cta">申し込む <span aria-hidden="true">↗</span></Link>
+                                <div className="ticket-stub"><Link to={'/events/' + latestEvent.id} className="ticket-cta">申し込む <span aria-hidden="true">↗</span></Link></div>
                             </div>
                         </article>
                     ) : (

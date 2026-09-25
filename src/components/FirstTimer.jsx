@@ -51,7 +51,7 @@ const FirstTimer = () => {
                             onMouseEnter={e => { e.currentTarget.style.boxShadow = '0 12px 30px rgba(255,159,28,0.15)'; }}
                             onMouseLeave={e => { e.currentTarget.style.boxShadow = '0 4px 15px rgba(0,0,0,0.04)'; }}
                         >
-                            <div style={{ marginBottom: '1rem' }}><IllustratedIcon name={item.icon} size={96} /></div>
+                            <div style={{ marginBottom: '1rem' }}><IllustratedIcon name={item.icon} size={96} order={i} /></div>
                             <h3 style={{ fontSize: '1.15rem', marginBottom: '0.8rem', color: 'var(--color-primary)' }}>{item.title}</h3>
                             <p style={{ fontSize: '0.9rem', lineHeight: 1.7, color: 'var(--color-text-muted)' }}>{item.desc}</p>
                         </div>

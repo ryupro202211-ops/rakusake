@@ -1,7 +1,6 @@
 /* Editorial home: warm paper, dark ink, a single orange accent. */
 .editorial-home { --color-primary: #b84a19; --color-secondary: #ed9b63; --color-text: #242922; --color-text-muted: #62655f; background: #f6f4eb; }
 .site-header { border-bottom: 1px solid #24292214; background: #f6f4ebf5 !important; box-shadow: none !important; }
-.site-header .nav-links > a:last-child { background: #b84a19 !important; box-shadow: none !important; }
 .site-header img { height: 46px !important; }
 .editorial-home section[id] { scroll-margin-top: 90px; }
 .editorial-home h2::after { display: none; }
@@ -117,4 +116,47 @@
   .editorial-page { padding-top: 96px; }
   .event-detail-foot { padding-bottom: 64px; }
   .event-detail-foot .ticket-cta { width: 100%; }
+}
+
+/* ── 1. Ticket stub: perforation + tear-off shift on hover ── */
+.ticket-stub { position: relative; margin: 20px -24px -24px; padding: 18px 24px 24px; border-top: 2px dashed #24292233; transform-origin: 0 0; transition: transform .45s cubic-bezier(.34, 1.56, .64, 1); }
+.ticket-stub::before, .ticket-stub::after { content: ''; position: absolute; top: -10px; width: 18px; height: 18px; border-radius: 50%; background: #f6f4eb; border: 1px solid #24292220; }
+.ticket-stub::before { left: -10px; }
+.ticket-stub::after { right: -10px; }
+.next-event-ticket:hover .ticket-stub,
+.next-event-ticket:focus-within .ticket-stub { transform: translateY(5px) rotate(-1.4deg); }
+.next-event-ticket .ticket-cta:hover { transform: none; }
+
+/* ── 2. Illustrated icons: ink wipe, then colour settles in ──
+   Icons are raster WebP, so the "drawing" is a slanted brush-edge wipe
+   while the art sits in grayscale, followed by the colour arriving. */
+.scroll-reveal .illus-icon { clip-path: polygon(0 0, 0 0, -20% 100%, 0 100%); filter: grayscale(1) contrast(1.35); }
+.scroll-reveal.visible .illus-icon {
+  animation: ink-draw 1s cubic-bezier(.65, 0, .35, 1) forwards, ink-colour .7s ease forwards;
+  animation-delay: calc(var(--draw-order, 0) * .16s + .15s), calc(var(--draw-order, 0) * .16s + 1s);
+}
+@keyframes ink-draw {
+  from { clip-path: polygon(0 0, 0 0, -20% 100%, 0 100%); }
+  to { clip-path: polygon(0 0, 120% 0, 100% 100%, 0 100%); }
+}
+@keyframes ink-colour {
+  from { filter: grayscale(1) contrast(1.35); }
+  to { filter: none; }
+}
+
+/* ── 3. Section headings: a terracotta brush stroke drawn left to right ── */
+.editorial-home .scroll-reveal h2::after {
+  display: block; content: ''; width: min(230px, 70%); height: 13px; margin: 12px auto 0; border-radius: 0;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 18' preserveAspectRatio='none'%3E%3Cpath fill='%23b84a19' d='M2 10.5C30 6.5 70 4.8 118 5.2c45 .4 86 1.6 119-1.2l1 3.6c-22 3.4-58 4.2-97 5.1-43 1-92 2.6-136 4.3-3 .1-4.2-1.4-3-3.3.3-.5 0-2.1 0-3.2z'/%3E%3Cpath fill='none' stroke='%23b84a19' stroke-opacity='.45' stroke-width='1.2' stroke-linecap='round' d='M14 15.2c60-2.6 130-3.6 210-5.4'/%3E%3C/svg%3E") no-repeat center / 100% 100%;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path .9s cubic-bezier(.65, 0, .35, 1) .35s;
+}
+.editorial-home .scroll-reveal.visible h2::after { width: min(230px, 70%); clip-path: inset(0 0 0 0); }
+.editorial-home .editorial-heading h2::after { margin-left: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticket-stub { transition: none; }
+  .next-event-ticket:hover .ticket-stub, .next-event-ticket:focus-within .ticket-stub { transform: none; }
+  .scroll-reveal .illus-icon { clip-path: none !important; filter: none !important; animation: none !important; }
+  .editorial-home .scroll-reveal h2::after { clip-path: none !important; transition: none !important; }
 }
