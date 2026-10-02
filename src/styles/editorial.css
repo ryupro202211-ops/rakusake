@@ -100,6 +100,8 @@
 .event-detail-art { background: #ebe6d9; border: 1px solid #24292220; border-radius: 8px; padding: 14px; margin-bottom: 32px; }
 .event-detail-art img { display: block; width: 100%; max-height: 430px; object-fit: contain; }
 .event-detail-meta { font-size: 12px; line-height: 1.9; color: #62655f; margin: 0 0 30px; padding-bottom: 26px; border-bottom: 1px solid #24292220; }
+.event-detail-overview { margin-bottom: 32px; }
+.event-detail-overview .event-detail-meta { font-size: 15px; margin-bottom: 18px; padding-bottom: 18px; }
 .event-detail-body { font-size: 15px; line-height: 2.05; color: #3a3f38; word-wrap: break-word; }
 .event-detail-body h1, .event-detail-body h2, .event-detail-body h3 { display: block; text-align: left; font-size: 19px; line-height: 1.7; font-weight: 900; letter-spacing: -.02em; color: #242922; margin: 42px 0 14px; padding-top: 20px; border-top: 1px solid #24292220; }
 .event-detail-body h1::after, .event-detail-body h2::after, .event-detail-body h3::after { display: none; }
@@ -116,6 +118,7 @@
   .editorial-page { padding-top: 96px; }
   .event-detail-foot { padding-bottom: 64px; }
   .event-detail-foot .ticket-cta { width: 100%; }
+  .event-detail-overview .ticket-cta { width: 100%; }
 }
 
 /* ── 1. Ticket stub: perforation + tear-off shift on hover ── */

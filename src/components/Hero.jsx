@@ -31,7 +31,7 @@ const Hero = () => {
                     <h1>いつもの休日に、<br /><span>乾杯と、</span><br />新しい出会いを。</h1>
                     <p className="hero-intro">おいしい一杯を片手に、初めましての人と笑い合う。<br className="desktop-break" />次の休日は、楽SAKEで過ごしませんか。</p>
                     <div className="hero-tags"><span>一人参加OK</span><span>20〜30代中心</span><span>毎月ちがう企画</span></div>
-                    {latestEvent && <Link className="ticket-cta hero-mobile-cta" to={'/events/' + latestEvent.id}>{date.getMonth() + 1}/{date.getDate()}のイベントに申し込む <span aria-hidden="true">↗</span></Link>}
+                    {latestEvent && <Link className="ticket-cta hero-mobile-cta" to={'/events/' + latestEvent.id}>{date.getMonth() + 1}/{date.getDate()}の詳細・料金を見る <span aria-hidden="true">↗</span></Link>}
                     <div className="hero-secondary-links">
                         <a href="#event-photos">イベントの様子を見る <span aria-hidden="true">↗</span></a>
                         <a href={LINE_URL} target="_blank" rel="noopener noreferrer">公式LINE <span aria-hidden="true">↗</span></a>
@@ -47,7 +47,7 @@ const Hero = () => {
                                 <h2>{latestEvent.title}</h2>
                                 {latestEvent.venue && <p className="ticket-venue">{latestEvent.venue}{latestEvent.fee && ' ｜ ' + latestEvent.fee}</p>}
                                 <SeatsBar capacity={latestEvent.capacity} remaining={latestEvent.remainingSeats} variant="light" />
-                                <div className="ticket-stub"><Link to={'/events/' + latestEvent.id} className="ticket-cta">申し込む <span aria-hidden="true">↗</span></Link></div>
+                                <div className="ticket-stub"><Link to={'/events/' + latestEvent.id} className="ticket-cta">詳細・料金を見る <span aria-hidden="true">↗</span></Link></div>
                             </div>
                         </article>
                     ) : (

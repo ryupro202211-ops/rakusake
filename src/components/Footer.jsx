@@ -19,7 +19,7 @@ const Footer = () => {
                     <h3 style={{ fontSize: 'clamp(1.3rem, 3vw, 1.8rem)', marginBottom: '1rem', color: '#fff', fontWeight: '800' }}>次回のイベントに参加しませんか？</h3>
                     <p style={{ opacity: 0.7, marginBottom: '2rem', fontSize: '0.95rem', maxWidth: '500px', margin: '0 auto 2rem' }}>一人参加OK・20〜30代中心・お酒好きが集まる交流イベント</p>
                     <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                        <a href="#events" className="btn-primary">イベントを見る</a>
+                        <a href={`${import.meta.env.BASE_URL}#events`} className="btn-primary">イベントを見る</a>
                         <a
                             href={LINE_URL}
                             target="_blank"
@@ -56,9 +56,9 @@ const Footer = () => {
                     </div>
 
                     <div style={{ marginBottom: '1.5rem', display: 'flex', justifyContent: 'center', gap: '2rem', flexWrap: 'wrap' }}>
-                        <a href="#about" style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>コンセプト</a>
-                        <a href="#events" style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>イベント一覧</a>
-                        <a href="#first-timer" style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>初めての方へ</a>
+                        <a href={`${import.meta.env.BASE_URL}#about`} style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>コンセプト</a>
+                        <a href={`${import.meta.env.BASE_URL}#events`} style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>イベント一覧</a>
+                        <a href={`${import.meta.env.BASE_URL}#first-timer`} style={{ color: 'var(--color-text-muted)', fontSize: '0.85rem', fontWeight: '600', transition: 'color 0.3s' }}>初めての方へ</a>
                     </div>
 
                     <div style={{ display: 'flex', justifyContent: 'center', gap: '1rem', marginBottom: '2rem' }}>

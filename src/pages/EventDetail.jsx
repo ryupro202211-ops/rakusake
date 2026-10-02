@@ -72,16 +72,25 @@ const EventDetail = () => {
                     <h1>{event.title}</h1>
                 </div>
 
+                <div className="event-detail-overview">
+                    <p className="event-detail-meta">
+                        <strong>開催日時：</strong>{date.getFullYear()}年{date.getMonth() + 1}月{date.getDate()}日（{['日', '月', '火', '水', '木', '金', '土'][date.getDay()]}）
+                        {event.startTime && ` ${event.startTime}${event.endTime ? '〜' + event.endTime : ''}`}
+                        {event.venue && <><br /><strong>会場：</strong>{event.venue}</>}
+                        {event.fee && <><br /><strong>参加費：</strong>{event.fee}</>}
+                        {event.payment && <><br /><strong>支払い：</strong>{event.payment}</>}
+                    </p>
+                    {isUpcoming && ticketUrl && (
+                        <a className="ticket-cta" href={ticketUrl} target="_blank" rel="noopener noreferrer">
+                            Peatixで申し込む <span aria-hidden="true">↗</span>
+                        </a>
+                    )}
+                </div>
+
                 {imageSrc && (
                     <div className="event-detail-art">
                         <img src={imageSrc} alt="" aria-hidden="true" />
                     </div>
-                )}
-
-                {(event.venue || event.fee) && (
-                    <p className="event-detail-meta">
-                        {event.venue}{event.venue && event.fee && ' ｜ '}{event.fee}
-                    </p>
                 )}
 
                 <article
@@ -93,7 +102,7 @@ const EventDetail = () => {
                     <Link to="/" className="event-detail-back">← ホームへ戻る</Link>
                     {isUpcoming && ticketUrl && (
                         <a className="ticket-cta" href={ticketUrl} target="_blank" rel="noopener noreferrer">
-                            申し込む <span aria-hidden="true">↗</span>
+                            Peatixで申し込む <span aria-hidden="true">↗</span>
                         </a>
                     )}
                 </div>
